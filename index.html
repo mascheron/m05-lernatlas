@@ -202,16 +202,26 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
   .layout:not(.noaside) aside{transform:none;visibility:visible}
   .layout:not(.noaside)::after{content:"";position:fixed;inset:var(--hh,120px) 0 0 0;background:rgba(0,0,0,.4);z-index:25}
   .only-m{display:inline-flex}
-  .top-row{gap:8px;padding:8px 12px}
-  .brand{flex:1;min-width:0}
-  .brand b{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .top-row{gap:8px;padding:8px 10px}
+  #btnTree{order:1;font-size:15px;padding:8px 12px}
+  .brand{order:2;flex:1 1 auto;min-width:0}
+  .brand b{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .brand span{display:none}
-  .search{order:5;flex:1 0 100%;max-width:none;min-width:0}
+  .ring{order:3}
+  #btnTheme{order:4;font-size:17px;padding:6px 12px}
+  .search{order:5;flex:1 0 calc(100% - 104px);max-width:none;min-width:0}
+  .nav-links .lg{display:none}
+  .search input{font-size:16px;padding:11px 12px 11px 36px}
+  .search svg{top:14px}
   .search kbd{display:none}
-  .nav-links{order:6;flex:1 0 100%;flex-wrap:nowrap;overflow-x:auto;gap:4px;scrollbar-width:none}
-  .nav-links a{white-space:nowrap;padding:6px 10px}
+  #btnFilter{order:6;font-size:15px;padding:10px 14px}
+  .nav-links{order:7;flex:1 0 100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .nav-links a{text-align:center;font-size:15px;padding:10px 2px;border:1px solid var(--line);white-space:nowrap}
   .ring span{display:none}
-  .ring svg{width:28px;height:28px}
+  .ring svg{width:30px;height:30px}
+  .chip{font-size:14px;padding:6px 12px}
+  .flabel{font-size:12px}
+  .fcount{font-size:13.5px}
   .filters{display:none;max-height:45vh;overflow:auto}
   header.top.fopen .filters{display:flex}
   .flabel{width:auto}
@@ -251,9 +261,9 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
     </div>
     <nav class="nav-links" aria-label="Lernmodi">
       <a class="hl" href="lernpfad/" data-nav="lernpfad">🧭 Lernpfad</a>
-      <a href="#karten" data-nav="karten">Karteikarten</a>
+      <a href="#karten" data-nav="karten">Karte<span class="lg">ikarte</span>n</a>
       <a href="#quiz" data-nav="quiz">Quiz</a>
-      <a href="#werkzeuge" data-nav="werkzeuge">Prüf-Werkzeuge</a>
+      <a href="#werkzeuge" data-nav="werkzeuge"><span class="lg">Prüf-</span>Werkzeuge</a>
     </nav>
     <div class="ring" id="ring" aria-live="polite"></div>
     <button class="btn" id="btnTheme" aria-label="Hell/Dunkel umschalten">◐</button>
