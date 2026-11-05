@@ -53,7 +53,7 @@ html.tt *,html.tt *::before{transition:background-color .4s,color .4s,border-col
 .fx-w,.card:not(.flip),.lp-st a,.grid>a,.stat,.opt:not(:disabled),.st-head,.exl>*,.tool-card{transition:box-shadow .2s,border-color .2s,background-color .2s}
 .card:not(.flip):hover,.lp-st a:hover,.grid>a:hover,.stat:hover,.opt:not(:disabled):hover,.st-head:hover{animation:fxwiggle .55s ease-in-out}
 .lp-st a:hover,.grid>a:hover,.st-head:hover{box-shadow:0 6px 18px rgba(20,33,61,.14)}
-.st.next .node{animation:fxwiggle 2.6s ease-in-out infinite}
+.st.next .node{animation:fxwiggle 1.2s ease-in-out .6s 1}
 .opt.right{animation:fxpop .45s ease,fxglow .8s ease-out}
 .opt.wrong{animation:fxshake .42s ease}
 .fb,.fx-in{animation:fxrise .38s ease both}
@@ -61,9 +61,9 @@ html.tt *,html.tt *::before{transition:background-color .4s,color .4s,border-col
 .enter .st,.enter .panel,.enter .law,.enter .exl>*,.enter .prog,.enter .bubble{animation:fxrise .55s ease both}
 .enter .st:nth-child(2){animation-delay:.05s}.enter .st:nth-child(3){animation-delay:.1s}.enter .st:nth-child(4){animation-delay:.15s}.enter .st:nth-child(5){animation-delay:.2s}.enter .st:nth-child(6){animation-delay:.25s}.enter .st:nth-child(7){animation-delay:.3s}.enter .st:nth-child(8){animation-delay:.35s}
 /* Wichtige Inhalte: Merksatz, Tipp, Hinweis (Animation startet beim Sichtbarwerden, läuft 2 Mal) */
-.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 2.4s ease-in-out 2}
-.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 3s ease-in-out .5s 2;pointer-events:none}
-.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 2.4s ease-in-out 2;transform-origin:left center}
+.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 2.4s ease-in-out 1}
+.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 3s ease-in-out .5s 1;pointer-events:none}
+.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 2.4s ease-in-out 1;transform-origin:left center}
 .merk strong,.tip strong{background:linear-gradient(transparent 60%,var(--fxmark) 0) no-repeat;background-size:0 100%;animation:fxmark .9s ease .3s forwards}
 .merk:not(.fxon),.merk:not(.fxon)::after,.merk:not(.fxon)>b:first-child,.merk:not(.fxon) strong,.tip:not(.fxon),.tip:not(.fxon)::after,.tip:not(.fxon) strong,.note:not(.fxon),.note:not(.fxon)::after{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.merk strong,.tip strong{background-size:100% 100%}}
@@ -638,7 +638,7 @@ textarea{resize:vertical}
 .fx-w,.card:not(.flip),.lp-st a,.grid>a,.stat,.opt:not(:disabled),.st-head,.exl>*,.tool-card{transition:box-shadow .2s,border-color .2s,background-color .2s}
 .card:not(.flip):hover,.lp-st a:hover,.grid>a:hover,.stat:hover,.opt:not(:disabled):hover,.st-head:hover{animation:fxwiggle .55s ease-in-out}
 .lp-st a:hover,.grid>a:hover,.st-head:hover{box-shadow:0 6px 18px rgba(20,33,61,.14)}
-.st.next .node{animation:fxwiggle 2.6s ease-in-out infinite}
+.st.next .node{animation:fxwiggle 1.2s ease-in-out .6s 1}
 .opt.right{animation:fxpop .45s ease,fxglow .8s ease-out}
 .opt.wrong{animation:fxshake .42s ease}
 .fb,.fx-in{animation:fxrise .38s ease both}
@@ -646,9 +646,9 @@ textarea{resize:vertical}
 .enter .st,.enter .panel,.enter .law,.enter .exl>*,.enter .prog,.enter .bubble{animation:fxrise .55s ease both}
 .enter .st:nth-child(2){animation-delay:.05s}.enter .st:nth-child(3){animation-delay:.1s}.enter .st:nth-child(4){animation-delay:.15s}.enter .st:nth-child(5){animation-delay:.2s}.enter .st:nth-child(6){animation-delay:.25s}.enter .st:nth-child(7){animation-delay:.3s}.enter .st:nth-child(8){animation-delay:.35s}
 /* Wichtige Inhalte: Merksatz, Tipp, Hinweis (Animation startet beim Sichtbarwerden, läuft 2 Mal) */
-.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 2.4s ease-in-out 2}
-.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 3s ease-in-out .5s 2;pointer-events:none}
-.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 2.4s ease-in-out 2;transform-origin:left center}
+.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 2.4s ease-in-out 1}
+.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 3s ease-in-out .5s 1;pointer-events:none}
+.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 2.4s ease-in-out 1;transform-origin:left center}
 .merk strong,.tip strong{background:linear-gradient(transparent 60%,var(--fxmark) 0) no-repeat;background-size:0 100%;animation:fxmark .9s ease .3s forwards}
 .merk:not(.fxon),.merk:not(.fxon)::after,.merk:not(.fxon)>b:first-child,.merk:not(.fxon) strong,.tip:not(.fxon),.tip:not(.fxon)::after,.tip:not(.fxon) strong,.note:not(.fxon),.note:not(.fxon)::after{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.merk strong,.tip strong{background-size:100% 100%}}
