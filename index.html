@@ -2239,22 +2239,34 @@ window.addEventListener("scroll",function(){if(scT)return;scT=requestAnimationFr
   else if(d<-8){setHid(false);armHide()}
   if(Math.abs(d)>8)lastY=y})},{passive:true});
 /* Themenbaum: Overlay am linken Rand (Hover), beim Scrollen wieder weg */
-var pinned=!!store("m5_treepin"),treeOpen=false,tCl=null,tSup=false;
+var pinned=!!store("m5_treepin"),treeOpen=false,tCl=null,tSup=false,tScr=0;
 function setTree(o){o=!!o&&layout.classList.contains("auto");treeOpen=o;layout.classList.toggle("tree-open",o);document.body.classList.toggle("tree-open",o);if(!o){clearTimeout(tCl)}}
 function applyTree(){var on=AH.matches&&!pinned;if(AH.matches)layout.classList.remove("noaside");layout.classList.toggle("auto",on);document.body.classList.toggle("tauto",on);if(!on)setTree(false)}
 function hotX(){var r=main.getBoundingClientRect(),pl=parseFloat(getComputedStyle(main).paddingLeft)||0;return Math.max(28,r.left+pl-12)}
-document.addEventListener("mousemove",function(e){if(!layout.classList.contains("auto"))return;
+document.addEventListener("mousemove",tmove,true);
+function tmove(e){if(!layout.classList.contains("auto"))return;
   var inAside=treeOpen&&aside.contains(e.target),zone=e.clientX<hotX()&&e.clientY>topH()+2;
   if(!zone&&!inAside)tSup=false;
+  if(tSup&&zone&&Date.now()-tScr>450)tSup=false;
   if(inAside){clearTimeout(tCl);return}
   if(zone&&!tSup){clearTimeout(tCl);if(!treeOpen)setTree(true);return}
-  if(treeOpen&&!zone){clearTimeout(tCl);tCl=setTimeout(function(){setTree(false)},260)}});
+  if(treeOpen&&!zone){clearTimeout(tCl);tCl=setTimeout(function(){setTree(false)},260)}}
 document.addEventListener("mouseleave",function(){if(treeOpen){clearTimeout(tCl);tCl=setTimeout(function(){setTree(false)},260)}});
-window.addEventListener("scroll",function(){if(!treeOpen||Date.now()<lockT)return;tSup=true;setTree(false)},{passive:true});
+window.addEventListener("scroll",function(){if(!treeOpen||Date.now()<lockT)return;tSup=true;tScr=Date.now();setTree(false)},{passive:true});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&treeOpen){tSup=true;setTree(false)}});
 aside.addEventListener("click",function(e){if(layout.classList.contains("auto")&&e.target.closest("a[href]")){tSup=true;setTree(false)}});
 (AH.addEventListener?AH.addEventListener("change",applyTree):AH.addListener(applyTree));
-applyTree();window.__dbg=function(){return {tSup:tSup,treeOpen:treeOpen,hot:hotX(),th:topH(),isHid:isHid}};
+applyTree();
+
+/* Tasten B oder T: Themenbaum ein-/ausblenden */
+document.addEventListener("keydown",function(e){
+  if(e.ctrlKey||e.metaKey||e.altKey)return;var k=(e.key||"").toLowerCase();if(k!=="b"&&k!=="t")return;
+  var t=(e.composedPath&&e.composedPath()[0])||e.target;
+  if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable))return;
+  e.preventDefault();
+  if(layout.classList.contains("auto")){tSup=true;tScr=Date.now();clearTimeout(tCl);setTree(!treeOpen)}
+  else{var b=document.getElementById("btnTree");if(b)b.click()}
+});
 var qi=$("#q"),qt=null;
 qi.addEventListener("input",function(){clearTimeout(qt);qt=setTimeout(function(){Q=qi.value;quiz=null;if(Q&&(LPR[(location.hash||"").slice(1)]||/^#s\d+$/.test(location.hash||""))){location.hash="";return}render()},120)});
 
