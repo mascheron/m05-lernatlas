@@ -1129,6 +1129,7 @@ $("#q-area").innerHTML='<div class="panel empty">Wähle Thema und Länge, dann �
 renderPath();progress();buildDeck();
 renderEx();renderLaws();progress();
 setTab(["path","quiz","cards","laws","ex"].includes(S.tab)?S.tab:"path");
+(function(){function dl(){const m=/^#s(\d+)$/.exec(location.hash);if(m){goStation(+m[1]);const el=$(".st[data-id='"+m[1]+"']");if(el&&el.scrollIntoView)setTimeout(()=>el.scrollIntoView({block:"start"}),60)}}dl();window.addEventListener("hashchange",dl)})();
 </script>
 
 <!--rechtstexte-->

@@ -49,6 +49,21 @@ header.top{position:sticky;top:0;z-index:30;background:var(--panel);border-botto
 .nav-links{display:flex;gap:6px;flex-wrap:wrap}
 .nav-links a{padding:7px 11px;border-radius:10px;font-weight:600;font-size:13px;text-decoration:none;color:var(--ink);border:1px solid transparent}
 .nav-links a:hover{background:var(--soft)}
+.nav-links a.hl{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.nav-links a.hl:hover{filter:brightness(1.12);background:var(--accent)}
+.lp{border:2px solid var(--accent);border-radius:18px;padding:18px 20px;margin:18px 0;background:linear-gradient(135deg,var(--soft),var(--panel))}
+.lp h2{margin:.1em 0 .3em}
+.lp .bar{margin:8px 0 4px}
+.lp-go{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.lp-go a{text-decoration:none}
+.lp-st{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:12px}
+.lp-st a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:13.5px;line-height:1.3}
+.lp-st a:hover{background:var(--soft)}
+.lp-st i{flex:none;font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:700 12px var(--sans)}
+.lp-st a.d i{background:var(--ok);color:#fff}
+.lp-st small{display:block;color:var(--ink2);font-size:12px}
+.lpside{display:block;text-decoration:none;margin:0 0 10px;padding:10px 12px;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:13.5px}
+.lpside small{display:block;font-weight:400;opacity:.85}
 .nav-links a.on{background:var(--accent);color:var(--accent-ink)}
 .ring{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
 .ring svg{width:34px;height:34px;transform:rotate(-90deg)}
@@ -229,10 +244,10 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
       <kbd>/</kbd>
     </div>
     <nav class="nav-links" aria-label="Lernmodi">
+      <a class="hl" href="lernpfad/" data-nav="lernpfad">🧭 Lernpfad</a>
       <a href="#karten" data-nav="karten">Karteikarten</a>
       <a href="#quiz" data-nav="quiz">Quiz</a>
       <a href="#werkzeuge" data-nav="werkzeuge">Prüf-Werkzeuge</a>
-      <a href="lernpfad/" data-nav="lernpfad">Lernpfad ↗</a>
     </nav>
     <div class="ring" id="ring" aria-live="polite"></div>
     <button class="btn" id="btnTheme" aria-label="Hell/Dunkel umschalten">◐</button>
@@ -673,7 +688,7 @@ function renderTree(){
     h+='<div class="tree-actions"><button class="btn small" id="hideTree">◀ Ausblenden</button></div>';
     items.forEach(function(n){var t=thById[n.thema];h+='<a class="tleaf'+(cur===n.id?" on":"")+'" href="#'+n.id+'" style="border-left:4px solid '+tcol(t)+'"><span class="par">'+esc(n.par)+'</span><span>'+esc(shortT(n.titel))+'</span>'+(learned[n.id]?'<span class="chk">✓</span>':'')+'</a>'});
     if(!items.length)h+='<p class="hint">Keine Treffer.</p>'}
-  aside.innerHTML=h}
+  aside.innerHTML='<a class="lpside" href="lernpfad/">🧭 Lernpfad starten<small>15 Stationen, Quiz, Karten, Fälle</small></a>'+h}
 function shortT(s){return s.length>46?s.slice(0,45)+"…":s}
 function anyFilter(){return Object.keys(F.themen).some(function(k){return F.themen[k]})||Object.keys(F.skript).some(function(k){return F.skript[k]})||F.status!=="alle"}
 
@@ -681,11 +696,27 @@ function anyFilter(){return Object.keys(F.themen).some(function(k){return F.them
 function crumbs(parts){return '<div class="crumbs"><a href="#">Modul 5</a>'+parts.map(function(p){return ' › '+(p[1]?'<a href="'+p[1]+'">'+esc(p[0])+'</a>':esc(p[0]))}).join("")+'</div>'}
 function cardsFor(ns){var h='<div class="grid">';ns.forEach(function(n){var t=thById[n.thema];h+='<a class="card" href="#'+n.id+'" style="--c:'+tcol(t)+'"><small>'+esc(n.par)+' · Teil '+n.skript+'</small><b>'+esc(n.titel)+'</b></a>'});return h+'</div>'}
 
+var LP=[[1,"Überblick und Vertragsgrundlagen"],[2,"Behandlungsvertrag (§§ 630a–630h)"],[3,"Einwilligung und Einwilligungsfähigkeit"],[4,"Gefährliche ärztliche Maßnahmen (§ 1829)"],[5,"Sterilisation, Unterbringung, Zwangsmaßnahmen"],[6,"Wünsche und mutmaßlicher Wille"],[7,"Patientenverfügung und Vorsorge"],[8,"Sterbewunsch und Sterbehilfe"],[9,"Sterben, Tod und Trauer"],[10,"Aufenthalt, Wohnen und Umgang"],[11,"Prüfungsschema und Fälle"],[12,"Aufgabe von Wohnraum (§ 1833)"],[13,"Umgang und Aufenthalt (§ 1834)"],[14,"Mietrecht I: Vertrag und Vertragsende"],[15,"Mietrecht II: Kündigung, Fristen, Rückgabe"]];
+var LPT={vertrag:[1],behandlung:[2],einwilligung:[3,6],aerztlich:[4,11],wille:[6,7,8],wohnen:[10,12],umgang:[10,13],miete:[14,15],zwang:[5]};
+function lpState(){var r={done:{}};try{var x=localStorage.getItem("m5-lernpfad-v1");if(x){var j=JSON.parse(x);r.done=j.done||{};r.cards=Object.keys(j.known||{}).length;r.ex=Object.keys(j.exdone||{}).length}}catch(e){}return r}
+function lpBox(){
+  var s=lpState(),d=0;LP.forEach(function(x){if(s.done[x[0]])d++});
+  var nx=LP.filter(function(x){return !s.done[x[0]]})[0];
+  var h='<section class="lp" aria-label="Lernpfad"><div class="eyebrow">Geführter Lernweg</div><h2>🧭 Der Lernpfad: 15 Stationen von Vertragsgrundlagen bis Mietrecht</h2>';
+  h+='<p style="margin:0">Der Lernpfad führt Dich Schritt für Schritt durch den Stoff: Erklärungen mit Gesetzestexten, <strong>104 Quizfragen</strong>, <strong>94 Karteikarten</strong>, Entscheidungs-Navigatoren, ein Fristenrechner und sechs Fälle. Der Atlas ist Dein Nachschlagewerk, der Lernpfad Dein Trainingsplan.</p>';
+  h+='<div class="bar" style="--c:var(--accent)"><i style="width:'+Math.round(100*d/LP.length)+'%"></i></div><p class="hint" style="margin:0">'+d+' von '+LP.length+' Stationen abgeschlossen'+(s.cards?' · '+s.cards+' Karten gewusst':'')+(s.ex?' · '+s.ex+' Übungen':'')+'</p>';
+  h+='<div class="lp-go"><a class="btn primary" href="lernpfad/'+(nx?'#s'+nx[0]:'')+'">'+(d===0?'Lernpfad starten':(nx?'Weiter bei Station '+nx[0]+': '+esc(nx[1]):'Lernpfad wiederholen'))+' →</a><a class="btn" href="lernpfad/">Alle Stationen</a></div>';
+  h+='<div class="lp-st">';LP.forEach(function(x){h+='<a href="lernpfad/#s'+x[0]+'"'+(s.done[x[0]]?' class="d"':'')+'><i>'+(s.done[x[0]]?'✓':x[0])+'</i><span>'+esc(x[1])+'</span></a>'});h+='</div></section>';return h}
+function lpTheme(t){var a=LPT[t.id];if(!a)return'';
+  var h='<h2>Im Lernpfad vertiefen</h2><div class="box soft" style="border-left:5px solid '+tcol(t)+'"><p style="margin:0 0 8px">Zu diesem Thema gibt es im Lernpfad ausführliche Stationen mit Quizfragen und Karteikarten:</p><div class="lp-st">';
+  a.forEach(function(i){var x=LP[i-1];h+='<a href="lernpfad/#s'+i+'"><i>'+i+'</i><span>Station '+i+'<small>'+esc(x[1])+'</small></span></a>'});
+  return h+'</div></div>'}
 function pageHome(){
   var tot=NORMEN.length,d=cnt(learned),st=cnt(starred),fr=NORMEN.filter(function(n){return n.frage}).length;
   var h='<div class="eyebrow">Sachkundelehrgang rechtliche Betreuer · Modul 5</div><h1>Personensorge – Dein Lernatlas</h1>';
   h+='<div class="hero"><div class="box lead soft"><p style="margin:0">Modul 5 ordnet die <strong>Personensorge</strong>: <strong>Gesundheitssorge</strong> (Einwilligung, Patientenverfügung, § 1829 BGB), <strong>Wohnraumaufgabe</strong> (§ 1833 BGB), <strong>Umgang und Aufenthalt</strong> (§ 1834 BGB) und das <strong>Mietrecht</strong> als Werkzeug. Alle Inhalte stammen aus den beiden Skripten; jede Norm hat Merksatz, Prüfschema und Prüfungsfrage.</p></div>';
   h+='<div class="stats"><div class="stat"><b>'+tot+'</b><span>Lerneinheiten</span></div><div class="stat"><b>'+d+'</b><span>gelernt</span></div><div class="stat"><b>'+st+'</b><span>★ gemerkt</span></div></div></div>';
+  h+=lpBox();
   h+='<h2>Themen × Skript <span class="hint" style="font:400 13px var(--sans)">(Anzahl, Klick filtert)</span></h2><div class="box"><table class="matrix" aria-label="Themen mal Skript"><tr><th></th><th>Teil 1</th><th>Teil 2</th></tr>';
   THEMEN.forEach(function(t){h+='<tr><th scope="row" style="color:'+tcol(t)+'">'+esc(strip(t.titel))+'</th>';
     [1,2].forEach(function(s){var n=NORMEN.filter(function(x){return x.thema===t.id&&x.skript===s}).length;
@@ -707,7 +738,7 @@ function pageTheme(t){
   if(t.lernweg)h+='<h2>So lernst Du es</h2><div class="box soft">'+esc(t.lernweg)+'</div>';
   var d=ns.filter(function(n){return learned[n.id]}).length;
   h+='<div class="bar" style="--c:'+tcol(t)+'"><i style="width:'+Math.round(100*d/ns.length)+'%"></i></div><p class="hint">'+d+' von '+ns.length+' gelernt</p>';
-  h+='<h2>Enthält</h2>'+cardsFor(ns);
+  h+=lpTheme(t);h+='<h2>Enthält</h2>'+cardsFor(ns);
   h+='<div class="pager">'+(i>0?'<a href="#t_'+THEMEN[i-1].id+'"><small>← Zurück</small>'+esc(strip(THEMEN[i-1].titel))+'</a>':'<a href="#"><small>← Start</small>Übersicht</a>')+(i<THEMEN.length-1?'<a href="#t_'+THEMEN[i+1].id+'"><small>Weiter →</small>'+esc(strip(THEMEN[i+1].titel))+'</a>':'<a href="#karten"><small>Weiter →</small>Karteikarten üben</a>')+'</div>';
   return h}
 
