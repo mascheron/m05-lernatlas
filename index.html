@@ -15,12 +15,12 @@
   --accent:#1d3a6e;--accent-ink:#fff;--soft:#e4edfb;--ok:#1f8a4c;--warn:#b86e00;--bad:#c0392b;
   --shadow:0 1px 2px rgba(20,33,61,.06),0 6px 20px rgba(20,33,61,.06);
   --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
-  --aside:340px;
+  --aside:340px;--merkbg:#dff3e7;
 }
 :root[data-theme="dark"]{
   --bg:#0e1424;--panel:#161e33;--panel2:#1b2540;--ink:#e8edf8;--ink2:#a8b4cc;--line:#2a3555;
   --accent:#7aa7f5;--accent-ink:#0e1424;--soft:#1f2c4d;--ok:#5fd08d;--warn:#f0b04a;--bad:#f08a7e;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3);--merkbg:#143626;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -147,6 +147,8 @@ details.q .ans{padding:0 16px 14px;color:var(--ink)}
 .pager a{flex:1;min-width:160px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel);color:var(--ink)}
 .pager a small{display:block;color:var(--ink2);font-size:12px}
 .pager a:last-child{text-align:right}
+.merk{background:var(--merkbg);border-left:5px solid var(--ok);border-radius:10px;padding:10px 14px;margin:12px 0;font-weight:600;line-height:1.5}
+.merk b{display:block;font:700 11.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ok);margin-bottom:2px}
 .pts{margin:6px 0;padding-left:20px}.pts li{margin:6px 0}
 .tip{border-left:4px solid var(--warn);background:var(--panel2);padding:10px 14px;border-radius:8px;margin:8px 0}
 .tip b{display:block;margin-bottom:2px}
@@ -268,55 +270,64 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
 <script>
 /* Daten Lernatlas Modul 5 – Personensorge. Quelle: Skripte Teil 1 (Gesundheitssorge) und Teil 2 (Wohnraum, Umgang, Aufenthalt, Mietrecht). */
 const THEMEN = [
- {id:"vertrag", titel:"Vertrags­grundlagen", range:"§§ 104 ff., 164 ff. BGB", farbe:"#2f6fdb", dunkel:"#7aa7f5",
+ {id:"vertrag",
+  merk:"Betreuung heißt nicht Geschäftsunfähigkeit. Verträge brauchen übereinstimmende Willenserklärungen; Vertreten darf nur, wer Vertretungsmacht hat.", titel:"Vertrags­grundlagen", range:"§§ 104 ff., 164 ff. BGB", farbe:"#2f6fdb", dunkel:"#7aa7f5",
   punkte:["**Willenserklärung:** Äußerung mit Rechtsbindungswillen; der **Vertrag** entsteht durch Angebot und Annahme.","**Geschäftsfähigkeit:** Jeder Volljährige ist geschäftsfähig, außer bei dauerhafter krankhafter Störung der Geistestätigkeit (§ 104 Nr. 2). Die Bestellung eines Betreuers macht nicht automatisch geschäftsunfähig.","**Form:** Schriftform (§ 126) verlangt die eigenhändige Unterschrift; Textform (E-Mail, Fax) genügt dafür nicht. Formmangel: Nichtigkeit (§ 125).","**Willensmängel:** Irrtum, Täuschung, Drohung führen zur Anfechtung (§§ 119 ff.).","**Stellvertretung (§ 164):** Eigene Erklärung im fremden Namen mit Vertretungsmacht bindet den Vertretenen; ohne Vertretungsmacht schwebend unwirksam (§ 177)."],
   fallen:["Geschäftsfähigkeit und Einwilligungsfähigkeit nicht verwechseln.","Schriftform und Textform auseinanderhalten.","Einseitige Rechtsgeschäfte wie die Kündigung brauchen bei Vertretung die Vollmacht im Original (§ 174)."],
   lernweg:"Zuerst die Begriffe sicher beherrschen, dann an Behandlungsvertrag und Mietvertrag anwenden: Dort kommen alle Grundlagen wieder vor.",
   frage:"Wann kommt ein Vertrag wirksam zustande – und wer kann für wen handeln?",
   intro:"Das Skript beginnt mit dem Allgemeinen Teil: Willenserklärung, Vertragsschluss, Geschäftsfähigkeit, Form- und Willensmängel, Stellvertretung. Diese Grundlagen brauchst Du für Behandlungsverträge ebenso wie für Mietverträge und Kündigungen durch den Betreuer."},
- {id:"behandlung", titel:"Behandlungs­vertrag", range:"§§ 630a–630h BGB", farbe:"#0f9d8f", dunkel:"#5fd0c4",
+ {id:"behandlung",
+  merk:"Information, Einwilligung, Aufklärung, Dokumentation, Einsicht, Beweislast: Bei Einwilligungsunfähigen sind Einwilligung und Aufklärung Sache des Betreuers.", titel:"Behandlungs­vertrag", range:"§§ 630a–630h BGB", farbe:"#0f9d8f", dunkel:"#5fd0c4",
   punkte:["**§ 630a:** Behandlungsvertrag; der Behandelnde schuldet die Behandlung, der Patient die Vergütung.","**§ 630c:** Informationspflichten, auch zu wirtschaftlichen Fragen und zu Behandlungsfehlern.","**§ 630d:** Einwilligung vor jeder Maßnahme; ist der Patient einwilligungsunfähig, entscheidet der Betreuer.","**§ 630e:** Aufklärung mündlich, rechtzeitig und verständlich; bei Einwilligungsunfähigen gegenüber dem Betreuer. Der Betreute ist soweit möglich einzubeziehen.","**§ 630f/g:** Dokumentation in der Patientenakte und Recht auf Einsichtnahme.","**§ 630h:** Beweislastregeln zugunsten des Patienten, etwa bei Dokumentationsmängeln oder fehlender Aufklärung."],
   fallen:["Aufklärung und Einwilligung bei Einwilligungsunfähigen gegenüber dem Betreuer, nicht gegenüber dem Betreuten allein.","Wer trägt die Beweislast? Für eine ordnungsgemäße Aufklärung der Behandelnde."],
   lernweg:"Reihenfolge merken: Vertrag, Information, Einwilligung, Aufklärung, Dokumentation, Einsicht, Beweislast.",
   frage:"Welche Pflichten haben Arzt und Patient – und wer trägt welche Beweislast?",
   intro:"Der Behandlungsvertrag ist im Patientenrechtegesetz (§§ 630a–630h BGB) geregelt. Für Betreuer wichtig: Aufklärung und Einwilligung müssen bei einwilligungsunfähigen Betreuten gegenüber dem Betreuer erfolgen."},
- {id:"einwilligung", titel:"Einwilligungs­fähigkeit", range:"Patientenrechte", farbe:"#d9482b", dunkel:"#f08a73",
+ {id:"einwilligung",
+  merk:"Einwilligungsfähige entscheiden selbst, nur bei Einwilligungsunfähigkeit entscheidet der Betreuer ersatzweise, nach dem Willen des Betreuten.", titel:"Einwilligungs­fähigkeit", range:"Patientenrechte", farbe:"#d9482b", dunkel:"#f08a73",
   punkte:["**Einwilligungsfähig** ist, wer Art, Bedeutung, Tragweite und Risiken der konkreten Maßnahme erfassen und danach entscheiden kann.","Sie ist **situationsbezogen**: Dieselbe Person kann für eine einfache Maßnahme einwilligungsfähig sein, für eine komplexe nicht.","Einwilligungsfähige entscheiden **selbst**; der Betreuer darf nicht an ihrer Stelle einwilligen oder ablehnen.","Nur bei Einwilligungsunfähigkeit entscheidet der Betreuer **ersatzweise**, orientiert am Willen des Betreuten.","Abgrenzung: Geschäftsfähigkeit, Testierfähigkeit und Verfahrensfähigkeit sind eigene Begriffe."],
   fallen:["Betreuung bedeutet nicht automatisch Einwilligungsunfähigkeit.","Die Einwilligungsfähigkeit wird pro Maßnahme geprüft, nicht pauschal."],
   lernweg:"Prüfreihenfolge: Ist der Patient einwilligungsfähig? Ja: er entscheidet. Nein: Betreuer, dann Wille, dann ggf. Genehmigung.",
   frage:"Wer entscheidet über eine ärztliche Maßnahme: Patient oder Betreuer?",
   intro:"Zentrale Prüfungsregel: Ein einwilligungsfähiger Patient entscheidet stets selbst. Nur bei Einwilligungsunfähigkeit ist die ersatzweise Einwilligung des Betreuers erforderlich. Einwilligungsfähigkeit ist von Geschäftsfähigkeit, Testier- und Verfahrensfähigkeit zu unterscheiden."},
- {id:"aerztlich", titel:"Gefährliche ärztliche Maßnahmen", range:"§ 1829 BGB · §§ 298, 312 FamFG", farbe:"#b4308a", dunkel:"#e48ccb",
+ {id:"aerztlich",
+  merk:"Gefahr von Tod oder schwerem Dauerschaden: Genehmigung des Gerichts, außer Betreuer und Arzt sind sich über den festgestellten Willen einig.", titel:"Gefährliche ärztliche Maßnahmen", range:"§ 1829 BGB · §§ 298, 312 FamFG", farbe:"#b4308a", dunkel:"#e48ccb",
   punkte:["**§ 1829 Abs. 1:** Genehmigung des Betreuungsgerichts, wenn die begründete Gefahr besteht, dass der Betreute aufgrund der Maßnahme stirbt oder einen schweren und länger dauernden gesundheitlichen Schaden erleidet.","**§ 1829 Abs. 2:** Gleiches gilt für Nichteinwilligung oder Widerruf einer Einwilligung, wenn dadurch eine solche Gefahr besteht.","**Ausnahme:** Besteht zwischen Betreuer und Arzt Einvernehmen, dass die Entscheidung dem festgestellten Willen des Betreuten entspricht, ist keine Genehmigung nötig.","**Verfahren:** FamFG, insbesondere Anhörung (§ 298) und die Zuordnung ärztlicher Zwangsmaßnahmen zu den Unterbringungssachen (§ 312 Nr. 3)."],
   fallen:["Die Gefahr muss begründet sein, nicht bloß denkbar.","Auch die Ablehnung einer lebenserhaltenden Maßnahme kann genehmigungsbedürftig sein.","Einvernehmen über den Willen ersetzt die Genehmigung, nicht die Willensfeststellung selbst."],
   lernweg:"Schema: Maßnahme, Gefahr von Tod oder schwerem Dauerschaden, Einvernehmen über den Willen, sonst Genehmigung.",
   frage:"Wann braucht der Betreuer die Genehmigung des Betreuungsgerichts für ärztliche Maßnahmen?",
   intro:"Bei begründeter Gefahr von Tod oder schwerem, länger dauerndem Schaden braucht die Einwilligung (oder Nichteinwilligung/der Widerruf) die Genehmigung des Gerichts. Ausnahme: Einvernehmen von Betreuer und Arzt über den festgestellten Willen."},
- {id:"wille", titel:"Wille und Vorsorge", range:"§§ 1816, 1820, 1821, 1827 BGB", farbe:"#e08a00", dunkel:"#f5b84d",
+ {id:"wille",
+  merk:"Wünsche feststellen und umsetzen; erst ohne Wünsche gilt der mutmaßliche Wille. Grenze: erhebliche Gefährdung bei fehlender Einsicht.", titel:"Wille und Vorsorge", range:"§§ 1816, 1820, 1821, 1827 BGB", farbe:"#e08a00", dunkel:"#f5b84d",
   punkte:["**§ 1821:** Der Betreuer stellt die Wünsche des Betreuten fest und setzt sie um, soweit das die Person nicht erheblich gefährdet und zumutbar ist.","Fehlen Wünsche, gilt der **mutmaßliche Wille** (aus früheren Äußerungen, Werten, Überzeugungen).","**Grenze:** erhebliche Gefährdung bei fehlender Einsichtsfähigkeit des Betreuten.","**Vorsorgeinstrumente:** Vorsorgevollmacht, Betreuungsverfügung, Patientenverfügung.","**Patientenverfügung (§ 1827):** schriftlich, jederzeit widerrufbar, gilt unabhängig von Art und Stadium der Erkrankung. Der Betreuer prüft, ob sie auf die aktuelle Situation passt, und verschafft ihr Geltung."],
   fallen:["Wünsche des Betreuten gehen dem Urteil des Betreuers vor, was „objektiv besser“ wäre.","Patientenverfügung, Behandlungswünsche und mutmaßlicher Wille sind verschiedene Stufen."],
   lernweg:"Merke die Stufenfolge: Patientenverfügung, geäußerte Behandlungswünsche, mutmaßlicher Wille.",
   frage:"Wessen Wille zählt – und wie wirken Vorsorgevollmacht, Betreuungs- und Patientenverfügung?",
   intro:"Handlungsleitend ist § 1821 BGB: Wünsche feststellen und umsetzen, sonst den mutmaßlichen Willen ermitteln. Grenze: erhebliche Gefährdung und fehlende Einsichtsfähigkeit. Dazu die drei Vorsorgeinstrumente."},
- {id:"wohnen", titel:"Wohnraum­aufgabe", range:"§ 1833 BGB", farbe:"#6a4bc4", dunkel:"#a996ee",
+ {id:"wohnen",
+  merk:"Anzeige beim Gericht, Genehmigung vor der Kündigung. Der Heimvertrag ist nur anzeigepflichtig.", titel:"Wohnraum­aufgabe", range:"§ 1833 BGB", farbe:"#6a4bc4", dunkel:"#a996ee",
   punkte:["**§ 1833 Abs. 1:** Aufgabe nur nach dem Wunsch des Betreuten oder bei erheblicher Gefährdung (§ 1821 Abs. 2 bis 4).","**Abs. 2:** unverzügliche **Anzeige** an das Gericht, auch bei drohendem Verlust aus anderen Gründen (zum Beispiel Vermieterkündigung).","**Abs. 3:** **Genehmigung** für Kündigung, Aufhebungsvertrag, Vermietung des selbst genutzten Wohnraums und Verfügung über das Grundstück.","Die Genehmigung für eine **Kündigung** muss vor Abgabe der Erklärung vorliegen.","Der Heimvertrag nach WBVG ist kein Mietverhältnis: nur Anzeige, keine Genehmigung."],
   fallen:["Anzeige und Genehmigung auseinanderhalten.","Kündigung: keine nachträgliche Heilung; Vertrag: nachträgliche Genehmigung möglich.","Bestellungsurkunde und Genehmigung der Kündigung beifügen (§ 1858 Abs. 2, § 174)."],
   lernweg:"Lerne den Ablauf als Fall: Wunsch oder Gefährdung, Anzeige, Genehmigung, Kündigungsschreiben, Rückgabe.",
   frage:"Wann darf der Betreuer die Wohnung des Betreuten aufgeben – und wer muss wann beteiligt werden?",
   intro:"§ 1833 BGB schützt die Wohnung als räumlichen Lebensmittelpunkt (Art. 13 GG). Absatz 1: Zulässigkeit, Absatz 2: Anzeigepflicht, Absatz 3: Genehmigungspflichten."},
- {id:"umgang", titel:"Umgang und Aufenthalt", range:"§ 1834 BGB", farbe:"#2a8a3e", dunkel:"#7bcf8c",
+ {id:"umgang",
+  merk:"Aufenthalt: Personensorge genügt. Umgang: ausdrücklicher Aufgabenbereich plus Wunsch oder konkrete Gefahr.", titel:"Umgang und Aufenthalt", range:"§ 1834 BGB", farbe:"#2a8a3e", dunkel:"#7bcf8c",
   punkte:["**Umgang (§ 1834 Abs. 1):** ausdrücklich zugewiesener Aufgabenbereich (§ 1815 Abs. 2 Nr. 4) und Wunsch des Betreuten oder konkrete Gefahr; keine zusätzliche Genehmigung.","**Aufenthalt (Abs. 2):** Personensorge genügt; wirkt auch gegenüber Dritten und umfasst das Herausgaberecht.","**Abs. 3:** Bei Streit entscheidet das Betreuungsgericht auf Antrag.","Konkrete Gefahr heißt: unmittelbar bevorstehende Rechtsgutsverletzung, die der Betreute krankheitsbedingt nicht erkennt."],
   fallen:["Personensorge reicht für den Aufenthalt, nicht für den Umgang.","Ohne Wunsch und ohne konkrete Gefahr darf der Betreuer den Umgang nicht bestimmen."],
   lernweg:"Klassiker: Umgang und Aufenthalt gegenüberstellen, Voraussetzungen jeweils in einem Satz.",
   frage:"Darf der Betreuer bestimmen, mit wem der Betreute Umgang hat und wo er lebt?",
   intro:"Die Umgangsbestimmung ist seit 2023 gesetzlich geregelt und streng begrenzt (ausdrücklicher Aufgabenbereich, Wunsch oder konkrete Gefahr). Die Aufenthaltsbestimmung wirkt auch gegenüber Dritten und umfasst das Herausgaberecht."},
- {id:"miete", titel:"Mietrecht", range:"§§ 535 ff. BGB", farbe:"#c2603a", dunkel:"#eba283",
+ {id:"miete",
+  merk:"Kündigung schriftlich, Frist ab Zugang, Urkunde und Genehmigung beifügen; Mieter 3. Werktag zum übernächsten Monatsende.", titel:"Mietrecht", range:"§§ 535 ff. BGB", farbe:"#c2603a", dunkel:"#eba283",
   punkte:["**Systematik:** §§ 535 bis 548 allgemein, §§ 549 bis 577a Wohnraum, §§ 578 bis 580a Gewerbe.","**Kündigung** braucht Schriftform (§ 568, § 126) und Zugang (§ 130).","**Fristen (§ 573c):** Mieter bis zum 3. Werktag zum übernächsten Monatsende; Vermieter 3, 6 oder 9 Monate je nach Mietdauer.","**Vermieter** braucht ein berechtigtes Interesse (§ 573), etwa Eigenbedarf einer natürlichen Person.","**Widerspruch (§§ 574 bis 574b):** schriftlich, spätestens zwei Monate vor Ende.","**Fristlos (§§ 543, 569):** zum Beispiel Zahlungsverzug; Schonfrist bis zwei Monate nach Rechtshängigkeit der Räumungsklage.","**Rückgabe (§§ 545, 546, 546a, 548):** Schlüssel und Protokoll, Nutzungsentschädigung, Verjährung nach sechs Monaten."],
   fallen:["Fristen immer ab Zugang berechnen.","Eigenbedarf geht nur bei natürlichen Personen als Vermieter.","Schonfristzahlung beseitigt die fristlose Kündigung wegen Zahlungsverzugs, aber nicht bei Wiederholung innerhalb von zwei Jahren."],
   lernweg:"Nutze den Fristenrechner unter „Prüf-Werkzeuge“ und übe die Zahlen (3 Werktage, 2 Monate, 6 Monate) mit den Karteikarten.",
   frage:"Wie wird ein Wohnraummietverhältnis begründet, gekündigt und abgewickelt?",
   intro:"Mietrecht ist die Werkzeugkiste für die Wohnungsaufgabe: Kündigungsform, Fristen, Gründe, Widerspruch, Zahlungsverzug, Sonderkündigungsrechte, Rückgabe und Verjährung."},
- {id:"zwang", titel:"Zwang und Freiheitsentzug", range:"§ 1832 BGB (Überblick)", farbe:"#5a6b7a", dunkel:"#9fb0bf",
+ {id:"zwang",
+  merk:"Unterbringung und Zwangsmaßnahmen sind das letzte Mittel und brauchen immer die Genehmigung des Gerichts.", titel:"Zwang und Freiheitsentzug", range:"§ 1832 BGB (Überblick)", farbe:"#5a6b7a", dunkel:"#9fb0bf",
   punkte:["**§ 1831:** freiheitsentziehende Unterbringung; **§ 1832:** ärztliche Zwangsmaßnahmen, jeweils nur mit Genehmigung des Gerichts.","Zwangsmaßnahme nur, wenn der Betreute krankheitsbedingt die Notwendigkeit nicht erkennen kann, ein ernsthafter Überzeugungsversuch scheiterte und ein erheblicher Schaden droht.","Verfahren nach dem FamFG als Unterbringungssache (§ 312)."],
   fallen:["Zwang ist stets letztes Mittel und die Ausnahme.","Hier nur Überblick; Details gehören in andere Module."],
   lernweg:"Nur den Rahmen merken: Voraussetzungen, Genehmigung, Verhältnismäßigkeit.",
@@ -732,6 +743,7 @@ function pageHome(){
 function pageTheme(t){
   var ns=NORMEN.filter(function(n){return n.thema===t.id}),i=t._i;
   var h=crumbs([[strip(t.titel)]])+'<div style="--c:'+tcol(t)+'"><div class="titlebar"><div class="eyebrow">Überblick</div><div class="par-big">'+esc(t.range)+'</div><h1>'+esc(strip(t.titel))+'</h1></div></div>';
+  if(t.merk)h+='<div class="merk"><b>Merksatz</b>'+esc(t.merk)+'</div>';
   h+='<div class="box soft lead" style="border-left:5px solid '+tcol(t)+'"><strong>Leitfrage:</strong> '+esc(t.frage)+'</div><h2>Worum geht es?</h2><p>'+esc(t.intro)+'</p>';
   if(t.punkte&&t.punkte.length){h+='<h2>Die wichtigsten Punkte</h2><ul class="pts">';t.punkte.forEach(function(x){h+='<li>'+md(x)+'</li>'});h+='</ul>'}
   if(t.fallen&&t.fallen.length){h+='<h2>Typische Prüfungsfallen</h2><div class="tip"><ul class="pts">';t.fallen.forEach(function(x){h+='<li>'+md(x)+'</li>'});h+='</ul></div>'}
@@ -745,7 +757,7 @@ function pageTheme(t){
 function pageNorm(n){
   var t=thById[n.thema],h=crumbs([[strip(t.titel),"#t_"+t.id],[n.par]]);
   h+='<div style="--c:'+tcol(t)+';--cd:'+t.dunkel+'"><div class="par-big">'+esc(n.par)+'</div><h1>'+esc(n.titel)+'</h1>';
-  h+='<div class="box soft lead"><strong>Merksatz:</strong> '+esc(n.kurz)+'</div>';
+  h+='<div class="merk"><b>Merksatz</b>'+esc(n.kurz)+'</div>';
   h+='<div class="chips"><span class="badge" style="border-color:'+tcol(t)+'">'+esc(strip(t.titel))+'</span><span class="badge">'+esc(n.quelle)+'</span><span class="badge">Skript Teil '+n.skript+'</span></div>';
   h+='<div class="actions"><button class="btn'+(learned[n.id]?' done':'')+'" id="bLearn">'+(learned[n.id]?'✓ Gelernt':'Als gelernt markieren')+'</button><button class="btn star'+(starred[n.id]?' on':'')+'" id="bStar">'+(starred[n.id]?'★ Gemerkt':'☆ Merken')+'</button><button class="btn" onclick="window.print()">Drucken</button></div>';
   h+='<div class="box"><h3>Erklärung</h3><p>'+md(n.text)+'</p></div>';
@@ -847,8 +859,9 @@ function calcFrist(dateStr,who,years){
   return {ende:last.toLocaleDateString("de-DE",{day:"2-digit",month:"long",year:"numeric"}),karenz:werktag3(y,m),inTime:inTime,monate:k}}
 function pageWerkzeuge(){
   var h=crumbs([["Prüf-Werkzeuge"]])+'<h1>Prüf-Werkzeuge</h1><p class="hint">Entscheidungshilfen und Rechner zum Üben – abgeleitet aus den Skripten, keine Rechtsberatung.</p>';
+  h+='<div class="merk"><b>Merksatz</b>Wohnung: Wille oder Gefährdung, dann Anzeige, dann Genehmigung vor der Kündigung. Ärztliche Maßnahme: Gefahr von Tod oder schwerem Dauerschaden bedeutet Genehmigung, außer Einvernehmen über den festgestellten Willen.</div>';
   h+='<div class="two" style="align-items:start"><div id="wizW">'+wizHtml("wohn")+'</div><div id="wizA">'+wizHtml("aerzt")+'</div></div>';
-  h+='<h2>Kündigungsfristen-Rechner (ordentliche Kündigung, Wohnraum)</h2><div class="box"><p class="hint">Regel § 573c Abs. 1 BGB: Zugang bis zum 3. Werktag (Samstag zählt) eines Monats → Ende des übernächsten Monats. Vermieter: nach 5 bzw. 8 Jahren Mietdauer verlängert sich die Frist um je 3 Monate. Feiertage werden nicht berücksichtigt.</p>';
+  h+='<h2>Kündigungsfristen-Rechner (ordentliche Kündigung, Wohnraum)</h2><div class="merk"><b>Merksatz</b>Der Zugang entscheidet: Mieter bis zum 3. Werktag zum Ende des übernächsten Monats, Vermieter 3, 6 oder 9 Monate je nach Mietdauer.</div><div class="box"><p class="hint">Regel § 573c Abs. 1 BGB: Zugang bis zum 3. Werktag (Samstag zählt) eines Monats → Ende des übernächsten Monats. Vermieter: nach 5 bzw. 8 Jahren Mietdauer verlängert sich die Frist um je 3 Monate. Feiertage werden nicht berücksichtigt.</p>';
   h+='<div class="field"><label>Zugang der Kündigung<input type="date" id="cDate"></label><label>Kündigender<select id="cWho"><option value="m">Mieter</option><option value="v">Vermieter</option></select></label><label>Mietdauer (Jahre)<input type="number" id="cYears" min="0" max="60" value="3" style="width:90px"></label></div><div id="cOut"></div></div>';
   h+='<h2>Spickzettel: Fristen und Zahlen</h2><div class="box"><div class="two"><ul><li>Kündigung Wohnraum: <strong>Schriftform</strong>, Original-Unterschrift</li><li>Mieterfrist: bis 3. Werktag → <strong>übernächster</strong> Monatsende</li><li>Vermieterfrist: 3 / 6 / 9 Monate (bis 5 / 5–8 / über 8 Jahre)</li><li>Widerspruch: schriftlich, <strong>2 Monate</strong> vor Ende</li><li>§ 545: Widerspruch gegen stillschweigende Verlängerung <strong>2 Wochen</strong></li></ul><ul><li>Zahlungsverzug: &gt; <strong>1 Monatsmiete</strong> / <strong>2 Monatsmieten</strong></li><li>Schonfrist: <strong>2 Monate</strong> nach Rechtshängigkeit (Zweijahressperre)</li><li>Kaution: <strong>2 Kaltmieten</strong>, bis zu <strong>3 Raten</strong></li><li>§ 548: Verjährung <strong>6 Monate</strong>; Regelverjährung 3 Jahre</li><li>Patientenakte: <strong>10 Jahre</strong> Aufbewahrung</li></ul></div></div>';
   return h}
