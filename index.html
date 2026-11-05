@@ -60,11 +60,12 @@ html.tt *,html.tt *::before{transition:background-color .4s,color .4s,border-col
 .st.open .st-body,.law[open] .lawx,.rv[open]>*:not(summary){animation:fxrise .38s ease both}
 .enter .st,.enter .panel,.enter .law,.enter .exl>*,.enter .prog,.enter .bubble{animation:fxrise .55s ease both}
 .enter .st:nth-child(2){animation-delay:.05s}.enter .st:nth-child(3){animation-delay:.1s}.enter .st:nth-child(4){animation-delay:.15s}.enter .st:nth-child(5){animation-delay:.2s}.enter .st:nth-child(6){animation-delay:.25s}.enter .st:nth-child(7){animation-delay:.3s}.enter .st:nth-child(8){animation-delay:.35s}
-/* Wichtige Inhalte: Merksatz, Tipp, Hinweis */
-.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 3.8s ease-in-out infinite}
-.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 6s ease-in-out infinite 1.2s;pointer-events:none}
-.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 3.8s ease-in-out infinite;transform-origin:left center}
-.merk strong,.tip strong{background:linear-gradient(transparent 60%,var(--fxmark) 0) no-repeat;background-size:0 100%;animation:fxmark .9s ease .5s forwards}
+/* Wichtige Inhalte: Merksatz, Tipp, Hinweis (Animation startet beim Sichtbarwerden, läuft 2 Mal) */
+.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 2.4s ease-in-out 2}
+.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 3s ease-in-out .5s 2;pointer-events:none}
+.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 2.4s ease-in-out 2;transform-origin:left center}
+.merk strong,.tip strong{background:linear-gradient(transparent 60%,var(--fxmark) 0) no-repeat;background-size:0 100%;animation:fxmark .9s ease .3s forwards}
+.merk:not(.fxon),.merk:not(.fxon)::after,.merk:not(.fxon)>b:first-child,.merk:not(.fxon) strong,.tip:not(.fxon),.tip:not(.fxon)::after,.tip:not(.fxon) strong,.note:not(.fxon),.note:not(.fxon)::after{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.merk strong,.tip strong{background-size:100% 100%}}
 @media print{*,*::before,*::after{animation:none!important}.rvl{opacity:1!important;transform:none!important}}
 
@@ -382,7 +383,9 @@ function mk(x,y,dx,dy,rot,dur){var p=document.createElement("i"),s=5+Math.random
   document.body.appendChild(p);
   var a=p.animate([{transform:"translate(0,0) rotate(0)",opacity:1},{transform:"translate("+dx*.6+"px,"+(dy*.6-60)+"px) rotate("+rot*.5+"deg)",opacity:1,offset:.45},{transform:"translate("+dx+"px,"+(dy+140)+"px) rotate("+rot+"deg)",opacity:0}],{duration:dur,easing:"cubic-bezier(.2,.7,.4,1)"});
   a.onfinish=function(){p.remove()}}
-window.__fx={burst:function(el,n){
+var mIO=("IntersectionObserver" in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("fxon");mIO.unobserve(e.target)}})},{threshold:.35}):null;
+function scan(r,sel){if(!mIO){r.querySelectorAll(sel).forEach(function(x){x.classList.add("fxon")});return}r.querySelectorAll(sel+":not(.fxon)").forEach(function(x){if(!x.__w){x.__w=1;mIO.observe(x)}})}
+window.__fx={watch:function(r,sel){scan(r,sel);if(window.MutationObserver)new MutationObserver(function(){scan(r,sel)}).observe(r,{childList:true,subtree:true})},burst:function(el,n){
   if((RM&&RM.matches)||!el||!el.getBoundingClientRect||!document.body.animate)return;
   var big=n>=60,r=el.getBoundingClientRect();n=n||26;
   if(big){for(var i=0;i<n;i++)mk(Math.random()*innerWidth,-12,(Math.random()-.5)*160,innerHeight*(.55+Math.random()*.35),Math.random()*720-360,1500+Math.random()*1300);return}
@@ -642,11 +645,12 @@ textarea{resize:vertical}
 .st.open .st-body,.law[open] .lawx,.rv[open]>*:not(summary){animation:fxrise .38s ease both}
 .enter .st,.enter .panel,.enter .law,.enter .exl>*,.enter .prog,.enter .bubble{animation:fxrise .55s ease both}
 .enter .st:nth-child(2){animation-delay:.05s}.enter .st:nth-child(3){animation-delay:.1s}.enter .st:nth-child(4){animation-delay:.15s}.enter .st:nth-child(5){animation-delay:.2s}.enter .st:nth-child(6){animation-delay:.25s}.enter .st:nth-child(7){animation-delay:.3s}.enter .st:nth-child(8){animation-delay:.35s}
-/* Wichtige Inhalte: Merksatz, Tipp, Hinweis */
-.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 3.8s ease-in-out infinite}
-.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 6s ease-in-out infinite 1.2s;pointer-events:none}
-.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 3.8s ease-in-out infinite;transform-origin:left center}
-.merk strong,.tip strong{background:linear-gradient(transparent 60%,var(--fxmark) 0) no-repeat;background-size:0 100%;animation:fxmark .9s ease .5s forwards}
+/* Wichtige Inhalte: Merksatz, Tipp, Hinweis (Animation startet beim Sichtbarwerden, läuft 2 Mal) */
+.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 2.4s ease-in-out 2}
+.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 3s ease-in-out .5s 2;pointer-events:none}
+.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 2.4s ease-in-out 2;transform-origin:left center}
+.merk strong,.tip strong{background:linear-gradient(transparent 60%,var(--fxmark) 0) no-repeat;background-size:0 100%;animation:fxmark .9s ease .3s forwards}
+.merk:not(.fxon),.merk:not(.fxon)::after,.merk:not(.fxon)>b:first-child,.merk:not(.fxon) strong,.tip:not(.fxon),.tip:not(.fxon)::after,.tip:not(.fxon) strong,.note:not(.fxon),.note:not(.fxon)::after{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.merk strong,.tip strong{background-size:100% 100%}}
 @media print{*,*::before,*::after{animation:none!important}.rvl{opacity:1!important;transform:none!important}}
 </style><div class="lpb"><div class="wrap">
@@ -1937,6 +1941,7 @@ renderPath();progress();buildDeck();
 renderEx();renderLaws();progress();
 S.tab=["path","quiz","cards","laws","ex"].includes(S.tab)?S.tab:"path";
 
+window.__fx.watch(root,".merk,.tip,.note");
 window.__LP={host:host,tabs:{path:"path",quiz:"quiz",cards:"cards",laws:"laws",ex:"ex"},
  show:function(tab,st){if(S.tab!==tab)setTab(tab);var w=$(".lpb");w.classList.remove("enter");void w.offsetWidth;w.classList.add("enter");setTimeout(function(){w.classList.remove("enter")},1100);if(st){goStation(st);var el=$(".st[data-id='"+st+"']");if(el)setTimeout(function(){el.scrollIntoView({block:"start"})},60)}},
  sync:function(){host.setAttribute("data-theme",__real.documentElement.getAttribute("data-theme")||"light");host.classList.toggle("tt",__real.documentElement.classList.contains("tt"))}};
@@ -2205,6 +2210,8 @@ function pgIn(){if(RMq.matches)return;main.classList.remove("pg");void main.offs
   main.querySelectorAll(".stat b").forEach(countUp)}
 function updProg(){if(!sprog)return;var h=document.documentElement.scrollHeight-innerHeight;sprog.style.transform="scaleX("+(h>0?Math.min(1,scrollY/h):0)+")"}
 var progT=0;window.addEventListener("scroll",function(){if(progT)return;progT=requestAnimationFrame(function(){progT=0;updProg()})},{passive:true});
+
+window.__fx.watch($("#main"),".merk,.tip,.note");
 var topEl=$("#top"),lockT=0,hidT=null,isHid=false,AH=window.matchMedia("(min-width:901px) and (hover:hover) and (pointer:fine)");
 function topH(){return isHid?0:topEl.offsetHeight}
 function mobOK(){return innerWidth<=900&&layout.classList.contains("noaside")&&!topEl.classList.contains("fopen")}
