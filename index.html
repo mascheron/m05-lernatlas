@@ -69,6 +69,15 @@ html.tt *,html.tt *::before{transition:background-color .4s,color .4s,border-col
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.merk strong,.tip strong{background-size:100% 100%}}
 @media print{*,*::before,*::after{animation:none!important}.rvl{opacity:1!important;transform:none!important}}
 
+/* Themenbaum als Hover-Overlay (Desktop mit Maus) */
+.layout.auto{grid-template-columns:minmax(0,1fr)}
+.layout.auto .gutter{display:none}
+.layout.auto aside{position:fixed;left:0;top:var(--hh,150px);height:calc(100vh - var(--hh,150px));width:var(--aside);z-index:26;transform:translateX(-102%);visibility:hidden;box-shadow:none;transition:transform .28s ease,top .3s ease,box-shadow .28s,visibility 0s .28s}
+.layout.auto.tree-open aside{transform:none;visibility:visible;box-shadow:6px 0 28px rgba(20,33,61,.22);transition:transform .28s ease,top .3s ease,box-shadow .28s,visibility 0s}
+#treeHint{display:none}
+body.tauto:not(.tree-open) #treeHint{display:flex;position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:20;align-items:center;gap:6px;writing-mode:vertical-rl;padding:14px 5px;background:var(--panel);border:1px solid var(--line);border-left:0;border-radius:0 10px 10px 0;font-size:12px;font-weight:700;color:var(--ink2);letter-spacing:.08em;box-shadow:var(--shadow);pointer-events:none;animation:fxhint 1.6s ease 1.2s 1}
+@keyframes fxhint{0%,100%{translate:0 0}30%{translate:6px 0}60%{translate:2px 0}}
+@media print{#treeHint{display:none!important}}
 /* Unterleiste (Quiz / Übungen) und Lernpfad-Host */
 .sub{display:flex;gap:4px;border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:3px;margin:0 0 14px;max-width:100%}
 .sub a{flex:1 1 0;text-align:center;padding:9px 10px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;color:var(--ink)}
@@ -324,6 +333,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
   </div>
   <div class="filters" id="filters"></div>
 </header>
+<div id="treeHint" aria-hidden="true">Themen ▸</div>
 <div class="layout" id="layout">
   <aside id="aside" aria-label="Themenbaum"></aside>
   <div class="gutter" id="gutter" aria-hidden="true"></div>
@@ -2181,7 +2191,7 @@ document.addEventListener("click",function(e){
   if(t.closest("#allClose")){openBr={};renderTree();return}
   if(t.closest("#btnFilter")){var tp=$("#top"),o=tp.classList.toggle("fopen");$("#btnFilter").setAttribute("aria-expanded",o);$("#btnFilter").textContent=o?"✕":"🔍";document.documentElement.style.setProperty("--hh",tp.offsetHeight+"px");return}
   if(window.innerWidth<=900&&!layout.classList.contains("noaside")&&(t===layout||(t.closest("#aside")&&t.closest("a[href]")))){layout.classList.add("noaside");return}
-  if(t.closest("#hideTree")||t.closest("#btnTree")){layout.classList.toggle("noaside");return}
+  if(t.closest("#hideTree")||t.closest("#btnTree")){if(AH.matches){if(t.closest("#hideTree")&&layout.classList.contains("auto")){setTree(false)}else{pinned=!pinned;store("m5_treepin",pinned?1:0);applyTree()}}else layout.classList.toggle("noaside");return}
   if(t.closest("#btnTheme")){var d=dark();var hr=document.documentElement;hr.classList.add("tt");setTimeout(function(){hr.classList.remove("tt");window.__LP.sync()},550);document.documentElement.setAttribute("data-theme",d?"light":"dark");store("m5_theme",d?"light":"dark");render();return}
   b=t.closest("[data-m]");if(b){var p=b.getAttribute("data-m").split("|");F.themen={};F.themen[p[0]]=true;F.skript={};F.skript[p[1]]=true;render();location.hash="#t_"+p[0];return}
   var cur=(location.hash||"").slice(1);
@@ -2228,6 +2238,23 @@ window.addEventListener("scroll",function(){if(scT)return;scT=requestAnimationFr
   else if(d>8&&y>120){setHid(true)}
   else if(d<-8){setHid(false);armHide()}
   if(Math.abs(d)>8)lastY=y})},{passive:true});
+/* Themenbaum: Overlay am linken Rand (Hover), beim Scrollen wieder weg */
+var pinned=!!store("m5_treepin"),treeOpen=false,tCl=null,tSup=false;
+function setTree(o){o=!!o&&layout.classList.contains("auto");treeOpen=o;layout.classList.toggle("tree-open",o);document.body.classList.toggle("tree-open",o);if(!o){clearTimeout(tCl)}}
+function applyTree(){var on=AH.matches&&!pinned;if(AH.matches)layout.classList.remove("noaside");layout.classList.toggle("auto",on);document.body.classList.toggle("tauto",on);if(!on)setTree(false)}
+function hotX(){var r=main.getBoundingClientRect(),pl=parseFloat(getComputedStyle(main).paddingLeft)||0;return Math.max(28,r.left+pl-12)}
+document.addEventListener("mousemove",function(e){if(!layout.classList.contains("auto"))return;
+  var inAside=treeOpen&&aside.contains(e.target),zone=e.clientX<hotX()&&e.clientY>topH()+2;
+  if(!zone&&!inAside)tSup=false;
+  if(inAside){clearTimeout(tCl);return}
+  if(zone&&!tSup){clearTimeout(tCl);if(!treeOpen)setTree(true);return}
+  if(treeOpen&&!zone){clearTimeout(tCl);tCl=setTimeout(function(){setTree(false)},260)}});
+document.addEventListener("mouseleave",function(){if(treeOpen){clearTimeout(tCl);tCl=setTimeout(function(){setTree(false)},260)}});
+window.addEventListener("scroll",function(){if(!treeOpen||Date.now()<lockT)return;tSup=true;setTree(false)},{passive:true});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&treeOpen){tSup=true;setTree(false)}});
+aside.addEventListener("click",function(e){if(layout.classList.contains("auto")&&e.target.closest("a[href]")){tSup=true;setTree(false)}});
+(AH.addEventListener?AH.addEventListener("change",applyTree):AH.addListener(applyTree));
+applyTree();window.__dbg=function(){return {tSup:tSup,treeOpen:treeOpen,hot:hotX(),th:topH(),isHid:isHid}};
 var qi=$("#q"),qt=null;
 qi.addEventListener("input",function(){clearTimeout(qt);qt=setTimeout(function(){Q=qi.value;quiz=null;if(Q&&(LPR[(location.hash||"").slice(1)]||/^#s\d+$/.test(location.hash||""))){location.hash="";return}render()},120)});
 
