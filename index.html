@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modul 5 Lernatlas – Personensorge</title>
+<meta name="description" content="Interaktiver Lernatlas zu Modul 5 (Personensorge) des Sachkundelehrgangs für rechtliche Betreuer: Gesundheitssorge, Wohnraumaufgabe, Umgang und Aufenthalt, Mietrecht.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d3a6e'/%3E%3Ctext x='16' y='22' font-size='17' text-anchor='middle' fill='white' font-family='Georgia'%3E%C2%A75%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2f8;--panel:#fff;--panel2:#f6f8fc;--ink:#14213d;--ink2:#46536b;--line:#d9e0ec;
+  --accent:#1d3a6e;--accent-ink:#fff;--soft:#e4edfb;--ok:#1f8a4c;--warn:#b86e00;--bad:#c0392b;
+  --shadow:0 1px 2px rgba(20,33,61,.06),0 6px 20px rgba(20,33,61,.06);
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  --aside:340px;
+}
+:root[data-theme="dark"]{
+  --bg:#0e1424;--panel:#161e33;--panel2:#1b2540;--ink:#e8edf8;--ink2:#a8b4cc;--line:#2a3555;
+  --accent:#7aa7f5;--accent-ink:#0e1424;--soft:#1f2c4d;--ok:#5fd08d;--warn:#f0b04a;--bad:#f08a7e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--accent-ink);padding:8px 12px;z-index:100}
+.skip:focus{left:8px;top:8px}
+
+/* Kopf */
+header.top{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.top-row{display:flex;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:7px 12px;font-weight:600;font-size:13px;transition:.15s}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.small{padding:4px 9px;font-size:12px}
+.brand{display:flex;flex-direction:column;line-height:1.15;cursor:pointer;text-decoration:none;color:inherit}
+.brand b{font:700 19px var(--serif);letter-spacing:-.01em}
+.brand span{font-size:12px;color:var(--ink2)}
+.search{flex:1;min-width:200px;max-width:560px;position:relative}
+.search input{width:100%;padding:9px 38px 9px 36px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--ink);font:inherit}
+.search svg{position:absolute;left:11px;top:11px;width:16px;height:16px;color:var(--ink2)}
+.search kbd{position:absolute;right:10px;top:8px;font:12px var(--mono);border:1px solid var(--line);border-radius:6px;padding:0 6px;color:var(--ink2)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{padding:7px 11px;border-radius:10px;font-weight:600;font-size:13px;text-decoration:none;color:var(--ink);border:1px solid transparent}
+.nav-links a:hover{background:var(--soft)}
+.nav-links a.on{background:var(--accent);color:var(--accent-ink)}
+.ring{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.ring svg{width:34px;height:34px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .bg{stroke:var(--line)}
+.ring .fg{stroke:var(--ok);stroke-linecap:round;transition:stroke-dashoffset .4s}
+.filters{padding:8px 16px 10px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;background:var(--panel2)}
+.frow{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.flabel{font:600 11px var(--sans);letter-spacing:.08em;color:var(--ink2);width:58px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:500;display:inline-flex;gap:6px;align-items:center}
+.chip:hover{background:var(--soft)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chip .dot{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.chip[aria-pressed="true"] .dot{box-shadow:0 0 0 2px var(--accent-ink)}
+.chip .n{opacity:.65;font-size:11px}
+.fcount{margin-left:auto;font-size:12.5px;color:var(--ink2)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:var(--aside) 6px 1fr;min-height:calc(100vh - 150px)}
+.layout.noaside{grid-template-columns:0 0 1fr}
+.layout.noaside aside,.layout.noaside .gutter{display:none}
+aside{background:var(--panel);border-right:1px solid var(--line);padding:12px;overflow:auto;position:sticky;top:var(--hh,150px);height:calc(100vh - var(--hh,150px));min-width:0}
+.gutter{cursor:col-resize;background:transparent}
+.gutter:hover{background:var(--line)}
+main{padding:22px clamp(14px,3vw,40px) 60px;min-width:0;max-width:1100px;width:100%}
+.tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.tabs .btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tree-actions{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tbranch{border-radius:12px;margin-bottom:4px}
+.tbhead{display:flex;gap:8px;align-items:flex-start;padding:8px 8px;border-radius:10px;cursor:pointer;width:100%;border:0;background:transparent;text-align:left}
+.tbhead:hover{background:var(--soft)}
+.tbhead .dot{width:11px;height:11px;border-radius:50%;background:var(--c);margin-top:6px;flex:none}
+.tbhead .t{font-weight:700;line-height:1.25}
+.tbhead .r{font:12px var(--mono);color:var(--c)}
+:root[data-theme="dark"] .tbhead .r{color:var(--cd)}
+.tbhead .cnt{margin-left:auto;font-size:12px;color:var(--ink2);padding-left:6px}
+.tleaves{margin:0 0 6px 18px;padding-left:10px;border-left:2px solid var(--c)}
+.tleaf{display:flex;gap:6px;align-items:center;padding:5px 8px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:13.5px}
+.tleaf:hover{background:var(--soft)}
+.tleaf.on{background:var(--soft);font-weight:700}
+.tleaf .par{font:12px var(--mono);color:var(--ink2);flex:none}
+.tleaf .chk{margin-left:auto;color:var(--ok);font-weight:700}
+.badge{font:600 10.5px var(--sans);padding:1px 6px;border-radius:6px;background:var(--soft);color:var(--ink2);border:1px solid var(--line)}
+
+/* Inhalt */
+.crumbs{font-size:13px;color:var(--ink2);margin-bottom:10px}
+.crumbs a{color:var(--ink2)}
+h1,h2,h3{font-family:var(--serif);line-height:1.2;letter-spacing:-.01em}
+h1{font-size:clamp(26px,4vw,38px);margin:.2em 0 .3em}
+h2{font-size:22px;margin:1.6em 0 .5em}
+h3{font-size:17px}
+.eyebrow{font:600 12px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.par-big{font:600 14px var(--mono);color:var(--c)}
+:root[data-theme="dark"] .par-big{color:var(--cd)}
+.titlebar{border-left:6px solid var(--c);padding-left:14px;margin:6px 0 14px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);margin:14px 0}
+.box.soft{background:var(--soft);border-color:transparent}
+.box.lead{font-size:16.5px}
+.box h3{margin:0 0 6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.btn.done{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.star.on{background:#f6c445;color:#3a2a00;border-color:#e0a800}
+ol.schema{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+ol.schema li{counter-increment:s;display:flex;gap:10px;margin:6px 0;align-items:flex-start}
+ol.schema li::before{content:counter(s);flex:none;width:24px;height:24px;border-radius:50%;background:var(--c);color:#fff;font:700 12.5px var(--sans);display:grid;place-items:center;margin-top:1px}
+details.q{border:1px solid var(--line);border-radius:14px;background:var(--panel);margin:12px 0;overflow:hidden}
+details.q summary{padding:14px 16px;cursor:pointer;font-weight:600;list-style:none;display:flex;gap:10px;justify-content:space-between;align-items:center}
+details.q summary::after{content:'Antwort zeigen';font-size:12px;font-weight:600;color:var(--accent);border:1px solid var(--line);padding:3px 9px;border-radius:8px;flex:none}
+details.q[open] summary::after{content:'Antwort verbergen'}
+details.q .ans{padding:0 16px 14px;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.card{display:block;text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:11px 13px;transition:.15s}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.card b{display:block;line-height:1.3}
+.card small{font:12px var(--mono);color:var(--ink2)}
+.rel{display:flex;gap:6px;flex-wrap:wrap}
+.rel a{text-decoration:none;border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:3px 11px;font-size:13px;color:var(--ink)}
+.rel a:hover{background:var(--soft)}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:28px;flex-wrap:wrap}
+.pager a{flex:1;min-width:160px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel);color:var(--ink)}
+.pager a small{display:block;color:var(--ink2);font-size:12px}
+.pager a:last-child{text-align:right}
+.tip{border-left:4px solid var(--warn);background:var(--panel2);padding:10px 14px;border-radius:8px;margin:8px 0}
+.tip b{display:block;margin-bottom:2px}
+.mark{background:rgba(255,200,0,.35);border-radius:3px}
+.hint{font-size:13px;color:var(--ink2)}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:12.5px;color:var(--ink2);text-align:center}
+
+/* Übersicht */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+@media(max-width:860px){.hero{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font:700 26px var(--serif)}
+.stat span{font-size:12px;color:var(--ink2)}
+.matrix{width:100%;border-collapse:separate;border-spacing:4px}
+.matrix th{font-size:12px;text-align:left;font-weight:600}
+.matrix td{text-align:center;border-radius:8px;padding:8px 4px;font:700 14px var(--mono);cursor:pointer;background:var(--panel2);color:var(--ink2)}
+.matrix td.has{background:var(--c);color:#fff}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c)}
+
+/* Karten, Quiz, Werkzeuge */
+.flash{perspective:1200px;margin:14px 0}
+.flip{position:relative;min-height:260px;transition:transform .5s;transform-style:preserve-3d}
+.flash.show .flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--panel);border:1px solid var(--line);border-top:6px solid var(--c);border-radius:18px;padding:22px;box-shadow:var(--shadow);overflow:auto;display:flex;flex-direction:column;justify-content:center}
+.face.back{transform:rotateY(180deg)}
+.face .big{font:600 20px/1.4 var(--serif)}
+.opts{display:grid;gap:8px;margin:12px 0}
+.opt{text-align:left;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:11px 14px}
+.opt:hover:not(:disabled){background:var(--soft)}
+.opt.right{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.wrong{background:var(--bad);color:#fff;border-color:var(--bad)}
+.progress{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:6px 0 14px}
+.progress i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.field{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:10px 0}
+.field label{display:flex;flex-direction:column;gap:3px;font-size:13px;font-weight:600}
+.field input,.field select{padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:var(--ink);font:inherit}
+.result{border-left:6px solid var(--ok);background:var(--panel2);border-radius:10px;padding:12px 16px;margin:12px 0}
+.result.warn{border-color:var(--warn)}
+.result.bad{border-color:var(--bad)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+
+/* Mobil */
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .gutter{display:none}
+  aside{position:static;height:auto;max-height:60vh;border-right:0;border-bottom:1px solid var(--line)}
+  .layout.noaside aside{display:none}
+}
+@media print{
+  header.top,aside,.gutter,.actions,.pager,.nav-links,footer .nolink{display:none!important}
+  .layout{display:block}body{background:#fff;color:#000}
+  details.q .ans{display:block!important}
+  details.q{border:1px solid #999}
+  details.q[open] summary::after,details.q summary::after{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.flip{transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="top" id="top">
+  <div class="top-row">
+    <button class="btn" id="btnTree" aria-label="Baum ein- oder ausblenden">☰ Baum</button>
+    <a class="brand" href="#" aria-label="Zur Startseite"><b>Modul 5 Lernatlas</b><span>Personensorge · Gesundheit · Wohnen · Umgang · Mietrecht</span></a>
+    <div class="search" role="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" autocomplete="off" placeholder="Suche: 1829, Wunsch, Kündigungsfrist, Genehmigung …" aria-label="Suche">
+      <kbd>/</kbd>
+    </div>
+    <nav class="nav-links" aria-label="Lernmodi">
+      <a href="#karten" data-nav="karten">Karteikarten</a>
+      <a href="#quiz" data-nav="quiz">Quiz</a>
+      <a href="#werkzeuge" data-nav="werkzeuge">Prüf-Werkzeuge</a>
+    </nav>
+    <div class="ring" id="ring" aria-live="polite"></div>
+    <button class="btn" id="btnTheme" aria-label="Hell/Dunkel umschalten">◐</button>
+  </div>
+  <div class="filters" id="filters"></div>
+</header>
+<div class="layout" id="layout">
+  <aside id="aside" aria-label="Themenbaum"></aside>
+  <div class="gutter" id="gutter" aria-hidden="true"></div>
+  <main id="main" tabindex="-1"></main>
+</div>
+<footer>
+  <div>Inhalte nach den Skripten „Modul 5 – Personensorge“ (Teil 1 und 2) des Sachkundelehrgangs nach BtRegV; Rechtsstand der Skripte: Betreuungsrecht ab 01.01.2023. Paragrafenüberschriften und Fristen vor der Prüfung am aktuellen Gesetzestext abgleichen (<a href="https://www.gesetze-im-internet.de/bgb/" target="_blank" rel="noopener">gesetze-im-internet.de</a>). Die Zusammenfassungen ersetzen weder das Gesetz noch eine Rechtsberatung.</div>
+  <div class="nolink" style="margin-top:6px"><a href="https://mascheron.de" target="_blank" rel="noopener">Impressum &amp; Datenschutz (crosspublish media GmbH)</a></div>
+</footer>
+
+<script>
+/* Daten Lernatlas Modul 5 – Personensorge. Quelle: Skripte Teil 1 (Gesundheitssorge) und Teil 2 (Wohnraum, Umgang, Aufenthalt, Mietrecht). */
+const THEMEN = [
+ {id:"vertrag", titel:"Vertrags­grundlagen", range:"§§ 104 ff., 164 ff. BGB", farbe:"#2f6fdb", dunkel:"#7aa7f5",
+  frage:"Wann kommt ein Vertrag wirksam zustande – und wer kann für wen handeln?",
+  intro:"Das Skript beginnt mit dem Allgemeinen Teil: Willenserklärung, Vertragsschluss, Geschäftsfähigkeit, Form- und Willensmängel, Stellvertretung. Diese Grundlagen brauchst Du für Behandlungsverträge ebenso wie für Mietverträge und Kündigungen durch den Betreuer."},
+ {id:"behandlung", titel:"Behandlungs­vertrag", range:"§§ 630a–630h BGB", farbe:"#0f9d8f", dunkel:"#5fd0c4",
+  frage:"Welche Pflichten haben Arzt und Patient – und wer trägt welche Beweislast?",
+  intro:"Der Behandlungsvertrag ist im Patientenrechtegesetz (§§ 630a–630h BGB) geregelt. Für Betreuer wichtig: Aufklärung und Einwilligung müssen bei einwilligungsunfähigen Betreuten gegenüber dem Betreuer erfolgen."},
+ {id:"einwilligung", titel:"Einwilligungs­fähigkeit", range:"Patientenrechte", farbe:"#d9482b", dunkel:"#f08a73",
+  frage:"Wer entscheidet über eine ärztliche Maßnahme: Patient oder Betreuer?",
+  intro:"Zentrale Prüfungsregel: Ein einwilligungsfähiger Patient entscheidet stets selbst. Nur bei Einwilligungsunfähigkeit ist die ersatzweise Einwilligung des Betreuers erforderlich. Einwilligungsfähigkeit ist von Geschäftsfähigkeit, Testier- und Verfahrensfähigkeit zu unterscheiden."},
+ {id:"aerztlich", titel:"Gefährliche ärztliche Maßnahmen", range:"§ 1829 BGB · §§ 298, 312 FamFG", farbe:"#b4308a", dunkel:"#e48ccb",
+  frage:"Wann braucht der Betreuer die Genehmigung des Betreuungsgerichts für ärztliche Maßnahmen?",
+  intro:"Bei begründeter Gefahr von Tod oder schwerem, länger dauerndem Schaden braucht die Einwilligung (oder Nichteinwilligung/der Widerruf) die Genehmigung des Gerichts. Ausnahme: Einvernehmen von Betreuer und Arzt über den festgestellten Willen."},
+ {id:"wille", titel:"Wille und Vorsorge", range:"§§ 1816, 1820, 1821, 1827 BGB", farbe:"#e08a00", dunkel:"#f5b84d",
+  frage:"Wessen Wille zählt – und wie wirken Vorsorgevollmacht, Betreuungs- und Patientenverfügung?",
+  intro:"Handlungsleitend ist § 1821 BGB: Wünsche feststellen und umsetzen, sonst den mutmaßlichen Willen ermitteln. Grenze: erhebliche Gefährdung und fehlende Einsichtsfähigkeit. Dazu die drei Vorsorgeinstrumente."},
+ {id:"wohnen", titel:"Wohnraum­aufgabe", range:"§ 1833 BGB", farbe:"#6a4bc4", dunkel:"#a996ee",
+  frage:"Wann darf der Betreuer die Wohnung des Betreuten aufgeben – und wer muss wann beteiligt werden?",
+  intro:"§ 1833 BGB schützt die Wohnung als räumlichen Lebensmittelpunkt (Art. 13 GG). Absatz 1: Zulässigkeit, Absatz 2: Anzeigepflicht, Absatz 3: Genehmigungspflichten."},
+ {id:"umgang", titel:"Umgang und Aufenthalt", range:"§ 1834 BGB", farbe:"#2a8a3e", dunkel:"#7bcf8c",
+  frage:"Darf der Betreuer bestimmen, mit wem der Betreute Umgang hat und wo er lebt?",
+  intro:"Die Umgangsbestimmung ist seit 2023 gesetzlich geregelt und streng begrenzt (ausdrücklicher Aufgabenbereich, Wunsch oder konkrete Gefahr). Die Aufenthaltsbestimmung wirkt auch gegenüber Dritten und umfasst das Herausgaberecht."},
+ {id:"miete", titel:"Mietrecht", range:"§§ 535 ff. BGB", farbe:"#c2603a", dunkel:"#eba283",
+  frage:"Wie wird ein Wohnraummietverhältnis begründet, gekündigt und abgewickelt?",
+  intro:"Mietrecht ist die Werkzeugkiste für die Wohnungsaufgabe: Kündigungsform, Fristen, Gründe, Widerspruch, Zahlungsverzug, Sonderkündigungsrechte, Rückgabe und Verjährung."},
+ {id:"zwang", titel:"Zwang und Freiheitsentzug", range:"§ 1832 BGB (Überblick)", farbe:"#5a6b7a", dunkel:"#9fb0bf",
+  frage:"Welche weiteren genehmigungspflichtigen Eingriffe gibt es (Überblick)?",
+  intro:"Im Skript Teil 1 nur als Verweis genannt (§§ 1827–1830, 1832). Hier als kurzer Überblick ergänzt; Details gehören in andere Module."}
+];
+
+/* Felder: id, par, titel, thema, quelle, skript (1|2), kurz, text, schema[], fokus, frage, antwort, verw[] */
+const NORMEN = [
+/* ---------- Vertragsgrundlagen ---------- */
+{id:"n_wille", par:"Willenserklärung", titel:"Willenserklärung und Vertragsschluss", thema:"vertrag", quelle:"BGB AT", skript:1,
+ kurz:"Verträge entstehen durch übereinstimmende Willenserklärungen (Angebot und Annahme).",
+ text:"Die **Willenserklärung** ist die Grundlage aller rechtsgeschäftlichen Handlungen. Der **Vertragsschluss** setzt Angebot und Annahme voraus. Wirksamkeit unter Abwesenden: **Zugang** (§ 130 BGB) – die Erklärung gelangt so in den Machtbereich des Empfängers, dass er unter normalen Umständen Kenntnis nehmen kann.",
+ schema:["Liegt eine Willenserklärung vor (Erklärungswille, Handlungswille)?","Ist sie dem Empfänger zugegangen (§ 130 BGB)?","Liegt ein Angebot und eine korrespondierende Annahme vor?","Gibt es Wirksamkeitshindernisse (Geschäftsfähigkeit, Form, Willensmängel)?"],
+ fokus:"Typische Frage: Wann wird eine Kündigung wirksam, die per Post kommt? Antwortmuster: Zugang im Machtbereich, nicht Absendung.",
+ frage:"Wann wird eine empfangsbedürftige Willenserklärung unter Abwesenden wirksam?",
+ antwort:"Mit Zugang beim Empfänger (§ 130 Abs. 1 S. 1 BGB): wenn sie so in seinen Machtbereich gelangt, dass er unter normalen Umständen Kenntnis nehmen kann. Maßgeblich für Fristberechnungen ist der Zugang.",
+ verw:["n_gf","n_stv","n_kuend"]},
+{id:"n_gf", par:"Geschäftsfähigkeit", titel:"Geschäftsfähigkeit, Form- und Willensmängel", thema:"vertrag", quelle:"BGB AT", skript:1,
+ kurz:"Mängelbehaftete Rechtsgeschäfte: Geschäftsunfähigkeit, Formmängel, Willensmängel (Anfechtung).",
+ text:"Rechtsgeschäfte können mangelhaft sein durch fehlende **Geschäftsfähigkeit**, **Formmängel** (z. B. Schriftform nach § 126 BGB) oder **Willensmängel** (Anfechtung §§ 119–123 BGB). Geschäftsfähigkeit ist die Fähigkeit, Rechtsgeschäfte zu schließen – sie ist nicht dasselbe wie Einwilligungsfähigkeit in ärztliche Maßnahmen.",
+ schema:["Ist die Person geschäftsfähig?","Ist die vorgeschriebene Form gewahrt?","Liegt ein Willensmangel vor (Irrtum, Täuschung, Drohung)?","Rechtsfolge: Nichtigkeit, schwebende Unwirksamkeit oder Anfechtbarkeit?"],
+ fokus:"Abgrenzung der „Fähigkeiten“: Geschäfts-, Rechts-, Testier-, Einwilligungs-, Verfahrens-, Prozessfähigkeit.",
+ frage:"Warum ist Geschäftsfähigkeit nicht gleich Einwilligungsfähigkeit?",
+ antwort:"Geschäftsfähigkeit betrifft das Schließen von Rechtsgeschäften; Einwilligungsfähigkeit ist die natürliche Einsichtsfähigkeit, Tragweite und Risiken einer ärztlichen Maßnahme abzuschätzen. Für die Patientenverfügung kommt es auf Einwilligungsfähigkeit an, für die Vorsorgevollmacht auf Geschäftsfähigkeit.",
+ verw:["n_einf","n_vorsorge","n_wille"]},
+{id:"n_stv", par:"Stellvertretung", titel:"Stellvertretungsrecht und Vollmachtsvorlage (§ 174 BGB)", thema:"vertrag", quelle:"BGB AT", skript:2,
+ kurz:"Bei einseitigen Rechtsgeschäften (Kündigung) muss die Vollmacht im Original vorgelegt werden, sonst ist Zurückweisung möglich.",
+ text:"Eine Kündigung ist eine **einseitige, empfangsbedürftige Willenserklärung**. Handelt ein Bevollmächtigter, ist sie nach **§ 174 BGB** unwirksam, wenn er keine Vollmachtsurkunde vorlegt und der andere das **unverzüglich** zurückweist (ohne schuldhaftes Zögern, § 121 BGB). Im Betreuungsrecht gilt die Parallelvorschrift **§ 1858 Abs. 2 BGB**: Der Kündigung ist die **Bestellungsurkunde** beizufügen, bei Genehmigungserfordernis zusätzlich die Genehmigung.",
+ schema:["Einseitiges Rechtsgeschäft durch Vertreter?","Vollmacht bzw. Bestellungsurkunde im Original beigefügt?","Ggf. gerichtliche Genehmigung beigefügt?","Zurückweisung unverzüglich erfolgt? → Kündigung unwirksam, Mietvertrag besteht fort"],
+ fokus:"Praxisfehler Nr. 1: Kündigung ohne Bestellungsurkunde/Genehmigung.",
+ frage:"Was passiert, wenn der Betreuer eine Wohnraumkündigung ohne Bestellungsurkunde ausspricht?",
+ antwort:"Der Vermieter kann die Kündigung unverzüglich zurückweisen (§ 174 BGB, § 1858 Abs. 2 BGB). Sie ist dann unwirksam, der Mietvertrag besteht unverändert fort.",
+ verw:["n1833_3","n_kuend","n_wille"]},
+
+/* ---------- Behandlungsvertrag ---------- */
+{id:"n630a", par:"§ 630a BGB", titel:"Vertragstypische Pflichten beim Behandlungsvertrag", thema:"behandlung", quelle:"BGB", skript:1,
+ kurz:"Behandelnder schuldet die versprochene Behandlung, der Patient die vereinbarte Vergütung.",
+ text:"Der Behandlungsvertrag begründet die **vertragstypischen Pflichten**: Der Behandelnde schuldet die versprochene Behandlung nach den allgemein anerkannten fachlichen Standards, der Patient die Vergütung (soweit kein Dritter, z. B. die Krankenkasse, zahlt).",
+ schema:[],fokus:"Einstieg in die §§ 630a–630h: Reihenfolge der Normen merken.",
+ frage:"Welche Normen bilden den Behandlungsvertrag im BGB?",
+ antwort:"§§ 630a bis 630h BGB: Pflichten (a), anwendbare Vorschriften (b), Mitwirkung und Informationspflichten (c), Einwilligung (d), Aufklärung (e), Dokumentation (f), Einsichtnahme in die Patientenakte (g), Beweislast (h).",
+ verw:["n630b","n630c","n630d"]},
+{id:"n630b", par:"§ 630b BGB", titel:"Anwendbare Vorschriften", thema:"behandlung", quelle:"BGB", skript:1,
+ kurz:"Auf den Behandlungsvertrag gelten die Vorschriften über das Dienstverhältnis, soweit nichts anderes bestimmt ist.",
+ text:"Der Behandlungsvertrag wird als **Dienstvertrag** eingeordnet (kein Erfolg geschuldet). Ergänzend gelten die dienstvertraglichen Regeln, soweit die §§ 630a ff. nichts Abweichendes regeln.",
+ schema:[],fokus:"Kein Werkvertrag: Der Arzt schuldet Sorgfalt, nicht Heilung.",
+ frage:"Schuldet der Arzt einen Heilungserfolg?",
+ antwort:"Nein. Der Behandlungsvertrag ist dienstvertragsähnlich (§ 630b BGB); geschuldet ist die fachgerechte Behandlung, nicht der Erfolg.",
+ verw:["n630a"]},
+{id:"n630c", par:"§ 630c BGB", titel:"Mitwirkung der Vertragsparteien, Informationspflichten", thema:"behandlung", quelle:"BGB", skript:1,
+ kurz:"Arzt und Patient wirken zusammen; der Arzt informiert verständlich über Diagnose, Therapie, Prognose.",
+ text:"Beide Parteien sollen zur Durchführung der Behandlung **zusammenwirken**. Der Behandelnde muss den Patienten **verständlich** informieren (Diagnose, voraussichtliche Entwicklung, Therapie). Bei Behandlungsfehlern bestehen besondere Offenbarungspflichten. Ist der Patient einwilligungsunfähig, sind die Informationen dem **Betreuer** zu geben.",
+ schema:[],fokus:"Informationsadressat bei Einwilligungsunfähigkeit ist der Betreuer.",
+ frage:"Wem gegenüber erfolgt die Information, wenn der Betreute einwilligungsunfähig ist?",
+ antwort:"Gegenüber dem zur Einwilligung Berechtigten, also dem Betreuer (bzw. Bevollmächtigten) – der Betreute ist aber soweit möglich einzubeziehen.",
+ verw:["n630d","n630e"]},
+{id:"n630d", par:"§ 630d BGB", titel:"Einwilligung", thema:"behandlung", quelle:"BGB", skript:1,
+ kurz:"Vor jedem Eingriff ist die Einwilligung des Patienten einzuholen; bei Einwilligungsunfähigkeit die des Betreuers.",
+ text:"Vor Durchführung einer medizinischen Maßnahme ist die **Einwilligung** einzuholen. Ist der Patient **einwilligungsunfähig**, ist die Einwilligung des hierzu Berechtigten (Betreuer, Bevollmächtigter) einzuholen, soweit nicht eine Patientenverfügung die Maßnahme gestattet oder untersagt. Die Einwilligung kann jederzeit **formlos widerrufen** werden.",
+ schema:["Ist der Patient einwilligungsfähig? → er entscheidet selbst","Wenn nein: Gibt es eine einschlägige Patientenverfügung (§ 1827 Abs. 1)?","Wenn nein: Behandlungswünsche/mutmaßlicher Wille (§ 1827 Abs. 2)","Genehmigung nach § 1829 nötig?"],
+ fokus:"Wirksame Einwilligung setzt ordnungsgemäße Aufklärung voraus (§ 630e).",
+ frage:"Wer willigt in eine ärztliche Maßnahme ein?",
+ antwort:"Der einwilligungsfähige Patient stets selbst. Nur bei Einwilligungsunfähigkeit willigt ersatzweise der Betreuer (oder Bevollmächtigte) ein.",
+ verw:["n630e","n_einf","n1829","n1827"]},
+{id:"n630e", par:"§ 630e BGB", titel:"Aufklärungspflichten", thema:"behandlung", quelle:"BGB", skript:1,
+ kurz:"Der Arzt muss rechtzeitig und verständlich über Art, Umfang, Durchführung, Folgen und Risiken aufklären.",
+ text:"Die **Aufklärung** muss mündlich, rechtzeitig und für den Patienten verständlich durch den Behandelnden oder eine fachlich befähigte Person erfolgen; ergänzend sind Unterlagen in Textform zulässig. Sie umfasst Diagnose, Verlauf, Therapie, Risiken und Alternativen. Bei Einwilligungsunfähigen erfolgt sie gegenüber dem Betreuer; der Betreute ist soweit möglich zusätzlich aufzuklären.",
+ schema:[],fokus:"Aufklärungsfehler → Beweislast beim Behandelnden (§ 630h).",
+ frage:"Welche Folge hat eine fehlende wirksame Aufklärung?",
+ antwort:"Die Einwilligung ist unwirksam (§ 630d Abs. 2), der Eingriff rechtswidrig; der Behandelnde trägt die Beweislast für ordnungsgemäße Aufklärung (§ 630h Abs. 2).",
+ verw:["n630d","n630h"]},
+{id:"n630f", par:"§ 630f BGB", titel:"Dokumentation der Behandlung", thema:"behandlung", quelle:"BGB", skript:1,
+ kurz:"Der Behandelnde führt zeitnah eine Patientenakte und bewahrt sie grundsätzlich zehn Jahre auf.",
+ text:"Der Behandelnde ist verpflichtet, eine **Patientenakte** in Papier- oder elektronischer Form zu führen. Wesentliche Maßnahmen und Ergebnisse sind **zeitnah** aufzuzeichnen; nachträgliche Änderungen müssen erkennbar bleiben. Aufbewahrung: grundsätzlich **zehn Jahre**.",
+ schema:[],fokus:"Dokumentation ist Grundlage für Einsicht (§ 630g) und Beweislast (§ 630h).",
+ frage:"Wie lange ist die Patientenakte grundsätzlich aufzubewahren?",
+ antwort:"Zehn Jahre nach Abschluss der Behandlung, soweit keine andere Aufbewahrungsfrist gilt (§ 630f Abs. 3 BGB).",
+ verw:["n630g","n630h"]},
+{id:"n630g", par:"§ 630g BGB", titel:"Einsichtnahme in die Patientenakte", thema:"behandlung", quelle:"BGB", skript:1,
+ kurz:"Patienten (bzw. ihr Betreuer) haben ein Recht auf unverzügliche Einsicht in die vollständige Akte.",
+ text:"Dem Patienten ist auf Verlangen **unverzüglich Einsicht** in die vollständige Patientenakte zu gewähren, soweit nicht erhebliche therapeutische Gründe oder Rechte Dritter entgegenstehen. Der Betreuer übt das Recht für den Betreuten aus, wenn sein Aufgabenkreis die Gesundheitssorge umfasst.",
+ schema:[],fokus:"Aufgabenkreis „Gesundheitssorge“ als Voraussetzung für die Akteneinsicht des Betreuers.",
+ frage:"Kann ein Betreuer Einsicht in die Patientenakte des Betreuten verlangen?",
+ antwort:"Ja, wenn sein Aufgabenkreis die Gesundheitssorge (bzw. entsprechende Auskunftsrechte) umfasst; er handelt dann als gesetzlicher Vertreter.",
+ verw:["n630f","n630h"]},
+{id:"n630h", par:"§ 630h BGB", titel:"Beweislast bei Haftung für Behandlungs- und Aufklärungsfehler", thema:"behandlung", quelle:"BGB", skript:1,
+ kurz:"Bei groben Behandlungsfehlern und fehlender Dokumentation drehen sich die Beweislasten zugunsten des Patienten.",
+ text:"§ 630h regelt **Beweislastumkehr und Vermutungen**: z. B. bei voll beherrschbaren Risiken, fehlender Aufklärung oder Einwilligung, groben Behandlungsfehlern und fehlender oder unvollständiger Dokumentation. Den Behandelnden trifft die Beweislast für ordnungsgemäße Aufklärung und Einwilligung.",
+ schema:[],fokus:"Beweislastumkehr als Schutzmechanismus für Patienten.",
+ frage:"Wer trägt die Beweislast für eine ordnungsgemäße Aufklärung?",
+ antwort:"Der Behandelnde (§ 630h Abs. 2 BGB).",
+ verw:["n630e","n630f"]},
+
+/* ---------- Einwilligungsfähigkeit ---------- */
+{id:"n_einf", par:"Einwilligungsfähigkeit", titel:"Einwilligungsfähigkeit und Patientenrechte", thema:"einwilligung", quelle:"BGB / StGB", skript:1,
+ kurz:"Ein einwilligungsfähiger Patient entscheidet stets selbst – der Betreuer willigt nur bei Einwilligungsunfähigkeit ersatzweise ein.",
+ text:"Hintergrund ist das **Haftungssystem**, insbesondere das strafrechtliche: Ärztliche Eingriffe sind tatbestandlich Körperverletzungen und nur mit wirksamer Einwilligung gerechtfertigt. **Einwilligungsfähigkeit** = natürliche Einsichtsfähigkeit, Tragweite und Risiken einer Entscheidung abzuschätzen. Sie ist von anderen Fähigkeiten zu unterscheiden: **Geschäftsfähigkeit** (Rechtsgeschäfte), **Rechtsfähigkeit** (Träger von Rechten und Pflichten), **Testierfähigkeit** (Testament), **Verfahrensfähigkeit** und **Prozessfähigkeit**.",
+ schema:["Ist der Betreute im konkreten Fall einsichts- und steuerungsfähig (Einwilligungsfähigkeit)?","Ja → Patient entscheidet selbst, Betreuer unterstützt","Nein → ersatzweise Einwilligung des Betreuers","Beachte: Patientenverfügung und Behandlungswünsche (§ 1827)"],
+ fokus:"Kernsatz für die Prüfung: „Ein einwilligungsfähiger Patient entscheidet stets selbst!“",
+ frage:"Wann ist die Einwilligung des Betreuers in eine ärztliche Maßnahme erforderlich?",
+ antwort:"Ausschließlich bei Einwilligungsunfähigkeit des Betreuten. Ist der Betreute einwilligungsfähig, entscheidet er selbst – auch gegen den Rat des Betreuers.",
+ verw:["n630d","n1827","n1829","n_gf"]},
+
+/* ---------- Gefährliche ärztliche Maßnahmen ---------- */
+{id:"n1829", par:"§ 1829 BGB", titel:"Genehmigung des Betreuungsgerichts bei ärztlichen Maßnahmen", thema:"aerztlich", quelle:"BGB", skript:1,
+ kurz:"Einwilligung, Nichteinwilligung oder Widerruf bei Lebens- oder schwerer Gesundheitsgefahr brauchen gerichtliche Genehmigung – außer bei Einvernehmen über den Willen.",
+ text:"**Abs. 1:** Einwilligung in Untersuchung, Heilbehandlung oder Eingriff → Genehmigung, wenn **begründete Gefahr** besteht, dass der Betreute stirbt oder einen **schweren und länger dauernden** Schaden erleidet. Ohne Genehmigung nur bei **Aufschub mit Gefahr**. **Abs. 2:** Auch **Nichteinwilligung oder Widerruf** bedürfen der Genehmigung, wenn die Maßnahme medizinisch angezeigt ist und aus dem Unterbleiben/Abbruch diese Gefahr droht. **Abs. 3:** Genehmigung ist zu erteilen, wenn die Entscheidung dem **Willen des Betreuten** entspricht. **Abs. 4:** Keine Genehmigung bei **Einvernehmen** von Betreuer und Arzt über den nach § 1827 festgestellten Willen. **Abs. 5:** Gilt entsprechend für Bevollmächtigte (§ 1820 Abs. 2 Nr. 1).",
+ schema:["Einwilligungsunfähigkeit des Betreuten?","Maßnahme: Untersuchung, Heilbehandlung oder Eingriff?","Begründete Gefahr von Tod oder schwerem, länger dauerndem Schaden – durch die Maßnahme (Abs. 1) oder ihr Unterbleiben (Abs. 2)?","Einvernehmen von Betreuer und Arzt über den festgestellten Willen (Abs. 4)? → keine Genehmigung","Sonst: Antrag beim Betreuungsgericht; Genehmigung ist zu erteilen, wenn dem Willen des Betreuten entsprechend (Abs. 3)","Eilfall: Aufschub mit Gefahr → ohne Genehmigung (Abs. 1 S. 2)"],
+ fokus:"Typische Frage: Brauche ich eine Genehmigung, wenn Arzt und ich uns über den Patientenwillen einig sind? Antwort: nein (Abs. 4).",
+ frage:"Wann ist eine Genehmigung nach § 1829 Abs. 4 BGB nicht erforderlich?",
+ antwort:"Wenn zwischen Betreuer und behandelndem Arzt Einvernehmen darüber besteht, dass Erteilung, Nichterteilung oder Widerruf der Einwilligung dem nach § 1827 festgestellten Willen des Betreuten entspricht.",
+ verw:["n1827","n298","n312","n1832","n_einf"]},
+{id:"n298", par:"§ 298 FamFG", titel:"Verfahren in Fällen des § 1829 BGB", thema:"aerztlich", quelle:"FamFG", skript:1,
+ kurz:"Persönliche Anhörung des Betroffenen, bei Abs. 2-Fällen stets Verfahrenspfleger, Sachverständigengutachten vor Genehmigung.",
+ text:"**Abs. 1:** Genehmigung nur nach **persönlicher Anhörung** des Betroffenen; sonstige Beteiligte sollen angehört werden; auf Verlangen eine nahestehende Person. **Abs. 2:** Ist Gegenstand eine Genehmigung nach **§ 1829 Abs. 2** (Nichteinwilligung/Widerruf), ist **stets ein Verfahrenspfleger** zu bestellen. **Abs. 3:** Vor der Genehmigung ist ein **Sachverständigengutachten** einzuholen; der Sachverständige soll nicht der behandelnde Arzt sein.",
+ schema:["Persönliche Anhörung des Betroffenen","Anhörung der Beteiligten (Soll), nahestehende Person auf Verlangen","Verfahrenspfleger – zwingend bei § 1829 Abs. 2","Sachverständigengutachten (nicht vom behandelnden Arzt)","Entscheidung"],
+ fokus:"Merke: Verfahrenspfleger „stets“ nur bei Abs. 2 (Nichteinwilligung/Widerruf).",
+ frage:"In welchem Fall ist nach § 298 FamFG zwingend ein Verfahrenspfleger zu bestellen?",
+ antwort:"Wenn Gegenstand des Verfahrens eine Genehmigung nach § 1829 Abs. 2 BGB ist (Nichteinwilligung oder Widerruf der Einwilligung).",
+ verw:["n1829","n312"]},
+{id:"n312", par:"§ 312 Nr. 3 FamFG", titel:"Unterbringungssachen: ärztliche Zwangsmaßnahmen", thema:"aerztlich", quelle:"FamFG", skript:1,
+ kurz:"Im Skript als einschlägige Vorschrift genannt (Genehmigung ärztlicher Zwangsmaßnahmen).",
+ text:"§ 312 FamFG definiert **Unterbringungssachen**; Nr. 3 betrifft die Genehmigung ärztlicher Zwangsmaßnahmen. Das Skript listet die Vorschrift in der Übersicht der relevanten Normen; vertiefend wird sie dort nicht ausgeführt. **Hinweis:** Wortlaut vor der Prüfung am aktuellen Gesetzestext abgleichen.",
+ schema:[],fokus:"Nur als Normenverweis im Skript; Inhalt zu § 1832 BGB.",
+ frage:"Welche Vorschrift des FamFG betrifft das Verfahren bei ärztlichen Zwangsmaßnahmen?",
+ antwort:"§ 312 Nr. 3 FamFG (Unterbringungssachen: Genehmigung ärztlicher Zwangsmaßnahmen), materiell § 1832 BGB.",
+ verw:["n1832","n298"]},
+
+/* ---------- Wille und Vorsorge ---------- */
+{id:"n1821", par:"§ 1821 BGB", titel:"Wünsche des Betreuten – Handlungsmaßstab des Betreuers", thema:"wille", quelle:"BGB", skript:2,
+ kurz:"Wünsche feststellen und umsetzen; Grenze: erhebliche Gefährdung bei fehlender Einsicht (oder Unzumutbarkeit); sonst mutmaßlicher Wille.",
+ text:"**Abs. 2:** Der Betreuer besorgt die Angelegenheiten so, dass der Betreute **nach seinen Wünschen** leben kann; Wünsche sind festzustellen und rechtlich zu unterstützen (auch frühere Wünsche, es sei denn der Betreute will erkennbar nicht daran festhalten). **Abs. 3:** Nicht zu entsprechen, soweit (1) Person oder Vermögen **erheblich gefährdet** würden und der Betreute die Gefahr krankheits- oder behinderungsbedingt nicht erkennen oder nicht danach handeln kann, oder (2) die **Unzumutbarkeit** für den Betreuer. **Abs. 4:** Fehlen feststellbare Wünsche oder darf nicht entsprochen werden → **mutmaßlicher Wille** (frühere Äußerungen, ethische/religiöse Überzeugungen, Wertvorstellungen; nahe Angehörige sollen sich äußern können).",
+ schema:["Wünsche des Betreuten feststellen","Entsprechen – Standardfall","Ausnahme Abs. 3 Nr. 1: erhebliche Gefährdung UND Einsichts-/Handlungsunfähigkeit?","Ausnahme Abs. 3 Nr. 2: Unzumutbarkeit?","Abs. 4: mutmaßlichen Willen aufgrund konkreter Anhaltspunkte ermitteln"],
+ fokus:"Das „Denkgerüst“ der gesamten Personensorge – in jeder Klausur mitprüfen.",
+ frage:"Wann darf der Betreuer den Wünschen des Betreuten nicht entsprechen?",
+ antwort:"Wenn Person oder Vermögen des Betreuten dadurch erheblich gefährdet würden und der Betreute die Gefahr aufgrund seiner Krankheit oder Behinderung nicht erkennen oder nicht nach dieser Einsicht handeln kann, oder wenn dies dem Betreuer nicht zuzumuten ist (§ 1821 Abs. 3).",
+ verw:["n1827","n1833_1","n1834_1","n_vorsorge"]},
+{id:"n1827", par:"§ 1827 BGB", titel:"Patientenverfügung und Behandlungswünsche", thema:"wille", quelle:"BGB", skript:1,
+ kurz:"Die Patientenverfügung bindet Betreuer und Arzt, wenn sie auf die aktuelle Lebens- und Behandlungssituation zutrifft.",
+ text:"Eine **Patientenverfügung** ist eine schriftliche Festlegung eines einwilligungsfähigen Volljährigen, ob er in bestimmte, noch nicht unmittelbar bevorstehende ärztliche Maßnahmen einwilligt oder sie untersagt. Der Betreuer hat zu prüfen, ob sie auf die aktuelle Situation zutrifft; wenn ja, hat er dem **Willen Ausdruck und Geltung zu verschaffen**. Fehlt eine passende Verfügung, gelten **Behandlungswünsche** bzw. der **mutmaßliche Wille**. Der Wille ist in jeder Phase der Erkrankung zu beachten (Reichweite unbegrenzt).",
+ schema:["Liegt eine schriftliche Patientenverfügung vor?","Wurde sie von einem Einwilligungsfähigen errichtet?","Trifft sie auf Lebens- und Behandlungssituation zu?","Ja → Betreuer verschafft Geltung. Nein → Behandlungswünsche / mutmaßlicher Wille","Genehmigung nach § 1829 nur ohne Einvernehmen mit dem Arzt"],
+ fokus:"Voraussetzungen: Schriftform, Einwilligungsfähigkeit (nicht Geschäftsfähigkeit), regelmäßige Überprüfung empfohlen.",
+ frage:"Welche Voraussetzungen hat eine wirksame Patientenverfügung?",
+ antwort:"Schriftform und Einwilligungsfähigkeit des Verfassers (nicht Geschäftsfähigkeit). Sie muss auf die aktuelle Behandlungssituation zutreffen; regelmäßige Überprüfung wird empfohlen.",
+ verw:["n1829","n1821","n_vorsorge","n_einf"]},
+{id:"n_vorsorge", par:"Vorsorge", titel:"Vorsorgevollmacht, Betreuungsverfügung, Patientenverfügung", thema:"wille", quelle:"BGB", skript:1,
+ kurz:"Drei Vorsorgeinstrumente mit unterschiedlichen Voraussetzungen: § 1820, § 1816 Abs. 2, § 1827.",
+ text:"**Vorsorgevollmacht (§ 1820 BGB):** Bestimmung eines Stellvertreters für individuell festgelegte Aufgabenbereiche; Schriftform, besondere Formvorschriften in § 1820, **Geschäftsfähigkeit** nötig, jederzeit **widerrufbar**. **Betreuungsverfügung (§ 1816 Abs. 2 BGB):** Vorschlag an das Betreuungsgericht, wer Betreuer werden soll; schriftlich, **keine Geschäftsfähigkeit** erforderlich. **Patientenverfügung (§ 1827 BGB):** Handlungsanweisung an Betreuer/Bevollmächtigte und Ärzte über künftige ärztliche Maßnahmen; Schriftform, **Einwilligungsfähigkeit**, regelmäßige Überprüfung empfohlen.",
+ schema:[],fokus:"Tabellenfrage: Welches Instrument verlangt welche Fähigkeit und Form?",
+ frage:"Welche Fähigkeit verlangt die Errichtung einer Vorsorgevollmacht, welche die einer Patientenverfügung?",
+ antwort:"Vorsorgevollmacht: Geschäftsfähigkeit. Patientenverfügung: Einwilligungsfähigkeit (nicht Geschäftsfähigkeit). Die Betreuungsverfügung erfordert keine Geschäftsfähigkeit.",
+ verw:["n1827","n1821","n1829"]},
+
+/* ---------- Wohnraumaufgabe ---------- */
+{id:"n1833_1", par:"§ 1833 Abs. 1", titel:"Zulässigkeit der Aufgabe von Wohnraum", thema:"wohnen", quelle:"BGB", skript:2,
+ kurz:"Wohnungsaufgabe nur nach § 1821 Abs. 2–4; Gefährdung liegt insbesondere bei unmöglicher Finanzierung oder erheblicher Gesundheitsgefahr bei häuslicher Versorgung vor.",
+ text:"Der Betreuer darf vom Betreuten **selbst genutzten Wohnraum** nur nach Maßgabe des **§ 1821 Abs. 2–4** aufgeben. Erfasst ist Wohnraum, in dem der Betreute allein oder mit Dritten wohnt – auch ein **Zimmer im Heim** oder in einer **Wohngemeinschaft**. Nicht erfasst: vermietete Anlageobjekte oder von Dritten genutzte Immobilien. **Gefährdung** (§ 1821 Abs. 3 Nr. 1) liegt insbesondere vor, wenn die **Finanzierung** trotz Ausschöpfung aller Ressourcen nicht möglich ist oder die **häusliche Versorgung** trotz aller ambulanten Dienste zu einer erheblichen gesundheitlichen Gefährdung führen würde. **Ist der Wille auf Aufgabe gerichtet**, kann der Betreuer das ohne Weiteres umsetzen.",
+ schema:["Wohnraum vom Betreuten selbst genutzt?","Wunsch des Betreuten auf Aufgabe? → umsetzbar","Wunsch gegen Aufgabe: erhebliche Gefährdung (Finanzierung / häusliche Versorgung)?","Betreuter erkennt Gefahr krankheitsbedingt nicht?","Ja → Aufgabe zulässig, sonst nicht (Wille geht vor)","Dann Anzeige (Abs. 2) und ggf. Genehmigung (Abs. 3)"],
+ fokus:"Neu seit 2023: Abs. 1 regelt das „Ob“ (Voraussetzungen), Abs. 2/3 das „Wie“ der Gerichtsbeteiligung.",
+ frage:"Wann liegt nach § 1833 Abs. 1 S. 2 BGB insbesondere eine Gefährdung vor?",
+ antwort:"Wenn die Finanzierung des Wohnraums trotz Ausschöpfung aller Ressourcen nicht möglich ist oder eine häusliche Versorgung trotz umfassender Zuhilfenahme aller ambulanten Dienste zu einer erheblichen gesundheitlichen Gefährdung führen würde.",
+ verw:["n1821","n1833_2","n1833_3"]},
+{id:"n1833_2", par:"§ 1833 Abs. 2", titel:"Anzeigepflicht gegenüber dem Betreuungsgericht", thema:"wohnen", quelle:"BGB", skript:2,
+ kurz:"Beabsichtigte Wohnungsaufgabe ist unverzüglich anzuzeigen – mit Gründen und Sichtweise des Betreuten; ebenso eine drohende Aufgabe aus anderen Gründen.",
+ text:"**Satz 1:** Beabsichtigt der Betreuer, Wohnraum aufzugeben, zeigt er das **unverzüglich** (§ 121 BGB) unter Angabe der **Gründe** und der **Sichtweise des Betreuten** an. Zweck: gerichtliche Kontrolle vor nicht mehr rückgängig zu machenden Tatsachen (z. B. Räumung, Entrümpelung – lässt sich nicht „genehmigen“). Bei Aufgabe **gegen den Willen** ist der Betreute persönlich anzuhören (§ 1862 Abs. 2 BGB). **Satz 2:** Ist mit der Aufgabe **aus anderen Gründen** zu rechnen (z. B. drohende **Vermieterkündigung**), ist auch das anzuzeigen – wenn der **Aufgabenkreis** die Angelegenheit umfasst. Bei drohender Kündigung sicherheitshalber das Gericht auch dann informieren, wenn der Aufgabenkreis noch nicht betroffen ist (Gericht kann ihn erweitern).",
+ schema:["Beabsichtigte Aufgabe oder drohender Verlust (z. B. Vermieterkündigung)?","Anzeige unverzüglich","Inhalt: Gründe + Sichtweise des Betreuten + beabsichtigte Maßnahmen","Heimplatz-Kündigung: nur Anzeige, keine Genehmigung"],
+ fokus:"Unterscheide Anzeige (Abs. 2) von Genehmigung (Abs. 3).",
+ frage:"Wann besteht eine Anzeigepflicht nach § 1833 Abs. 2 S. 2 BGB?",
+ antwort:"Wenn mit einer Aufgabe des Wohnraums aus anderen Gründen zu rechnen ist (z. B. Vermieterkündigung) und der Aufgabenkreis des Betreuers die Angelegenheit umfasst; sicherheitshalber ist das Gericht bei drohender Kündigung immer zu informieren.",
+ verw:["n1833_1","n1833_3","n_heim"]},
+{id:"n1833_3", par:"§ 1833 Abs. 3", titel:"Genehmigungspflichtiges Handeln des Betreuers", thema:"wohnen", quelle:"BGB", skript:2,
+ kurz:"Genehmigung für: Kündigung, Aufhebung des Mietverhältnisses, Vermietung des selbst genutzten Wohnraums, Grundstücksverfügung mit Wohnungsaufgabe.",
+ text:"Genehmigungsbedürftig sind bei **vom Betreuten selbst genutztem Wohnraum**: **Nr. 1** die **Kündigung** des Mietverhältnisses (einseitige, empfangsbedürftige Willenserklärung; Betreuter muss Mieter oder Mitmieter sein); **Nr. 2** jede **Willenserklärung zur Aufhebung** (Angebot/Annahme eines Aufhebungsvertrags); **Nr. 3** die **Vermietung** (auch Untervermietung, auch bei Eigentum/dinglichem Recht) – verhindert Umgehung der Schutzvorschriften; **Nr. 4** die **Verfügung über ein Grundstück/Grundstücksrecht**, wenn damit die Wohnungsaufgabe verbunden ist (sonst § 1850 Nr. 1 BGB). Es gilt **Außengenehmigung** (§§ 1855–1858): Wirksamkeitsvoraussetzung. Genehmigung nur gegenüber dem Betreuer erklärt (§ 1855); bei einseitigen Geschäften muss sie **vor** Abgabe vorliegen (§ 1858 Abs. 1) – keine Heilung durch nachträgliche Genehmigung. Verträge sind bei fehlender Genehmigung schwebend unwirksam und heilbar. Handelt der Betreute selbst wirksam, braucht er keine Genehmigung.",
+ schema:["Selbst genutzter Wohnraum? (sonst § 1833 nicht anwendbar)","Betreuer handelt in Vertretung (oder aufgrund Einwilligungsvorbehalts)?","Aufgabenkreis umfasst Miet-/Wohnungsangelegenheiten (nicht nur Vermögenssorge!)?","Genehmigungstatbestand Nr. 1–4?","Genehmigung vor Abgabe einholen (bei einseitigem Geschäft)","Bestellungsurkunde + Genehmigung der Kündigung beifügen (§ 1858 Abs. 2)"],
+ fokus:"Gerichtliche Genehmigung ist Wirksamkeitsvoraussetzung. Zuständig: Rechtspfleger; persönliche Anhörung (§ 299 FamFG), Verfahrenspfleger nach § 276 FamFG; Rechtsmittel: befristete Beschwerde (§§ 58 ff. FamFG).",
+ frage:"Warum muss die Genehmigung zur Kündigung vor Abgabe der Erklärung vorliegen?",
+ antwort:"Die Kündigung ist ein einseitiges Rechtsgeschäft (§ 1858 Abs. 1 BGB). Fehlt die Genehmigung bei Abgabe, ist die Erklärung unwirksam; nachträgliche Heilung ist ausgeschlossen. Bei Verträgen (Aufhebungsvertrag) ist dagegen Heilung durch nachträgliche Genehmigung möglich (schwebende Unwirksamkeit).",
+ verw:["n_stv","n1833_1","n_heim","n_kuend"]},
+{id:"n_heim", par:"Heimvertrag (WBVG)", titel:"Kündigung eines Heimplatzes", thema:"wohnen", quelle:"BGB / WBVG", skript:2,
+ kurz:"Der Heimvertrag nach WBVG ist kein Mietverhältnis: Kündigung nur anzeigepflichtig, nicht genehmigungsbedürftig.",
+ text:"Ein Vertrag über einen **Heimplatz nach dem Wohn- und Betreuungsvertragsgesetz (WBVG)** ist ein **eigener Vertragstyp**, kein Mietverhältnis. Die Kündigung durch den Betreuer bedarf **keiner Genehmigung**, ist aber **anzeigepflichtig** nach § 1833 Abs. 2 (BT-Drs. 19/24445, 263). Wohnraum im Sinne des § 1833 sind dennoch auch Heimzimmer.",
+ schema:[],fokus:"Fangfrage: Genehmigung bei Heimkündigung? Nein – nur Anzeige.",
+ frage:"Braucht der Betreuer eine Genehmigung für die Kündigung des Heimvertrags?",
+ antwort:"Nein. Der Heimvertrag nach WBVG ist kein Mietverhältnis; die Kündigung ist lediglich nach § 1833 Abs. 2 anzeigepflichtig.",
+ verw:["n1833_2","n1833_3"]},
+
+/* ---------- Umgang und Aufenthalt ---------- */
+{id:"n1834_1", par:"§ 1834 Abs. 1", titel:"Umgangsbestimmung durch den Betreuer", thema:"umgang", quelle:"BGB", skript:2,
+ kurz:"Umgang darf nur bestimmt werden bei ausdrücklich übertragenem Aufgabenbereich und entweder Wunsch des Betreuten oder konkreter Gefahr (§ 1821 Abs. 3 Nr. 1).",
+ text:"Die Umgangsbestimmung mit **Wirkung für und gegen Dritte** ist seit 01.01.2023 gesetzlich geregelt (vorher Verweis auf Elternrecht, § 1908i aF). **Voraussetzungen:** (1) **Aufgabenbereich „Umgangsbestimmung“ ausdrücklich** übertragen (**§ 1815 Abs. 2 Nr. 4**) – „Personensorge“ oder „Aufenthaltsbestimmung“ genügen nicht mehr; (2) **Wunsch des Betreuten** oder (3) **konkrete Gefährdung** nach § 1821 Abs. 3 Nr. 1 (konkret, nicht abstrakt = unmittelbar bevorstehende Rechtsgutsverletzung; Betreuter kann sie krankheitsbedingt nicht erkennen). Beispiele: Dritter erbettelt ständig Geld; Kontakt mit Personen, die zum Absetzen von Medikamenten oder zu schädlichen Substanzen verleiten. Zusätzliche **gerichtliche Genehmigung** ist **nicht** erforderlich.",
+ schema:["Aufgabenbereich „Umgangsbestimmung“ ausdrücklich übertragen?","Wunsch des Betreuten? (z. B. Schutz vor aufgedrängtem Umgang)","Sonst: konkrete erhebliche Gefahr, die der Betreute nicht erkennen kann?","Ja → Umgang mit Wirkung für und gegen Dritte bestimmen","Streit → Betreuungsgericht auf Antrag (Abs. 3)"],
+ fokus:"Klassiker: Dem Betreuer ist „Personensorge“ übertragen – darf er den Umgang bestimmen? Nein, ausdrückliche Zuweisung nötig.",
+ frage:"Genügt die Übertragung der „Personensorge“, um den Umgang des Betreuten zu bestimmen?",
+ antwort:"Nein. Nach § 1815 Abs. 2 Nr. 4 BGB muss der Aufgabenbereich „Umgangsbestimmung“ ausdrücklich zugewiesen sein; Personensorge oder Aufenthaltsbestimmung reichen nicht.",
+ verw:["n1821","n1834_2","n1815"]},
+{id:"n1815", par:"§ 1815 Abs. 2 BGB", titel:"Ausdrückliche Anordnung bestimmter Aufgabenbereiche", thema:"umgang", quelle:"BGB", skript:2,
+ kurz:"Bestimmte Befugnisse (u. a. Umgangsbestimmung, Aufenthalt im Ausland) müssen ausdrücklich angeordnet sein.",
+ text:"Das Skript nennt zwei Fälle des ausdrücklichen Anordnungserfordernisses: **Nr. 3** die Bestimmung des **gewöhnlichen Aufenthalts im Ausland** und **Nr. 4** die **Umgangsbestimmung**. Grund: besonders einschneidende Eingriffe in die persönliche Lebensführung und präventive gerichtliche Erforderlichkeitskontrolle.",
+ schema:[],fokus:"Ausdrücklichkeitserfordernis = Prüfungsklassiker.",
+ frage:"Nenne zwei Bereiche, die dem Betreuer nach § 1815 Abs. 2 BGB ausdrücklich übertragen werden müssen.",
+ antwort:"Umgangsbestimmung (Nr. 4) und Bestimmung des gewöhnlichen Aufenthalts im Ausland (Nr. 3).",
+ verw:["n1834_1","n1834_2"]},
+{id:"n1834_2", par:"§ 1834 Abs. 2–3", titel:"Aufenthaltsbestimmung und gerichtliche Streitentscheidung", thema:"umgang", quelle:"BGB", skript:2,
+ kurz:"Aufenthaltsbestimmung wirkt auch gegenüber Dritten und umfasst das Herausgabeverlangen; Streit entscheidet das Betreuungsgericht.",
+ text:"**Aufgabenbereich:** Es genügt z. B. die **Personensorge** (Aufenthaltsbestimmung ist Teilbereich); eine ausdrückliche Übertragung ist – anders als beim Umgang – nicht nötig (Ausnahme: Ausland, § 1815 Abs. 2 Nr. 3). **Inhalt:** Bestimmung mit **Wirkung für und gegen Dritte**, Dritte müssen sie beachten; Recht, die **Herausgabe** des Betreuten zu verlangen, notfalls gerichtlich durchsetzbar. **Abs. 3:** Über Streitigkeiten zu Umgang oder Aufenthalt entscheidet das **Betreuungsgericht auf Antrag**.",
+ schema:["Aufgabenbereich Aufenthaltsbestimmung (oder Personensorge) vorhanden?","Wille des Betreuten / § 1821 beachten","Bestimmung mit Wirkung für und gegen Dritte","Ggf. Herausgabeverlangen; Streit → Betreuungsgericht"],
+ fokus:"Vergleiche: Umgang = ausdrücklich, Aufenthalt = reicht Personensorge.",
+ frage:"Was umfasst die Aufenthaltsbestimmungsbefugnis des Betreuers gegenüber Dritten?",
+ antwort:"Die Bestimmung wirkt auch gegen Dritte, die sie beachten müssen; der Betreuer kann außerdem die Herausgabe des Betreuten verlangen, notfalls gerichtlich durchsetzen. Streitigkeiten entscheidet das Betreuungsgericht auf Antrag.",
+ verw:["n1834_1","n1815","n1821"]},
+
+/* ---------- Mietrecht ---------- */
+{id:"n_mietsystem", par:"§§ 535 ff. BGB", titel:"Systematik und Pflichten im Mietrecht", thema:"miete", quelle:"BGB", skript:2,
+ kurz:"Mietvertrag: Gebrauchsüberlassung gegen Miete; allgemeine Vorschriften §§ 535–548, Wohnraum §§ 549–577a, Gewerbe §§ 578a–580a.",
+ text:"Mietrecht ist Teil des **besonderen Schuldrechts**. **§§ 535–548:** allgemeine Vorschriften (§ 535 Grundnorm, §§ 536–536d Mängel/Minderung, § 540 Untervermietung, § 543 außerordentliche Kündigung, § 545 stillschweigende Verlängerung, §§ 546/546a Rückgabe/Nutzungsentschädigung, § 548 Verjährung). **§§ 549–577a:** Wohnraummiete. **§§ 578a–580a:** Grundstücke und Räume (Gewerbe). **§§ 581 ff.:** Pacht. **Pflichten:** Vermieter gewährt Gebrauch und erhält die Sache instand (§ 535 Abs. 1); Mieter zahlt Miete und gibt zurück (§ 535 Abs. 2). **Vertragsschluss:** formfrei; **§ 550:** Mietvertrag über mehr als ein Jahr ohne Schriftform gilt als unbefristet. **Personenmehrheit:** Rechte nur gemeinschaftlich, Gesamtschuldnerschaft (§§ 421, 426).",
+ schema:[],fokus:"Spezialvorschriften: Heizkostenverordnung, Betriebskostenverordnung.",
+ frage:"Welche Rechtsfolge hat ein formlos geschlossener Mietvertrag über mehr als ein Jahr?",
+ antwort:"Er gilt nach § 550 BGB als auf unbestimmte Zeit geschlossen (Schriftform nach § 126 BGB: eigenhändige Unterschriften aller Vertragspartner).",
+ verw:["n_kuend","n_rueckgabe"]},
+{id:"n_befristung", par:"§ 575 BGB", titel:"Befristete Wohnraummietverhältnisse", thema:"miete", quelle:"BGB", skript:2,
+ kurz:"Wohnraummietverhältnisse sind grundsätzlich unbefristet; Befristung nur aus drei abschließenden Gründen mit schriftlicher Mitteilung.",
+ text:"Zulässige Befristungsgründe (**abschließend**): **Eigenbedarf** nach Ablauf der Mietzeit, **Sanierungs-/Beseitigungsbedarf**, **Dienstverhältnis** des Mieters. Der Grund muss bei Vertragsschluss **schriftlich** mitgeteilt werden, sonst gilt der Vertrag als **unbefristet**. Befristete Verträge enden mit Zeitablauf ohne Kündigung (§ 542 Abs. 2); vorher nur durch Aufhebung oder außerordentliche Kündigung (§§ 543, 569).",
+ schema:[],fokus:"Hintergrund: sozialpolitischer Schutz – erschwerte Kündigung durch den Vermieter.",
+ frage:"Nenne die zulässigen Befristungsgründe bei Wohnraummiete.",
+ antwort:"Eigenbedarf nach Ablauf der Mietzeit, Sanierungs-/Beseitigungsbedarf und Vermietung im Zusammenhang mit einem Dienstverhältnis (§ 575 Abs. 1 BGB, abschließend).",
+ verw:["n_mietsystem","n_kuend"]},
+{id:"n_kuend", par:"§§ 568, 573c BGB", titel:"Form, Inhalt und Fristen der ordentlichen Kündigung", thema:"miete", quelle:"BGB", skript:2,
+ kurz:"Wohnraumkündigung: Schriftform (§ 126), Vermieter braucht berechtigtes Interesse; Mieterfrist: bis 3. Werktag zum übernächsten Monatsende.",
+ text:"**Form (§ 568 Abs. 1):** schriftlich mit eigenhändiger Unterschrift; Fax, E-Mail, Kopie (Textform § 126b) genügen **nicht**. **Inhalt:** Mietobjekt inkl. Nebenräume, Mietvertrag mit Datum, alle Parteien, Kündigungs- und Beendigungsdatum (hilfsweise nächstmöglicher Termin), **Hinweis auf Widerspruchsrecht** (§ 568 Abs. 2). **Gründe:** Mieter ordentlich ohne, Vermieter nur mit **berechtigtem Interesse** (§ 573). **Fristen (§ 573c):** Mieter bis zum **3. Werktag** eines Monats zum **Ende des übernächsten** Monats (knapp 3 Monate). Vermieter: bis 5 Jahre knapp 3 Monate; über 5 bis 8 Jahre knapp 6 Monate; über 8 Jahre knapp 9 Monate. Entscheidend ist der **Zugang** (§ 130).",
+ schema:["Schriftform mit Originalunterschrift?","Alle Mieter/Vermieter benannt?","Bestellungsurkunde / Genehmigung beigefügt (§ 174, § 1858 Abs. 2)?","Frist ab Zugang berechnet","Vermieter: berechtigtes Interesse + Widerspruchshinweis"],
+ fokus:"Fristrechnung: Zugang bis 3. Werktag (Samstag zählt als Werktag).",
+ frage:"Welche Kündigungsfrist gilt für den Mieter bei ordentlicher Kündigung?",
+ antwort:"Kündigung bis zum 3. Werktag eines Monats zum Ende des übernächsten Monats (§ 573c Abs. 1 S. 1 BGB), also knapp drei Monate.",
+ verw:["n_stv","n1833_3","n_gruende","n_widerspruch"]},
+{id:"n_gruende", par:"§ 573 BGB", titel:"Berechtigtes Interesse des Vermieters (Eigenbedarf u. a.)", thema:"miete", quelle:"BGB", skript:2,
+ kurz:"Vermieter kündigt nur mit berechtigtem Interesse: Pflichtverletzung, Eigenbedarf, Hinderung der wirtschaftlichen Verwertung.",
+ text:"**Nr. 1:** schuldhafte, nicht unerhebliche **Pflichtverletzung**. **Nr. 2:** **Eigenbedarf** für sich, Familien- oder Haushaltsangehörige – nur durch **natürliche Personen**; Familienangehörige im familienrechtlichen Sinn; Haushaltsangehörige müssen bei Kündigung dem Haushalt angehören; es zählt das Interesse des **Vermieters**; vernünftige, nachvollziehbare Gründe; **Interessenabwägung**. **Nr. 3:** **Hinderung an angemessener wirtschaftlicher Verwertung** mit erheblichem Nachteil (Veräußerung, Modernisierung) – auch juristische Personen. Das Interesse ist im **Kündigungsschreiben** anzugeben; Nachschieben nur für nach Ausspruch entstandene Gründe.",
+ schema:[],fokus:"Eigenbedarf: nur natürliche Personen als Vermieter.",
+ frage:"Kann eine Wohnungsgenossenschaft wegen Eigenbedarfs kündigen?",
+ antwort:"Nein. Eigenbedarf kann nur eine natürliche Person als Vermieter geltend machen, keine juristische Person (§ 573 Abs. 2 Nr. 2 BGB).",
+ verw:["n_kuend","n_widerspruch"]},
+{id:"n_widerspruch", par:"§§ 574–574b BGB", titel:"Widerspruchsrecht des Mieters (Sozialklausel)", thema:"miete", quelle:"BGB", skript:2,
+ kurz:"Mieter kann der ordentlichen Kündigung widersprechen, wenn die Beendigung eine Härte bedeutet; Widerspruch schriftlich spätestens 2 Monate vor Ende.",
+ text:"Der Mieter verlangt Fortsetzung, wenn die Beendigung für ihn, seine Familie oder Haushaltsangehörige eine **Härte** bedeutet, die auch unter Berücksichtigung der berechtigten Interessen des Vermieters nicht gerechtfertigt ist. **Gesetzlicher Härtefall:** kein angemessener Ersatzwohnraum (§ 574 Abs. 2). **Unbenannte Härtefälle:** Alter, Krankheit, Behinderung, lange Wohndauer/Verwurzelung, Beruf, Kinder, doppelter Umzug. **Form und Frist (§ 574b):** schriftlich (§ 126), spätestens **zwei Monate vor Beendigung** beim Vermieter; Gründe nur auf Verlangen. Der Vermieter muss im Kündigungsschreiben auf Möglichkeit, Form und Frist hinweisen (§ 568 Abs. 2); sonst kostenrechtliche Folgen.",
+ schema:["Kündigung durch Vermieter ordentlich?","Härtegründe beim Betreuten (Alter, Krankheit, Behinderung, Verwurzelung)?","Schriftlich spätestens 2 Monate vor Ende","Begründung auf Verlangen"],
+ fokus:"Für Betreuer sehr praxisrelevant: Widerspruch bei Vermieterkündigung des Betreuten.",
+ frage:"Bis wann muss der Mieter dem Kündigungswiderspruch erklären?",
+ antwort:"Schriftlich und spätestens zwei Monate vor Beendigung des Mietverhältnisses; der Vermieter muss darauf im Kündigungsschreiben hingewiesen haben (§ 574b, § 568 Abs. 2 BGB).",
+ verw:["n_kuend","n_gruende","n1833_2"]},
+{id:"n_fristlos", par:"§§ 543, 569 BGB", titel:"Außerordentliche fristlose Kündigung und Zahlungsverzug", thema:"miete", quelle:"BGB", skript:2,
+ kurz:"Fristlos bei wichtigem Grund; Zahlungsverzug: Rückstand > 1 Monatsmiete bzw. 2 Monatsmieten; Schonfrist 2 Monate nach Rechtshängigkeit.",
+ text:"**Allgemein (§ 543 Abs. 1):** Fortsetzung unzumutbar; bei Pflichtverletzung vorher **Abmahnung/Fristsetzung** (Abs. 3), außer aussichtslos oder besondere Gründe/Zahlungsverzug. **Mieter:** Gebrauch nicht gewährt (z. B. Flächenabweichung ≥ 10 %), **Gesundheitsgefahr** (§ 569 Abs. 1), **Hausfriedensstörung** (§ 569 Abs. 2). **Vermieter:** Gefährdung der Mietsache, unbefugte Überlassung an Dritte. **Zahlungsverzug (§ 543 Abs. 2 Nr. 3):** zwei aufeinanderfolgende Termine mit Miete oder nicht unerheblichem Teil (Wohnraum: Rückstand **> eine Monatsmiete**, § 569 Abs. 3 Nr. 1) oder Rückstand über mehr als zwei Termine in Höhe von **zwei Monatsmieten**. Maßgeblich ist die **Gesamtmiete** inkl. Nebenkostenvorauszahlung. Kündigungsgrund erlischt bei vollständiger Befriedigung **vor Zugang**. **Schonfrist (§ 569 Abs. 3 Nr. 2):** Kündigung wird unwirksam bei Befriedigung oder Übernahmeerklärung einer öffentlichen Stelle bis **zwei Monate nach Rechtshängigkeit** der Räumungsklage – aber nicht, wenn innerhalb von 2 Jahren schon eine solche Kündigung unwirksam wurde. **Kaution (§ 569 Abs. 2a):** Verzug mit Mietsicherheit in Höhe von **zwei Kaltmieten** berechtigt zur fristlosen Kündigung ohne Abmahnung; Ratenzahlung in bis zu **3 Raten** (§ 551).",
+ schema:["Wichtiger Grund (Pflichtverletzung oder Zahlungsverzug)?","Abmahnung/Fristsetzung erforderlich oder entbehrlich?","Rückstand: > 1 Monatsmiete (2 Termine) oder 2 Monatsmieten (> 2 Termine)?","Befriedigung vor Zugang? → Kündigungsgrund erloschen","Nach Räumungsklage: Schonfrist 2 Monate nach Rechtshängigkeit"],
+ fokus:"Praxis: Mietschulden → Betreuer prüft Schonfristzahlung und Kostenübernahme durch Sozialleistungsträger.",
+ frage:"Wie kann eine fristlose Kündigung wegen Zahlungsverzugs nachträglich unwirksam werden?",
+ antwort:"Durch vollständige Befriedigung des Vermieters oder Verpflichtungserklärung einer öffentlichen Stelle bis spätestens zwei Monate nach Rechtshängigkeit der Räumungsklage (§ 569 Abs. 3 Nr. 2 BGB) – nicht, wenn innerhalb von zwei Jahren schon einmal auf diese Weise eine Kündigung unwirksam geworden ist.",
+ verw:["n_kuend","n_sonderk","n1833_2"]},
+{id:"n_sonderk", par:"§§ 580, 555e, 561 BGB", titel:"Sonderkündigungsrechte", thema:"miete", quelle:"BGB", skript:2,
+ kurz:"Außerordentliche Kündigung mit gesetzlicher Frist: z. B. bei Tod des Mieters, Modernisierungsankündigung oder Mieterhöhung.",
+ text:"**§ 580:** bei **Tod des Mieters** durch Erben oder Vermieter. **§ 555e:** nach Zugang einer **Modernisierungsankündigung**. **§ 561:** nach Zugang einer **Mieterhöhung** (ortsübliche Vergleichsmiete § 558 oder Modernisierung § 559). Überwiegend bei befristeten Mietverträgen relevant.",
+ schema:[],fokus:"Beispiel für Betreuungsende (Tod des Betreuten): § 580.",
+ frage:"Nenne drei Sonderkündigungsrechte im Wohnraummietrecht.",
+ antwort:"§ 580 (Tod des Mieters), § 555e (Modernisierungsankündigung), § 561 (Mieterhöhung nach §§ 558, 559).",
+ verw:["n_fristlos","n_kuend"]},
+{id:"n_rueckgabe", par:"§§ 545, 546, 546a, 548 BGB", titel:"Rückgabe der Mietsache, Verlängerung und Verjährung", thema:"miete", quelle:"BGB", skript:2,
+ kurz:"Rückgabe ist Hauptpflicht des Mieters; bei Verzögerung Nutzungsentschädigung; Verjährung von Ansprüchen nur 6 Monate.",
+ text:"**§ 546:** vollständige Besitzaufgabe, alle Räume, Zubehör (Schlüssel), Entfernung eingebrachter Sachen und baulicher Veränderungen; **Übergabeprotokoll** als Beweisgrundlage. **§ 545:** Gebrauchsfortsetzung nach Mietende ohne **Widerspruch binnen zwei Wochen** → stillschweigende Verlängerung auf unbestimmte Zeit (regelmäßig vorsorglicher Widerspruch im Kündigungsschreiben). **§ 546a:** Nutzungsentschädigung – Wahlrecht: bisherige Miete (inkl. Nebenkosten) oder ortsübliche Miete. **§ 548:** **kurze Verjährung 6 Monate**: Vermieter ab Rückerhalt (Schadensersatz Veränderung/Verschlechterung); Mieter ab Mietvertragsende (Aufwendungsersatz, Wegnahme). Übrige Ansprüche: Regelverjährung 3 Jahre.",
+ schema:["Alle Schlüssel und Räume zurückgeben","Übergabeprotokoll anfertigen","Widerspruch nach § 545 vorsorglich","Verjährung 6 Monate beachten (§ 548)"],
+ fokus:"Praxis bei Wohnungsauflösung: Räumung erst nach Anzeige/Genehmigung.",
+ frage:"Wann verjähren Schadensersatzansprüche des Vermieters wegen Verschlechterung der Mietsache?",
+ antwort:"Sechs Monate ab Rückerlangung der Mietsache (§ 548 Abs. 1 BGB).",
+ verw:["n_mietsystem","n1833_2"]},
+
+/* ---------- Zwang und Freiheitsentzug (Überblick) ---------- */
+{id:"n1832", par:"§ 1832 BGB", titel:"Ärztliche Zwangsmaßnahmen", thema:"zwang", quelle:"BGB", skript:1,
+ kurz:"Einwilligung in ärztliche Zwangsmaßnahme nur unter sieben engen Voraussetzungen und mit gerichtlicher Genehmigung.",
+ text:"Im Skript nur als Verweis genannt; **Überblick** (am Gesetz abgeglichen): Der Betreuer darf nur einwilligen, wenn (1) die Maßnahme nötig ist, um einen **drohenden erheblichen gesundheitlichen Schaden** abzuwenden, (2) der Betreute die Notwendigkeit krankheits- oder behinderungsbedingt nicht erkennen oder nicht danach handeln kann, (3) sie dem **Willen nach § 1827** entspricht, (4) ernsthaft **ohne Druck und mit ausreichend Zeit** versucht wurde zu überzeugen, (5) **keine mildere Maßnahme** hilft, (6) der erwartete **Nutzen die Beeinträchtigung deutlich überwiegt** und (7) sie im Rahmen eines **Krankenhausaufenthalts** erfolgt. **Genehmigung** des Betreuungsgerichts erforderlich (Abs. 2). Hinweis: Die Krankenhausvorgabe (Nr. 7) wurde in Einzelfällen für verfassungswidrig erklärt, bis zur Neuregelung gilt das bisherige Recht fort – aktuelle Rechtslage vor der Prüfung nachlesen.",
+ schema:["Einwilligungsunfähigkeit / fehlende Krankheitseinsicht","Notwendigkeit zur Abwendung eines erheblichen Gesundheitsschadens","Überzeugungsversuch ohne Druck","Mildere Mittel ausgeschlossen, Nutzen überwiegt deutlich","Stationär im Krankenhaus","Gerichtliche Genehmigung (Verfahrenspfleger, Gutachten)"],
+ fokus:"Gehört zum Modul „Personensorge 1“ als Verweis; Details in Unterbringungsmodul.",
+ frage:"Wer muss einer ärztlichen Zwangsmaßnahme zustimmen?",
+ antwort:"Der Betreuer willigt ein, die Einwilligung bedarf aber der Genehmigung des Betreuungsgerichts (§ 1832 Abs. 2 BGB).",
+ verw:["n1829","n312","n1827"]}
+];
+
+const TIPPS = [
+ {titel:"Denkreihenfolge Gesundheitssorge",text:"1. Einwilligungsfähig? → 2. Patientenverfügung (§ 1827 I) → 3. Behandlungswünsche/mutmaßlicher Wille (§ 1827 II) → 4. Gefahr von Tod/schwerem Schaden → § 1829 → 5. Einvernehmen Arzt/Betreuer (Abs. 4) → 6. sonst Genehmigung (Anhörung, Verfahrenspfleger, Gutachten, § 298 FamFG)."},
+ {titel:"Denkreihenfolge Wohnungsaufgabe",text:"1. Selbst genutzter Wohnraum? → 2. Wille/Wunsch (§ 1821) → 3. Gefährdung (Finanzierung / häusliche Versorgung) → 4. Anzeige (Abs. 2) → 5. Genehmigung (Abs. 3: Kündigung, Aufhebung, Vermietung, Grundstück) → 6. Form: Urkunde + Genehmigung beifügen (§ 174, § 1858 II)."},
+ {titel:"Umgang vs. Aufenthalt",text:"Umgang: Aufgabenbereich ausdrücklich (§ 1815 II Nr. 4), nur auf Wunsch oder bei konkreter Gefahr. Aufenthalt: Personensorge genügt; wirkt gegen Dritte; Herausgabeverlangen; Streit → Betreuungsgericht."}
+];
+
+</script>
+<script>
+(function(){
+"use strict";
+/* ---------- Helfer ---------- */
+var $=function(s,r){return (r||document).querySelector(s)};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/­/g,"")}
+function strip(s){return String(s).replace(/­/g,"")}
+var byId={};NORMEN.forEach(function(n,i){n._i=i;byId[n.id]=n});
+var thById={};THEMEN.forEach(function(t,i){t._i=i;thById[t.id]=t});
+function dark(){return document.documentElement.getAttribute("data-theme")==="dark"}
+function tcol(t){return dark()?t.dunkel:t.farbe}
+function store(k,v){try{if(v===undefined){var r=localStorage.getItem(k);return r?JSON.parse(r):null}localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+var learned=store("m5_learned")||{},starred=store("m5_starred")||{},boxes=store("m5_boxes")||{};
+function saveAll(){store("m5_learned",learned);store("m5_starred",starred);store("m5_boxes",boxes)}
+function cnt(o){return Object.keys(o).filter(function(k){return o[k]&&byId[k]}).length}
+
+/* ---------- Zustand ---------- */
+var F={themen:{},skript:{},status:"alle"};
+var Q="";var treeMode="baum";var openBr={};
+var layout=$("#layout"),aside=$("#aside"),main=$("#main");
+
+/* ---------- Suche ---------- */
+function norm(s){return strip(s).toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss").replace(/[§.,;:()„“"'–—\/]/g," ").replace(/\s+/g," ").trim()}
+function lev(a,b){if(a===b)return 0;var m=a.length,n=b.length;if(Math.abs(m-n)>1)return 2;var p=[],i,j;for(j=0;j<=n;j++)p[j]=j;for(i=1;i<=m;i++){var c=[i];for(j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+NORMEN.forEach(function(n){n._t=norm(n.par+" "+n.titel);n._k=norm(n.kurz);n._x=norm(n.text+" "+(n.fokus||"")+" "+n.frage+" "+n.antwort+" "+(n.schema||[]).join(" "));n._w=(n._t+" "+n._k).split(" ")});
+function score(n,q){
+  var toks=norm(q).split(" ").filter(Boolean);if(!toks.length)return 1;var s=0;
+  for(var i=0;i<toks.length;i++){var t=toks[i],h=0;
+    if(n._t.indexOf(t)>-1)h=10;else if(n._k.indexOf(t)>-1)h=5;else if(n._x.indexOf(t)>-1)h=2;
+    else if(t.length>=5){for(var j=0;j<n._w.length;j++){var w=n._w[j];if(w.length>=4&&lev(t,w)<=1){h=3;break}}}
+    if(!h)return 0;s+=h}
+  return s}
+function passes(n,withQ){
+  var tk=Object.keys(F.themen).filter(function(k){return F.themen[k]});if(tk.length&&tk.indexOf(n.thema)<0)return false;
+  var sk=Object.keys(F.skript).filter(function(k){return F.skript[k]});if(sk.length&&sk.indexOf(String(n.skript))<0)return false;
+  if(F.status==="offen"&&learned[n.id])return false;
+  if(F.status==="gelernt"&&!learned[n.id])return false;
+  if(F.status==="gemerkt"&&!starred[n.id])return false;
+  if(withQ&&Q&&!score(n,Q))return false;return true}
+function list(){var r=NORMEN.filter(function(n){return passes(n,true)});if(Q){r=r.map(function(n){return [n,score(n,Q)]}).sort(function(a,b){return b[1]-a[1]}).map(function(x){return x[0]})}return r}
+
+/* ---------- Kopf: Filter, Ring ---------- */
+function renderFilters(){
+  var h='<div class="frow"><span class="flabel">THEMA</span>';
+  THEMEN.forEach(function(t){var n=NORMEN.filter(function(x){return x.thema===t.id}).length;
+    h+='<button class="chip" data-th="'+t.id+'" aria-pressed="'+(!!F.themen[t.id])+'" style="--c:'+tcol(t)+'"><span class="dot"></span>'+esc(strip(t.titel))+' <span class="n">'+n+'</span></button>'});
+  h+='</div><div class="frow"><span class="flabel">SKRIPT</span>';
+  [[1,"Teil 1 · Gesundheitssorge"],[2,"Teil 2 · Wohnen, Umgang, Mietrecht"]].forEach(function(s){
+    var n=NORMEN.filter(function(x){return x.skript===s[0]}).length;
+    h+='<button class="chip" data-sk="'+s[0]+'" aria-pressed="'+(!!F.skript[s[0]])+'">'+s[1]+' <span class="n">'+n+'</span></button>'});
+  h+='<span class="flabel" style="margin-left:14px">STATUS</span>';
+  [["alle","Alle"],["offen","Offen"],["gelernt","Gelernt"],["gemerkt","★ Gemerkt"]].forEach(function(s){
+    h+='<button class="chip" data-st="'+s[0]+'" aria-pressed="'+(F.status===s[0])+'">'+s[1]+'</button>'});
+  var anyF=Object.keys(F.themen).some(function(k){return F.themen[k]})||Object.keys(F.skript).some(function(k){return F.skript[k]})||F.status!=="alle"||Q;
+  h+='<span class="fcount"><span id="fcnt">'+list().length+' von '+NORMEN.length+' Normen</span>'+(anyF?' · <button class="btn small" id="freset">Filter zurücksetzen</button>':'')+'</span></div>';
+  $("#filters").innerHTML=h}
+function renderRing(){
+  var d=cnt(learned),t=NORMEN.length,C=2*Math.PI*13,off=C*(1-d/t);
+  $("#ring").innerHTML='<svg viewBox="0 0 34 34" aria-hidden="true"><circle class="bg" cx="17" cy="17" r="13"/><circle class="fg" cx="17" cy="17" r="13" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/></svg><span>'+d+' / '+t+' gelernt</span>'}
+
+/* ---------- Baum ---------- */
+function renderTree(){
+  var cur=(location.hash||"").slice(1);
+  var h='<div class="tabs"><button class="btn" data-tm="baum" aria-pressed="'+(treeMode==="baum")+'">Baum</button><button class="btn" data-tm="liste" aria-pressed="'+(treeMode==="liste")+'">Paragrafenliste</button></div>';
+  var items=list();
+  if(treeMode==="baum"){
+    h+='<div class="tree-actions"><button class="btn small" id="allOpen">Alles auf</button><button class="btn small" id="allClose">Alles zu</button><button class="btn small" id="hideTree">◀ Ausblenden</button></div>';
+    THEMEN.forEach(function(t){var ns=items.filter(function(n){return n.thema===t.id});if(!ns.length&&(Q||anyFilter()))return;
+      var open=openBr[t.id]||cur===("t_"+t.id)||ns.some(function(n){return n.id===cur});
+      h+='<div class="tbranch" style="--c:'+t.farbe+';--cd:'+t.dunkel+'"><button class="tbhead" data-br="'+t.id+'" aria-expanded="'+!!open+'"><span class="dot" style="background:'+tcol(t)+'"></span><span><span class="t">'+esc(strip(t.titel))+'</span><br><span class="r">'+esc(t.range)+'</span></span><span class="cnt">'+ns.length+'</span></button>';
+      if(open){h+='<div class="tleaves" style="border-color:'+tcol(t)+'"><a class="tleaf'+(cur==="t_"+t.id?" on":"")+'" href="#t_'+t.id+'"><em>Überblick</em></a>';
+        ns.forEach(function(n){h+='<a class="tleaf'+(cur===n.id?" on":"")+'" href="#'+n.id+'"><span class="par">'+esc(n.par.length>14?n.par.slice(0,13)+"…":n.par)+'</span><span>'+esc(shortT(n.titel))+'</span>'+(learned[n.id]?'<span class="chk" title="gelernt">✓</span>':starred[n.id]?'<span class="chk" style="color:#e0a800">★</span>':'')+'</a>'});
+        h+='</div>'}
+      h+='</div>'});
+  }else{
+    h+='<div class="tree-actions"><button class="btn small" id="hideTree">◀ Ausblenden</button></div>';
+    items.forEach(function(n){var t=thById[n.thema];h+='<a class="tleaf'+(cur===n.id?" on":"")+'" href="#'+n.id+'" style="border-left:4px solid '+tcol(t)+'"><span class="par">'+esc(n.par)+'</span><span>'+esc(shortT(n.titel))+'</span>'+(learned[n.id]?'<span class="chk">✓</span>':'')+'</a>'});
+    if(!items.length)h+='<p class="hint">Keine Treffer.</p>'}
+  aside.innerHTML=h}
+function shortT(s){return s.length>46?s.slice(0,45)+"…":s}
+function anyFilter(){return Object.keys(F.themen).some(function(k){return F.themen[k]})||Object.keys(F.skript).some(function(k){return F.skript[k]})||F.status!=="alle"}
+
+/* ---------- Seiten ---------- */
+function crumbs(parts){return '<div class="crumbs"><a href="#">Modul 5</a>'+parts.map(function(p){return ' › '+(p[1]?'<a href="'+p[1]+'">'+esc(p[0])+'</a>':esc(p[0]))}).join("")+'</div>'}
+function cardsFor(ns){var h='<div class="grid">';ns.forEach(function(n){var t=thById[n.thema];h+='<a class="card" href="#'+n.id+'" style="--c:'+tcol(t)+'"><small>'+esc(n.par)+' · Teil '+n.skript+'</small><b>'+esc(n.titel)+'</b></a>'});return h+'</div>'}
+
+function pageHome(){
+  var tot=NORMEN.length,d=cnt(learned),st=cnt(starred),fr=NORMEN.filter(function(n){return n.frage}).length;
+  var h='<div class="eyebrow">Sachkundelehrgang rechtliche Betreuer · Modul 5</div><h1>Personensorge – Dein Lernatlas</h1>';
+  h+='<div class="hero"><div class="box lead soft"><p style="margin:0">Modul 5 ordnet die <strong>Personensorge</strong>: <strong>Gesundheitssorge</strong> (Einwilligung, Patientenverfügung, § 1829 BGB), <strong>Wohnraumaufgabe</strong> (§ 1833 BGB), <strong>Umgang und Aufenthalt</strong> (§ 1834 BGB) und das <strong>Mietrecht</strong> als Werkzeug. Alle Inhalte stammen aus den beiden Skripten; jede Norm hat Merksatz, Prüfschema und Prüfungsfrage.</p></div>';
+  h+='<div class="stats"><div class="stat"><b>'+tot+'</b><span>Lerneinheiten</span></div><div class="stat"><b>'+d+'</b><span>gelernt</span></div><div class="stat"><b>'+st+'</b><span>★ gemerkt</span></div></div></div>';
+  h+='<h2>Themen × Skript <span class="hint" style="font:400 13px var(--sans)">(Anzahl, Klick filtert)</span></h2><div class="box"><table class="matrix" aria-label="Themen mal Skript"><tr><th></th><th>Teil 1</th><th>Teil 2</th></tr>';
+  THEMEN.forEach(function(t){h+='<tr><th scope="row" style="color:'+tcol(t)+'">'+esc(strip(t.titel))+'</th>';
+    [1,2].forEach(function(s){var n=NORMEN.filter(function(x){return x.thema===t.id&&x.skript===s}).length;
+      h+=n?'<td class="has" style="--c:'+tcol(t)+'" data-m="'+t.id+'|'+s+'" role="button" tabindex="0" aria-label="'+n+' Normen filtern">'+n+'</td>':'<td>·</td>'});h+='</tr>'});
+  h+='</table></div>';
+  h+='<h2>So arbeitest Du damit</h2><div class="box"><div class="two"><div><h3>Lernen</h3><p>Normen im Baum durchgehen, <strong>Als gelernt markieren</strong>, ★ merken. Fortschritt wird in Deinem Browser gespeichert.</p><h3>Suchen &amp; Filtern</h3><p>Taste <kbd>/</kbd> fokussiert die Suche (auch Paragrafen wie „1833“, kleine Tippfehler okay). Themen/Skript = ODER, Zeilen untereinander = UND.</p></div><div><h3>Üben</h3><p><a href="#karten">Karteikarten</a> mit Prüfungsfragen, <a href="#quiz">Quiz</a> „Welche Norm passt?“ und die <a href="#werkzeuge">Prüf-Werkzeuge</a> (Entscheidungshilfen und Fristenrechner).</p><h3>Tastatur</h3><p><kbd>←</kbd> <kbd>→</kbd> zwischen Normen, <kbd>Esc</kbd> leert die Suche.</p></div></div></div>';
+  h+='<h2>Prüfungsfokus: Denkreihenfolgen</h2>';TIPPS.forEach(function(t){h+='<div class="tip"><b>'+esc(t.titel)+'</b>'+esc(t.text)+'</div>'});
+  h+='<h2>Enthält</h2><div class="grid">';THEMEN.forEach(function(t){var n=NORMEN.filter(function(x){return x.thema===t.id}).length;h+='<a class="card" href="#t_'+t.id+'" style="--c:'+tcol(t)+'"><small>'+esc(t.range)+'</small><b>'+esc(strip(t.titel))+'</b><span class="hint">'+n+' Einheiten</span></a>'});h+='</div>';
+  h+='<h2>Weiterführende Links</h2><div class="rel"><a href="https://www.gesetze-im-internet.de/bgb/" target="_blank" rel="noopener">BGB</a><a href="https://www.gesetze-im-internet.de/famfg/" target="_blank" rel="noopener">FamFG</a><a href="https://www.gesetze-im-internet.de/btog/" target="_blank" rel="noopener">BtOG</a><a href="https://www.gesetze-im-internet.de/btregv/" target="_blank" rel="noopener">BtRegV</a></div>';
+  h+='<div class="pager"><span></span><a href="#t_'+THEMEN[0].id+'"><small>Weiter</small>'+esc(strip(THEMEN[0].titel))+' →</a></div>';
+  return h}
+
+function pageTheme(t){
+  var ns=NORMEN.filter(function(n){return n.thema===t.id}),i=t._i;
+  var h=crumbs([[strip(t.titel)]])+'<div style="--c:'+tcol(t)+'"><div class="titlebar"><div class="par-big">'+esc(t.range)+'</div><h1>'+esc(strip(t.titel))+'</h1></div></div>';
+  h+='<div class="box soft lead" style="border-left:5px solid '+tcol(t)+'"><strong>Leitfrage:</strong> '+esc(t.frage)+'</div><p>'+esc(t.intro)+'</p>';
+  var d=ns.filter(function(n){return learned[n.id]}).length;
+  h+='<div class="bar" style="--c:'+tcol(t)+'"><i style="width:'+Math.round(100*d/ns.length)+'%"></i></div><p class="hint">'+d+' von '+ns.length+' gelernt</p>';
+  h+='<h2>Enthält</h2>'+cardsFor(ns);
+  h+='<div class="pager">'+(i>0?'<a href="#t_'+THEMEN[i-1].id+'"><small>← Zurück</small>'+esc(strip(THEMEN[i-1].titel))+'</a>':'<a href="#"><small>← Start</small>Übersicht</a>')+(i<THEMEN.length-1?'<a href="#t_'+THEMEN[i+1].id+'"><small>Weiter →</small>'+esc(strip(THEMEN[i+1].titel))+'</a>':'<a href="#karten"><small>Weiter →</small>Karteikarten üben</a>')+'</div>';
+  return h}
+
+function pageNorm(n){
+  var t=thById[n.thema],h=crumbs([[strip(t.titel),"#t_"+t.id],[n.par]]);
+  h+='<div style="--c:'+tcol(t)+';--cd:'+t.dunkel+'"><div class="par-big">'+esc(n.par)+'</div><h1>'+esc(n.titel)+'</h1>';
+  h+='<div class="box soft lead"><strong>Merksatz:</strong> '+esc(n.kurz)+'</div>';
+  h+='<div class="chips"><span class="badge" style="border-color:'+tcol(t)+'">'+esc(strip(t.titel))+'</span><span class="badge">'+esc(n.quelle)+'</span><span class="badge">Skript Teil '+n.skript+'</span></div>';
+  h+='<div class="actions"><button class="btn'+(learned[n.id]?' done':'')+'" id="bLearn">'+(learned[n.id]?'✓ Gelernt':'Als gelernt markieren')+'</button><button class="btn star'+(starred[n.id]?' on':'')+'" id="bStar">'+(starred[n.id]?'★ Gemerkt':'☆ Merken')+'</button><button class="btn" onclick="window.print()">Drucken</button></div>';
+  h+='<div class="box"><h3>Erklärung</h3><p>'+md(n.text)+'</p></div>';
+  if(n.schema&&n.schema.length){h+='<h2>Prüfschema</h2><ol class="schema">';n.schema.forEach(function(s){h+='<li>'+md(s)+'</li>'});h+='</ol>'}
+  if(n.fokus)h+='<h2>Prüfungsfokus</h2><div class="tip"><b>Typisch</b>'+md(n.fokus)+'</div>';
+  if(n.frage)h+='<h2>Prüfungsfrage</h2><details class="q"><summary>'+esc(n.frage)+'</summary><div class="ans">'+md(n.antwort)+'</div></details>';
+  if(n.verw&&n.verw.length){h+='<h2>Verwandte Normen</h2><div class="rel">';n.verw.forEach(function(v){var x=byId[v];if(x)h+='<a href="#'+x.id+'">'+esc(x.par)+' · '+esc(shortT(x.titel))+'</a>'});h+='</div>'}
+  h+='</div>';
+  var arr=list(),k=arr.indexOf(n);if(k<0){arr=NORMEN;k=n._i}
+  var p=arr[k-1],q=arr[k+1];
+  h+='<div class="pager">'+(p?'<a href="#'+p.id+'"><small>← Vorherige</small>'+esc(p.par)+'</a>':'<span></span>')+(q?'<a href="#'+q.id+'"><small>Nächste →</small>'+esc(q.par)+'</a>':'<span></span>')+'</div>';
+  return h}
+
+/* Suche-Ergebnisseite */
+function pageSearch(){var r=list();var h=crumbs([["Suche: "+Q]])+'<h1>Suchergebnisse</h1><p class="hint">'+r.length+' Treffer für „'+esc(Q)+'“</p>';
+  h+=r.length?cardsFor(r):'<div class="box">Nichts gefunden. Probiere eine Paragrafennummer (z. B. 1833), einen Wortteil oder setze die Filter zurück.</div>';return h}
+
+/* ---------- Karteikarten ---------- */
+var deck=[],di=0,showBack=false;
+function buildDeck(){var pool=NORMEN.filter(function(n){return n.frage&&passes(n,false)});
+  var w=[];pool.forEach(function(n){var b=boxes[n.id]||0;var c=b===0?4:b===1?2:1;for(var i=0;i<c;i++)w.push(n)});
+  for(var i=w.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=w[i];w[i]=w[j];w[j]=x}
+  var seen={},d=[];w.forEach(function(n){if(!seen[n.id]){seen[n.id]=1;d.push(n)}});deck=d;di=0;showBack=false}
+function pageKarten(){
+  if(!deck.length||di>=deck.length)buildDeck();
+  var h=crumbs([["Karteikarten"]])+'<h1>Karteikarten</h1><p class="hint">Frage lesen, Antwort laut formulieren, dann umdrehen. „Gewusst“ sortiert die Karte nach hinten, „Nochmal“ kommt häufiger. Die Filter oben begrenzen den Stapel.</p>';
+  if(!deck.length){return h+'<div class="box">Keine Karten für diese Filter.</div>'}
+  var n=deck[di],t=thById[n.thema],b=boxes[n.id]||0;
+  h+='<div class="progress" aria-hidden="true"><i style="width:'+Math.round(100*di/deck.length)+'%"></i></div><p class="hint">Karte '+(di+1)+' von '+deck.length+' · Stufe '+(b+1)+'/3 · '+esc(n.par)+'</p>';
+  h+='<div class="flash'+(showBack?' show':'')+'" style="--c:'+tcol(t)+'"><div class="flip" id="flip"><div class="face"><div class="eyebrow">'+esc(strip(t.titel))+'</div><p class="big">'+esc(n.frage)+'</p><p class="hint">Klicke „Antwort zeigen“ (oder Leertaste).</p></div><div class="face back"><div class="eyebrow">Antwort · '+esc(n.par)+'</div><p>'+md(n.antwort)+'</p><p><a href="#'+n.id+'">Zur Norm →</a></p></div></div></div>';
+  h+='<div class="actions"><button class="btn primary" id="kFlip">'+(showBack?'Frage zeigen':'Antwort zeigen')+'</button><button class="btn" id="kNo">Nochmal</button><button class="btn" id="kYes">Gewusst ✓</button><button class="btn" id="kShuf">Neu mischen</button></div>';
+  return h}
+
+/* ---------- Quiz ---------- */
+var quiz=null;
+function newQuiz(){var pool=NORMEN.filter(function(n){return passes(n,false)});if(pool.length<4)pool=NORMEN;
+  var qs=pool.slice().sort(function(){return Math.random()-.5}).slice(0,10).map(function(n){
+    var same=NORMEN.filter(function(x){return x.id!==n.id&&x.thema===n.thema}),other=NORMEN.filter(function(x){return x.id!==n.id&&x.thema!==n.thema});
+    var d=same.sort(function(){return Math.random()-.5}).slice(0,2).concat(other.sort(function(){return Math.random()-.5}));d=d.slice(0,3);
+    var opts=d.concat([n]).sort(function(){return Math.random()-.5});return {n:n,opts:opts,pick:null}});
+  quiz={qs:qs,i:0,score:0}}
+function pageQuiz(){
+  if(!quiz)newQuiz();var h=crumbs([["Quiz"]])+'<h1>Quiz: Welche Norm passt?</h1>';
+  if(quiz.i>=quiz.qs.length){var pct=Math.round(100*quiz.score/quiz.qs.length);
+    h+='<div class="box lead"><h3>Ergebnis: '+quiz.score+' von '+quiz.qs.length+' ('+pct+' %)</h3><p>'+(pct>=80?'Stark – Du hast die Systematik drauf.':pct>=50?'Solide. Wiederhole die falsch beantworteten Normen.':'Noch Luft nach oben – nutze die Karteikarten und Prüfschemata.')+'</p><div class="actions"><button class="btn primary" id="qNew">Neues Quiz</button><a class="btn" href="#karten">Karteikarten</a></div></div>';
+    var wrong=quiz.qs.filter(function(q){return q.pick&&q.pick!==q.n.id});
+    if(wrong.length){h+='<h2>Nochmal ansehen</h2>'+cardsFor(wrong.map(function(q){return q.n}))}return h}
+  var q=quiz.qs[quiz.i];
+  h+='<div class="progress"><i style="width:'+Math.round(100*quiz.i/quiz.qs.length)+'%"></i></div><p class="hint">Frage '+(quiz.i+1)+' von '+quiz.qs.length+' · Punkte: '+quiz.score+'</p>';
+  h+='<div class="box lead"><div class="eyebrow">Zu welcher Norm gehört dieser Merksatz?</div><p style="margin:.4em 0 0">'+esc(q.n.kurz)+'</p></div><div class="opts">';
+  q.opts.forEach(function(o){var cls="opt";if(q.pick){if(o.id===q.n.id)cls+=" right";else if(o.id===q.pick)cls+=" wrong"}
+    h+='<button class="'+cls+'" data-o="'+o.id+'"'+(q.pick?' disabled':'')+'><strong>'+esc(o.par)+'</strong> – '+esc(o.titel)+'</button>'});
+  h+='</div>';
+  if(q.pick){var ok=q.pick===q.n.id;h+='<div class="result'+(ok?'':' bad')+'"><strong>'+(ok?'Richtig.':'Leider falsch.')+'</strong> '+esc(q.n.par)+': '+md(q.n.text.slice(0,260))+(q.n.text.length>260?' …':'')+' <a href="#'+q.n.id+'">Zur Norm →</a></div><div class="actions"><button class="btn primary" id="qNext">'+(quiz.i+1<quiz.qs.length?'Weiter':'Ergebnis')+'</button></div>'}
+  return h}
+
+/* ---------- Prüf-Werkzeuge ---------- */
+var WIZ={
+ wohn:{titel:"Wohnungsaufgabe: Darf der Betreuer aufgeben?",start:"w1",n:{
+  w1:{q:"Wird der Wohnraum vom Betreuten selbst genutzt (auch Heimzimmer oder WG-Zimmer)?",o:[["Ja","w2"],["Nein (z. B. vermietetes Anlageobjekt)","r_nein"]]},
+  w2:{q:"Handelt der Betreuer in Vertretung – oder will der Betreute selbst und wirksam handeln?",o:[["Betreuer handelt als Vertreter","w3"],["Betreuter handelt selbst wirksam","r_selbst"]]},
+  w3:{q:"Geht es um einen Heimvertrag nach WBVG (Heimplatz)?",o:[["Ja, Heimplatz","r_heim"],["Nein, Mietverhältnis","w4"]]},
+  w4:{q:"Umfasst der Aufgabenkreis Miet-/Wohnungsangelegenheiten (nicht nur Vermögenssorge)?",o:[["Ja (oder Personensorge/Aufenthalt)","w5"],["Nein, nur Vermögenssorge","r_ak"]]},
+  w5:{q:"Entspricht die Aufgabe dem Wunsch des Betreuten?",o:[["Ja, Betreuter will aufgeben","r_wunsch"],["Nein / nicht feststellbar","w6"]]},
+  w6:{q:"Würden Person oder Vermögen bei Erhalt erheblich gefährdet (Finanzierung unmöglich oder häusliche Versorgung führt zu erheblicher Gesundheitsgefahr) – und kann der Betreute das krankheitsbedingt nicht erkennen?",o:[["Ja","r_gefahr"],["Nein","r_nein_gefahr"]]},
+  r_nein:{r:"§ 1833 BGB ist nicht anwendbar.",t:"Nicht vom Betreuten selbst genutzter Wohnraum fällt in die Vermögenssorge (z. B. §§ 1850 ff. BGB).",c:"warn"},
+  r_selbst:{r:"Keine gerichtliche Genehmigung nötig.",t:"Handelt der Betreute selbst wirksam, auch mit Unterstützung des Betreuers, greifen die Genehmigungsvorbehalte nicht ein. Prüfe aber, ob ein Einwilligungsvorbehalt angeordnet ist.",c:"ok"},
+  r_heim:{r:"Nur Anzeige, keine Genehmigung.",t:"Der Heimvertrag nach WBVG ist kein Mietverhältnis: Kündigung ist nach § 1833 Abs. 2 BGB unverzüglich anzuzeigen, aber nicht genehmigungsbedürftig. Wohnraum im Sinne des § 1833 ist das Heimzimmer trotzdem.",c:"warn"},
+  r_ak:{r:"Aufgabenkreis zu eng.",t:"Mit bloßer Vermögenssorge reicht es nicht. Erweiterung des Aufgabenkreises beim Betreuungsgericht anregen (bei drohender Vermieterkündigung das Gericht ohnehin informieren).",c:"bad"},
+  r_wunsch:{r:"Aufgabe ist zulässig (§ 1821 Abs. 2).",t:"Der Betreuer setzt den Wunsch um. Trotzdem: Beabsichtigte Aufgabe unverzüglich mit Gründen und Sichtweise des Betreuten anzeigen (§ 1833 Abs. 2). Genehmigung nach Abs. 3 für Kündigung, Aufhebungsvertrag, Vermietung, Grundstücksverfügung. Kündigung mit Bestellungsurkunde und Genehmigung im Original; Genehmigung vor Abgabe der Erklärung.",c:"ok"},
+  r_gefahr:{r:"Aufgabe gegen den Willen ist zulässig – mit Verfahren.",t:"§ 1833 Abs. 1 S. 2 i. V. m. § 1821 Abs. 3 Nr. 1. Anzeige unverzüglich mit Gründen und Sichtweise; persönliche Anhörung des Betreuten (§ 1862 Abs. 2, § 299 FamFG), Verfahrenspfleger (§ 276 FamFG); Genehmigung des Rechtspflegers vor Kündigung/Aufhebung. Vor der Räumung die Anzeige nicht vergessen.",c:"warn"},
+  r_nein_gefahr:{r:"Aufgabe unzulässig, wenn der Betreute sie nicht will.",t:"Der Wille des Betreuten geht vor. Sind Wünsche nicht feststellbar, gilt der mutmaßliche Wille (§ 1821 Abs. 4); frühere Äußerungen und Wertvorstellungen ermitteln, Angehörige hören.",c:"bad"}}},
+ aerzt:{titel:"Ärztliche Maßnahme: Brauche ich eine Genehmigung (§ 1829)?",start:"a1",n:{
+  a1:{q:"Ist der Betreute für diese Maßnahme einwilligungsfähig?",o:[["Ja","r_selbst"],["Nein","a2"]]},
+  a2:{q:"Gibt es eine Patientenverfügung, die auf die aktuelle Situation zutrifft?",o:[["Ja, trifft zu","a3"],["Nein / trifft nicht zu","a3b"]]},
+  a3:{q:"Besteht begründete Gefahr, dass der Betreute durch die Maßnahme oder ihr Unterbleiben/Abbrechen stirbt oder einen schweren, länger dauernden Schaden erleidet?",o:[["Ja","a4"],["Nein","r_keine"]]},
+  a3b:{q:"Behandlungswünsche bzw. mutmaßlicher Wille sind festzustellen (§ 1827). Besteht begründete Gefahr von Tod oder schwerem, länger dauerndem Schaden – durch die Maßnahme oder ihr Unterbleiben/Abbrechen?",o:[["Ja","a4"],["Nein","r_keine"]]},
+  a4:{q:"Besteht Einvernehmen zwischen Betreuer und behandelndem Arzt, dass Einwilligung, Nichteinwilligung oder Widerruf dem festgestellten Willen (§ 1827) entspricht?",o:[["Ja","r_einv"],["Nein / Streit","a5"]]},
+  a5:{q:"Ist mit dem Aufschub Gefahr verbunden (Eilfall) und geht es um eine Einwilligung (Abs. 1)?",o:[["Ja, Eilfall","r_eil"],["Nein","r_gen"]]},
+  r_selbst:{r:"Der Betreute entscheidet selbst.",t:"Ein einwilligungsfähiger Patient entscheidet stets selbst; der Betreuer unterstützt nur. Keine Betreuer-Einwilligung, keine Genehmigung.",c:"ok"},
+  r_keine:{r:"Keine Genehmigung nach § 1829 nötig.",t:"Der Betreuer willigt ersatzweise ein bzw. setzt den Willen um (§ 1827). Gefahr-Schwelle des § 1829 nicht erreicht.",c:"ok"},
+  r_einv:{r:"Keine Genehmigung erforderlich (Abs. 4).",t:"Einvernehmen über den nach § 1827 festgestellten Willen ersetzt das Genehmigungsverfahren. Gut dokumentieren, wie der Wille festgestellt wurde.",c:"ok"},
+  r_eil:{r:"Ohne Genehmigung durchführbar (Abs. 1 S. 2).",t:"Nur wenn mit dem Aufschub Gefahr verbunden ist. Betreuer willigt ein; Begründung dokumentieren.",c:"warn"},
+  r_gen:{r:"Genehmigung des Betreuungsgerichts beantragen.",t:"Verfahren nach § 298 FamFG: persönliche Anhörung des Betroffenen, Anhörung der Beteiligten, bei § 1829 Abs. 2 (Nichteinwilligung/Widerruf) stets Verfahrenspfleger, Sachverständigengutachten (nicht vom behandelnden Arzt). Die Genehmigung ist zu erteilen, wenn die Entscheidung dem Willen des Betreuten entspricht (Abs. 3).",c:"warn"}}}
+};
+var wiz={wohn:"w1",aerzt:"a1"};
+function wizHtml(key){var w=WIZ[key],cur=wiz[key],nd=w.n[cur];
+  var h='<div class="box"><h3>'+esc(w.titel)+'</h3>';
+  if(nd.q){h+='<p><strong>'+esc(nd.q)+'</strong></p><div class="opts">';nd.o.forEach(function(o){h+='<button class="opt" data-w="'+key+'|'+o[1]+'">'+esc(o[0])+'</button>'});h+='</div>'}
+  else{h+='<div class="result '+(nd.c==="ok"?"":nd.c)+'"><strong>'+esc(nd.r)+'</strong><br>'+esc(nd.t)+'</div>'}
+  h+='<button class="btn small" data-w="'+key+'|'+w.start+'">Neu starten</button></div>';return h}
+function addMonths(y,m,k){var t=y*12+m+k;return [Math.floor(t/12),t%12]}
+function werktag3(y,m){var c=0,d=0;while(c<3){d++;var wd=new Date(y,m,d).getDay();if(wd!==0)c++}return d}
+function calcFrist(dateStr,who,years){
+  var p=dateStr.split("-");if(p.length<3)return null;var y=+p[0],m=+p[1]-1,d=+p[2];if(!y||isNaN(m)||!d)return null;
+  var extra=0;if(who==="v"){if(years>8)extra=6;else if(years>5)extra=3}
+  var inTime=d<=werktag3(y,m);var k=(inTime?2:3)+extra;var e=addMonths(y,m,k);
+  var last=new Date(e[0],e[1]+1,0);
+  return {ende:last.toLocaleDateString("de-DE",{day:"2-digit",month:"long",year:"numeric"}),karenz:werktag3(y,m),inTime:inTime,monate:k}}
+function pageWerkzeuge(){
+  var h=crumbs([["Prüf-Werkzeuge"]])+'<h1>Prüf-Werkzeuge</h1><p class="hint">Entscheidungshilfen und Rechner zum Üben – abgeleitet aus den Skripten, keine Rechtsberatung.</p>';
+  h+='<div class="two" style="align-items:start"><div id="wizW">'+wizHtml("wohn")+'</div><div id="wizA">'+wizHtml("aerzt")+'</div></div>';
+  h+='<h2>Kündigungsfristen-Rechner (ordentliche Kündigung, Wohnraum)</h2><div class="box"><p class="hint">Regel § 573c Abs. 1 BGB: Zugang bis zum 3. Werktag (Samstag zählt) eines Monats → Ende des übernächsten Monats. Vermieter: nach 5 bzw. 8 Jahren Mietdauer verlängert sich die Frist um je 3 Monate. Feiertage werden nicht berücksichtigt.</p>';
+  h+='<div class="field"><label>Zugang der Kündigung<input type="date" id="cDate"></label><label>Kündigender<select id="cWho"><option value="m">Mieter</option><option value="v">Vermieter</option></select></label><label>Mietdauer (Jahre)<input type="number" id="cYears" min="0" max="60" value="3" style="width:90px"></label></div><div id="cOut"></div></div>';
+  h+='<h2>Spickzettel: Fristen und Zahlen</h2><div class="box"><div class="two"><ul><li>Kündigung Wohnraum: <strong>Schriftform</strong>, Original-Unterschrift</li><li>Mieterfrist: bis 3. Werktag → <strong>übernächster</strong> Monatsende</li><li>Vermieterfrist: 3 / 6 / 9 Monate (bis 5 / 5–8 / über 8 Jahre)</li><li>Widerspruch: schriftlich, <strong>2 Monate</strong> vor Ende</li><li>§ 545: Widerspruch gegen stillschweigende Verlängerung <strong>2 Wochen</strong></li></ul><ul><li>Zahlungsverzug: &gt; <strong>1 Monatsmiete</strong> / <strong>2 Monatsmieten</strong></li><li>Schonfrist: <strong>2 Monate</strong> nach Rechtshängigkeit (Zweijahressperre)</li><li>Kaution: <strong>2 Kaltmieten</strong>, bis zu <strong>3 Raten</strong></li><li>§ 548: Verjährung <strong>6 Monate</strong>; Regelverjährung 3 Jahre</li><li>Patientenakte: <strong>10 Jahre</strong> Aufbewahrung</li></ul></div></div>';
+  return h}
+
+/* ---------- Routing ---------- */
+function setActiveNav(r){document.querySelectorAll(".nav-links a").forEach(function(a){a.classList.toggle("on",a.getAttribute("data-nav")===r)})}
+function render(){
+  var hash=(location.hash||"").slice(1),h="",r="";
+  document.documentElement.style.setProperty("--hh",$("#top").offsetHeight+"px");
+  if(Q&&!byId[hash]&&hash.indexOf("t_")!==0&&hash!=="karten"&&hash!=="quiz"&&hash!=="werkzeuge")h=pageSearch();
+  else if(!hash)h=pageHome();
+  else if(hash==="karten"){h=pageKarten();r="karten"}
+  else if(hash==="quiz"){h=pageQuiz();r="quiz"}
+  else if(hash==="werkzeuge"){h=pageWerkzeuge();r="werkzeuge"}
+  else if(hash.indexOf("t_")===0&&thById[hash.slice(2)])h=pageTheme(thById[hash.slice(2)]);
+  else if(byId[hash])h=pageNorm(byId[hash]);
+  else h=pageHome();
+  main.innerHTML=h;setActiveNav(r);renderTree();renderFilters();renderRing();
+  document.title=(byId[hash]?byId[hash].par+" – ":"")+"Modul 5 Lernatlas";
+  if(hash==="werkzeuge")updFrist()}
+function go(){render();try{window.scrollTo(0,0)}catch(e){}}
+window.addEventListener("hashchange",go);
+
+function updFrist(){var d=$("#cDate");if(!d)return;var out=$("#cOut");
+  if(!d.value){out.innerHTML='<p class="hint">Datum eingeben …</p>';return}
+  var r=calcFrist(d.value,$("#cWho").value,+$("#cYears").value||0);
+  if(!r){out.innerHTML='';return}
+  out.innerHTML='<div class="result'+(r.inTime?'':' warn')+'"><strong>Mietverhältnis endet am '+esc(r.ende)+'</strong><br>'+(r.inTime?'Zugang rechtzeitig (bis zum '+r.karenz+'. des Monats, dem 3. Werktag).':'Zugang nach dem 3. Werktag ('+r.karenz+'.) → ein Monat später.')+' Beendigung zum Ende des '+r.monate+'. Folgemonats nach dem Zugangsmonat (Mieter: 2. bzw. 3. Monat).</div>'}
+
+/* ---------- Ereignisse ---------- */
+document.addEventListener("click",function(e){
+  var t=e.target;if(!t.closest)return;
+  var b=t.closest("[data-th]");if(b){var k=b.getAttribute("data-th");F.themen[k]=!F.themen[k];quiz=null;deck=[];render();return}
+  b=t.closest("[data-sk]");if(b){k=b.getAttribute("data-sk");F.skript[k]=!F.skript[k];quiz=null;deck=[];render();return}
+  b=t.closest("[data-st]");if(b){F.status=b.getAttribute("data-st");quiz=null;deck=[];render();return}
+  if(t.closest("#freset")){F={themen:{},skript:{},status:"alle"};Q="";$("#q").value="";quiz=null;deck=[];render();return}
+  b=t.closest("[data-tm]");if(b){treeMode=b.getAttribute("data-tm");renderTree();return}
+  b=t.closest("[data-br]");if(b){var id=b.getAttribute("data-br");openBr[id]=!(openBr[id]||(location.hash==="#t_"+id));renderTree();return}
+  if(t.closest("#allOpen")){THEMEN.forEach(function(x){openBr[x.id]=true});renderTree();return}
+  if(t.closest("#allClose")){openBr={};renderTree();return}
+  if(t.closest("#hideTree")||t.closest("#btnTree")){layout.classList.toggle("noaside");return}
+  if(t.closest("#btnTheme")){var d=dark();document.documentElement.setAttribute("data-theme",d?"light":"dark");store("m5_theme",d?"light":"dark");render();return}
+  b=t.closest("[data-m]");if(b){var p=b.getAttribute("data-m").split("|");F.themen={};F.themen[p[0]]=true;F.skript={};F.skript[p[1]]=true;render();location.hash="#t_"+p[0];return}
+  var cur=(location.hash||"").slice(1);
+  if(t.closest("#bLearn")&&byId[cur]){learned[cur]=!learned[cur];if(!learned[cur])delete learned[cur];saveAll();render();return}
+  if(t.closest("#bStar")&&byId[cur]){starred[cur]=!starred[cur];if(!starred[cur])delete starred[cur];saveAll();render();return}
+  if(t.closest("#kFlip")){showBack=!showBack;main.innerHTML=pageKarten();return}
+  if(t.closest("#kYes")||t.closest("#kNo")){var n=deck[di];if(n){var bx=boxes[n.id]||0;boxes[n.id]=t.closest("#kYes")?Math.min(2,bx+1):0;saveAll()}di++;showBack=false;if(di>=deck.length)buildDeck();main.innerHTML=pageKarten();return}
+  if(t.closest("#kShuf")){buildDeck();main.innerHTML=pageKarten();return}
+  b=t.closest("[data-o]");if(b&&quiz){var q=quiz.qs[quiz.i];if(!q.pick){q.pick=b.getAttribute("data-o");if(q.pick===q.n.id)quiz.score++;main.innerHTML=pageQuiz()}return}
+  if(t.closest("#qNext")){quiz.i++;main.innerHTML=pageQuiz();return}
+  if(t.closest("#qNew")){newQuiz();main.innerHTML=pageQuiz();return}
+  b=t.closest("[data-w]");if(b){var wp=b.getAttribute("data-w").split("|");wiz[wp[0]]=wp[1];$(wp[0]==="wohn"?"#wizW":"#wizA").innerHTML=wizHtml(wp[0]);return}
+});
+document.addEventListener("input",function(e){if(e.target.id==="cDate"||e.target.id==="cWho"||e.target.id==="cYears")updFrist()});
+document.addEventListener("keydown",function(e){
+  var tg=e.target,typing=tg&&(tg.tagName==="INPUT"||tg.tagName==="SELECT"||tg.tagName==="TEXTAREA");
+  if(e.key==="/"&&!typing){e.preventDefault();$("#q").focus();return}
+  if(e.key==="Escape"&&tg&&tg.id==="q"){Q="";tg.value="";tg.blur();render();return}
+  if(typing)return;
+  var hash=(location.hash||"").slice(1);
+  if(hash==="karten"&&e.key===" "){e.preventDefault();showBack=!showBack;main.innerHTML=pageKarten();return}
+  if(byId[hash]&&(e.key==="ArrowRight"||e.key==="ArrowLeft")){var arr=list();var k=arr.indexOf(byId[hash]);if(k<0){arr=NORMEN;k=byId[hash]._i}var nx=arr[k+(e.key==="ArrowRight"?1:-1)];if(nx)location.hash="#"+nx.id}
+  var m=tg.closest&&tg.closest("[data-m]");if(m&&(e.key==="Enter"||e.key===" ")){e.preventDefault();m.click()}
+});
+var qi=$("#q"),qt=null;
+qi.addEventListener("input",function(){clearTimeout(qt);qt=setTimeout(function(){Q=qi.value;quiz=null;deck=[];render()},120)});
+
+/* Spaltenbreite ziehen */
+(function(){var g=$("#gutter"),drag=false;
+  g.addEventListener("mousedown",function(e){drag=true;e.preventDefault()});
+  window.addEventListener("mousemove",function(e){if(!drag)return;var w=Math.max(220,Math.min(560,e.clientX));document.documentElement.style.setProperty("--aside",w+"px")});
+  window.addEventListener("mouseup",function(){drag=false})})();
+
+/* Start */
+(function(){var th=store("m5_theme");if(!th)th=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";document.documentElement.setAttribute("data-theme",th);
+  if(window.innerWidth<=900)layout.classList.add("noaside");
+  render();window.addEventListener("resize",function(){document.documentElement.style.setProperty("--hh",$("#top").offsetHeight+"px")})})();
+window.__M5={NORMEN:NORMEN,THEMEN:THEMEN,score:score,list:list};
+})();
+</script>
+</body>
+</html>
