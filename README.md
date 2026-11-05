@@ -1,18 +1,17 @@
 # Modul 5 Lernatlas – Personensorge
 
-Interaktiver Lernatlas zum Modul 5 (Personensorge) des Sachkundelehrgangs für rechtliche Betreuer (BtRegV).
-
+Lernseite zum Modul 5 (Personensorge) des Sachkundelehrgangs für rechtliche Betreuer (BtRegV).
 Live: https://m05-lernatlas.netlify.app
 
-## Inhalt
-- Gesundheitssorge: Behandlungsvertrag (§§ 630a–630h BGB), Einwilligungsfähigkeit, § 1829 BGB, § 298 FamFG, Patientenverfügung und Vorsorge
-- Wohnraumaufgabe (§ 1833 BGB), Umgang und Aufenthalt (§ 1834 BGB)
-- Mietrecht als Werkzeug (Kündigung, Fristen, Widerspruch, Zahlungsverzug, Rückgabe)
+Das Repo vereint zwei Lernwerkzeuge auf einer Domain, jeweils eine einzelne HTML-Datei ohne Build-Schritt:
 
-## Funktionen
-Themenbaum, Filter, Suche (mit Tippfehlertoleranz), Lernstatus und Merkliste, Prüfschemata und Prüfungsfragen, Karteikarten, Quiz, Entscheidungshilfen (Wohnungsaufgabe, § 1829), Kündigungsfristen-Rechner, Hell/Dunkel, Druckansicht.
+| Pfad | Inhalt |
+|---|---|
+| `/` (`index.html`) | **Lernatlas:** Themenbaum, Filter, Suche, Lernstatus, 34 Normen mit Merksatz, Prüfschema und Prüfungsfrage, Karteikarten, Quiz „Welche Norm passt?“, Entscheidungshilfen, Fristenrechner |
+| `/lernpfad/` (`lernpfad/index.html`) | **Lernpfad:** 15 Stationen, 104 Quizfragen mit Erklärungen, 94 Karteikarten, Gesetze im Wortlaut (BGB, FamFG), Übungen (Entscheidungs-Navigator, Wohnungs-Navigator, Fristenrechner, sechs Fälle, Reflexion) |
 
-## Technik
-Eine einzige `index.html` (Vanilla JS, kein Build-Schritt). Fortschritt wird nur lokal im Browser gespeichert.
+Stoff: Gesundheitssorge (Behandlungsvertrag §§ 630a–630h, Einwilligung, § 1829 BGB, Patientenverfügung, Sterbewunsch) und Teil 2 (Aufgabe von Wohnraum § 1833, Umgang und Aufenthalt § 1834, Mietrecht).
+
+Lernfortschritt und Notizen werden nur im Browser gespeichert. Deployment: Netlify, Publish-Verzeichnis `/`, kein Build-Befehl.
 
 Hinweis: Die Zusammenfassungen ersetzen weder das Gesetz noch eine Rechtsberatung. Paragrafenüberschriften und Fristen vor der Prüfung am aktuellen Gesetzestext abgleichen.

@@ -207,6 +207,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
       <a href="#karten" data-nav="karten">Karteikarten</a>
       <a href="#quiz" data-nav="quiz">Quiz</a>
       <a href="#werkzeuge" data-nav="werkzeuge">Prüf-Werkzeuge</a>
+      <a href="lernpfad/" data-nav="lernpfad">Lernpfad ↗</a>
     </nav>
     <div class="ring" id="ring" aria-live="polite"></div>
     <button class="btn" id="btnTheme" aria-label="Hell/Dunkel umschalten">◐</button>
@@ -637,7 +638,7 @@ function pageHome(){
     [1,2].forEach(function(s){var n=NORMEN.filter(function(x){return x.thema===t.id&&x.skript===s}).length;
       h+=n?'<td class="has" style="--c:'+tcol(t)+'" data-m="'+t.id+'|'+s+'" role="button" tabindex="0" aria-label="'+n+' Normen filtern">'+n+'</td>':'<td>·</td>'});h+='</tr>'});
   h+='</table></div>';
-  h+='<h2>So arbeitest Du damit</h2><div class="box"><div class="two"><div><h3>Lernen</h3><p>Normen im Baum durchgehen, <strong>Als gelernt markieren</strong>, ★ merken. Fortschritt wird in Deinem Browser gespeichert.</p><h3>Suchen &amp; Filtern</h3><p>Taste <kbd>/</kbd> fokussiert die Suche (auch Paragrafen wie „1833“, kleine Tippfehler okay). Themen/Skript = ODER, Zeilen untereinander = UND.</p></div><div><h3>Üben</h3><p><a href="#karten">Karteikarten</a> mit Prüfungsfragen, <a href="#quiz">Quiz</a> „Welche Norm passt?“ und die <a href="#werkzeuge">Prüf-Werkzeuge</a> (Entscheidungshilfen und Fristenrechner).</p><h3>Tastatur</h3><p><kbd>←</kbd> <kbd>→</kbd> zwischen Normen, <kbd>Esc</kbd> leert die Suche.</p></div></div></div>';
+  h+='<h2>So arbeitest Du damit</h2><div class="box"><div class="two"><div><h3>Lernen</h3><p>Normen im Baum durchgehen, <strong>Als gelernt markieren</strong>, ★ merken. Fortschritt wird in Deinem Browser gespeichert.</p><h3>Suchen &amp; Filtern</h3><p>Taste <kbd>/</kbd> fokussiert die Suche (auch Paragrafen wie „1833“, kleine Tippfehler okay). Themen/Skript = ODER, Zeilen untereinander = UND.</p></div><div><h3>Üben</h3><p><a href="#karten">Karteikarten</a> mit Prüfungsfragen, <a href="#quiz">Quiz</a> „Welche Norm passt?“ und die <a href="#werkzeuge">Prüf-Werkzeuge</a> (Entscheidungshilfen und Fristenrechner). Dazu der <a href="lernpfad/">Lernpfad</a> mit 15 Stationen, 104 Quizfragen, 94 Karteikarten, Gesetzestexten und Fällen.</p><h3>Tastatur</h3><p><kbd>←</kbd> <kbd>→</kbd> zwischen Normen, <kbd>Esc</kbd> leert die Suche.</p></div></div></div>';
   h+='<h2>Prüfungsfokus: Denkreihenfolgen</h2>';TIPPS.forEach(function(t){h+='<div class="tip"><b>'+esc(t.titel)+'</b>'+esc(t.text)+'</div>'});
   h+='<h2>Enthält</h2><div class="grid">';THEMEN.forEach(function(t){var n=NORMEN.filter(function(x){return x.thema===t.id}).length;h+='<a class="card" href="#t_'+t.id+'" style="--c:'+tcol(t)+'"><small>'+esc(t.range)+'</small><b>'+esc(strip(t.titel))+'</b><span class="hint">'+n+' Einheiten</span></a>'});h+='</div>';
   h+='<h2>Weiterführende Links</h2><div class="rel"><a href="https://www.gesetze-im-internet.de/bgb/" target="_blank" rel="noopener">BGB</a><a href="https://www.gesetze-im-internet.de/famfg/" target="_blank" rel="noopener">FamFG</a><a href="https://www.gesetze-im-internet.de/btog/" target="_blank" rel="noopener">BtOG</a><a href="https://www.gesetze-im-internet.de/btregv/" target="_blank" rel="noopener">BtRegV</a></div>';
