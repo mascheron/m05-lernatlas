@@ -856,7 +856,7 @@ document.addEventListener("click",function(e){
   if(t.closest("#freset")){F={themen:{},skript:{},status:"alle"};Q="";$("#q").value="";quiz=null;deck=[];render();return}
   b=t.closest("[data-tm]");if(b){treeMode=b.getAttribute("data-tm");renderTree();return}
   b=t.closest("[data-brt]");if(b){var id0=b.getAttribute("data-brt");openBr[id0]=!(openBr[id0]||(location.hash==="#t_"+id0));renderTree();return}
-  b=t.closest("[data-br]");if(b){var id=b.getAttribute("data-br");openBr[id]=true;if(location.hash==="#t_"+id){renderTree()}else{location.hash="#t_"+id}return}
+  b=t.closest("[data-br]");if(b){var id=b.getAttribute("data-br");openBr[id]=true;if(window.innerWidth<=900)layout.classList.add("noaside");if(location.hash==="#t_"+id){renderTree();render()}else{location.hash="#t_"+id}return}
   if(t.closest("#allOpen")){THEMEN.forEach(function(x){openBr[x.id]=true});renderTree();return}
   if(t.closest("#allClose")){openBr={};renderTree();return}
   if(t.closest("#btnFilter")){var tp=$("#top"),o=tp.classList.toggle("fopen");$("#btnFilter").setAttribute("aria-expanded",o);$("#btnFilter").textContent=o?"Filter ▴":"Filter ▾";document.documentElement.style.setProperty("--hh",tp.offsetHeight+"px");return}
