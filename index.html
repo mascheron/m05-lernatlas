@@ -31,6 +31,43 @@ button{font:inherit;color:inherit;cursor:pointer}
 .skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--accent-ink);padding:8px 12px;z-index:100}
 .skip:focus{left:8px;top:8px}
 
+.rvl{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.rvl.in{opacity:1;transform:none}
+main.pg{animation:fxfade .3s ease both}
+@keyframes fxfade{from{opacity:0}to{opacity:1}}
+#sprog{position:fixed;left:0;top:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--accent),var(--ok));z-index:60;pointer-events:none}
+html.tt *,html.tt *::before{transition:background-color .4s,color .4s,border-color .4s!important}
+.nav-links a{transition:background-color .2s,color .2s}
+:root{--fxc:var(--ok);--fxshine:rgba(255,255,255,.55);--fxmark:rgba(255,205,60,.55)}
+:root[data-theme="dark"]{--fxshine:rgba(255,255,255,.12);--fxmark:rgba(255,205,60,.28)}
+/* ===== Animationen ===== */
+@keyframes fxwiggle{0%,100%{rotate:0deg}20%{rotate:-1.4deg}40%{rotate:1.1deg}60%{rotate:-.7deg}80%{rotate:.4deg}}
+@keyframes fxpop{0%{transform:scale(1)}35%{transform:scale(1.045)}100%{transform:scale(1)}}
+@keyframes fxshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+@keyframes fxrise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fxglow{0%{box-shadow:0 0 0 0 var(--fxc)}100%{box-shadow:0 0 0 16px transparent}}
+@keyframes fxsweep{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+@keyframes fxpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fxc) 40%,transparent)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--fxc) 0%,transparent)}}
+@keyframes fxmark{to{background-size:100% 100%}}
+@keyframes fxbadge{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.12) rotate(-4deg)}}
+.fx-w,.card:not(.flip),.lp-st a,.grid>a,.stat,.opt:not(:disabled),.st-head,.exl>*,.tool-card{transition:box-shadow .2s,border-color .2s,background-color .2s}
+.card:not(.flip):hover,.lp-st a:hover,.grid>a:hover,.stat:hover,.opt:not(:disabled):hover,.st-head:hover{animation:fxwiggle .55s ease-in-out}
+.lp-st a:hover,.grid>a:hover,.st-head:hover{box-shadow:0 6px 18px rgba(20,33,61,.14)}
+.st.next .node{animation:fxwiggle 2.6s ease-in-out infinite}
+.opt.right{animation:fxpop .45s ease,fxglow .8s ease-out}
+.opt.wrong{animation:fxshake .42s ease}
+.fb,.fx-in{animation:fxrise .38s ease both}
+.st.open .st-body,.law[open] .lawx,.rv[open]>*:not(summary){animation:fxrise .38s ease both}
+.enter .st,.enter .panel,.enter .law,.enter .exl>*,.enter .prog,.enter .bubble{animation:fxrise .55s ease both}
+.enter .st:nth-child(2){animation-delay:.05s}.enter .st:nth-child(3){animation-delay:.1s}.enter .st:nth-child(4){animation-delay:.15s}.enter .st:nth-child(5){animation-delay:.2s}.enter .st:nth-child(6){animation-delay:.25s}.enter .st:nth-child(7){animation-delay:.3s}.enter .st:nth-child(8){animation-delay:.35s}
+/* Wichtige Inhalte: Merksatz, Tipp, Hinweis */
+.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 3.8s ease-in-out infinite}
+.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 6s ease-in-out infinite 1.2s;pointer-events:none}
+.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 3.8s ease-in-out infinite;transform-origin:left center}
+.merk strong,.tip strong{background:linear-gradient(transparent 60%,var(--fxmark) 0) no-repeat;background-size:0 100%;animation:fxmark .9s ease .5s forwards}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.merk strong,.tip strong{background-size:100% 100%}}
+@media print{*,*::before,*::after{animation:none!important}.rvl{opacity:1!important;transform:none!important}}
+
 /* Unterleiste (Quiz / Übungen) und Lernpfad-Host */
 .sub{display:flex;gap:4px;border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:3px;margin:0 0 14px;max-width:100%}
 .sub a{flex:1 1 0;text-align:center;padding:9px 10px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;color:var(--ink)}
@@ -261,6 +298,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
 </style>
 </head>
 <body>
+<div id="sprog" aria-hidden="true"></div>
 <a class="skip" href="#main">Zum Inhalt springen</a>
 <header class="top" id="top">
   <div class="top-row">
@@ -335,6 +373,24 @@ h2{margin:0 0 .6rem;font-size:1.25rem}h3{margin:1rem 0 .3rem;font-size:1rem}p{ma
 
 </footer>
 
+<script>
+(function(){
+var RM=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)");
+var COL=["#1f8a4c","#f0b04a","#7aa7f5","#e4572e","#a855f7","#14b8a6","#f472b6"];
+function mk(x,y,dx,dy,rot,dur){var p=document.createElement("i"),s=5+Math.random()*7;
+  p.style.cssText="position:fixed;left:"+x+"px;top:"+y+"px;width:"+s+"px;height:"+(s*(Math.random()<.5?1:.45))+"px;background:"+COL[Math.random()*COL.length|0]+";border-radius:"+(Math.random()<.4?"50%":"2px")+";pointer-events:none;z-index:9999";
+  document.body.appendChild(p);
+  var a=p.animate([{transform:"translate(0,0) rotate(0)",opacity:1},{transform:"translate("+dx*.6+"px,"+(dy*.6-60)+"px) rotate("+rot*.5+"deg)",opacity:1,offset:.45},{transform:"translate("+dx+"px,"+(dy+140)+"px) rotate("+rot+"deg)",opacity:0}],{duration:dur,easing:"cubic-bezier(.2,.7,.4,1)"});
+  a.onfinish=function(){p.remove()}}
+window.__fx={burst:function(el,n){
+  if((RM&&RM.matches)||!el||!el.getBoundingClientRect||!document.body.animate)return;
+  var big=n>=60,r=el.getBoundingClientRect();n=n||26;
+  if(big){for(var i=0;i<n;i++)mk(Math.random()*innerWidth,-12,(Math.random()-.5)*160,innerHeight*(.55+Math.random()*.35),Math.random()*720-360,1500+Math.random()*1300);return}
+  if(!r.width&&!r.height)return;
+  var cx=r.left+r.width/2,cy=r.top+r.height/2;
+  for(var j=0;j<n;j++){var ang=Math.random()*Math.PI*2,d=50+Math.random()*110;mk(cx,cy,Math.cos(ang)*d,Math.sin(ang)*d,Math.random()*540-270,800+Math.random()*700)}}};
+})();
+</script>
 <template id="lp-tpl"><style>
 /* Layout: Kopfzeile mit Tabs, darunter eine Sprechblase als Einstieg; Lernpfad als vertikale Linie mit Stationen, Quiz und Karten als schmale Arbeitsflächen */
 :host{display:block;
@@ -562,6 +618,37 @@ textarea{resize:vertical}
 .wrap{max-width:none;padding-inline:0;padding-block:0 24px}
 .bubble{margin-top:0}
 .lpb{background:transparent}
+
+:host{--fxc:var(--good);--fxshine:rgba(255,255,255,.6);--fxmark:rgba(255,205,60,.55)}
+:host([data-theme="dark"]){--fxshine:rgba(255,255,255,.12);--fxmark:rgba(255,205,60,.28)}
+:host(.tt) *{transition:background-color .4s,color .4s,border-color .4s!important}
+/* ===== Animationen ===== */
+@keyframes fxwiggle{0%,100%{rotate:0deg}20%{rotate:-1.4deg}40%{rotate:1.1deg}60%{rotate:-.7deg}80%{rotate:.4deg}}
+@keyframes fxpop{0%{transform:scale(1)}35%{transform:scale(1.045)}100%{transform:scale(1)}}
+@keyframes fxshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+@keyframes fxrise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fxglow{0%{box-shadow:0 0 0 0 var(--fxc)}100%{box-shadow:0 0 0 16px transparent}}
+@keyframes fxsweep{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+@keyframes fxpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fxc) 40%,transparent)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--fxc) 0%,transparent)}}
+@keyframes fxmark{to{background-size:100% 100%}}
+@keyframes fxbadge{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.12) rotate(-4deg)}}
+.fx-w,.card:not(.flip),.lp-st a,.grid>a,.stat,.opt:not(:disabled),.st-head,.exl>*,.tool-card{transition:box-shadow .2s,border-color .2s,background-color .2s}
+.card:not(.flip):hover,.lp-st a:hover,.grid>a:hover,.stat:hover,.opt:not(:disabled):hover,.st-head:hover{animation:fxwiggle .55s ease-in-out}
+.lp-st a:hover,.grid>a:hover,.st-head:hover{box-shadow:0 6px 18px rgba(20,33,61,.14)}
+.st.next .node{animation:fxwiggle 2.6s ease-in-out infinite}
+.opt.right{animation:fxpop .45s ease,fxglow .8s ease-out}
+.opt.wrong{animation:fxshake .42s ease}
+.fb,.fx-in{animation:fxrise .38s ease both}
+.st.open .st-body,.law[open] .lawx,.rv[open]>*:not(summary){animation:fxrise .38s ease both}
+.enter .st,.enter .panel,.enter .law,.enter .exl>*,.enter .prog,.enter .bubble{animation:fxrise .55s ease both}
+.enter .st:nth-child(2){animation-delay:.05s}.enter .st:nth-child(3){animation-delay:.1s}.enter .st:nth-child(4){animation-delay:.15s}.enter .st:nth-child(5){animation-delay:.2s}.enter .st:nth-child(6){animation-delay:.25s}.enter .st:nth-child(7){animation-delay:.3s}.enter .st:nth-child(8){animation-delay:.35s}
+/* Wichtige Inhalte: Merksatz, Tipp, Hinweis */
+.merk,.tip,.note{position:relative;overflow:hidden;animation:fxpulse 3.8s ease-in-out infinite}
+.merk::after,.tip::after,.note::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,var(--fxshine) 50%,transparent 62%);transform:translateX(-130%);animation:fxsweep 6s ease-in-out infinite 1.2s;pointer-events:none}
+.merk>b:first-child,.merk>.mk-l{width:max-content;animation:fxbadge 3.8s ease-in-out infinite;transform-origin:left center}
+.merk strong,.tip strong{background:linear-gradient(transparent 60%,var(--fxmark) 0) no-repeat;background-size:0 100%;animation:fxmark .9s ease .5s forwards}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.merk strong,.tip strong{background-size:100% 100%}}
+@media print{*,*::before,*::after{animation:none!important}.rvl{opacity:1!important;transform:none!important}}
 </style><div class="lpb"><div class="wrap">
   <section class="hero">
     <div class="bubble">
@@ -1514,7 +1601,7 @@ $("#path").addEventListener("click",e=>{
   const b=e.target.closest("[data-act]");if(!b)return;
   const li=b.closest(".st"),id=+li.dataset.id;
   if(b.dataset.act==="toggle"){const o=li.classList.toggle("open");b.setAttribute("aria-expanded",o)}
-  else if(b.dataset.act==="done"){S.done[id]=!S.done[id];if(!S.done[id])delete S.done[id];save();renderPath();progress();$(".st[data-id='"+id+"']").classList.add("open")}
+  else if(b.dataset.act==="done"){S.done[id]=!S.done[id];if(S.done[id])window.__fx.burst(b,40);if(!S.done[id])delete S.done[id];save();renderPath();progress();$(".st[data-id='"+id+"']").classList.add("open")}
   else if(b.dataset.act==="quiz"){$("#q-topic").value=id;setTab("quiz");startQuiz()}
   else if(b.dataset.act==="cards"){$("#c-topic").value=id;setTab("cards");buildDeck()}
 });
@@ -1765,7 +1852,7 @@ $("#q-area").addEventListener("click",e=>{
     const c=Q.cur;c.answered=true;
     const pick=c.opts[+o.dataset.i];
     $$(".opt").forEach((b,i)=>{b.disabled=true;if(c.opts[i].ok)b.classList.add("right")});
-    if(pick.ok){Q.score++}else{o.classList.add("wrong");Q.wrong.push(c.q)}
+    if(pick.ok){Q.score++;window.__fx.burst(o)}else{o.classList.add("wrong");Q.wrong.push(c.q)}
     Q.log.push({q:c.q,picked:pick.t,ok:pick.ok});
     const last=Q.i===Q.list.length-1,done=Q.i+1;
     $("#q-fb").innerHTML='<div class="fb '+(pick.ok?"good":"bad")+'"><b>'+(pick.ok?"✓ Richtig":"✗ Nicht ganz")+'</b>'+
@@ -1784,7 +1871,7 @@ $("#q-area").addEventListener("click",e=>{
 });
 function showResult(){
   const n=Q.list.length,pct=Math.round(Q.score/n*100);
-  const key=Q.t||0;
+  const key=Q.t||0;if(pct>=75)setTimeout(()=>window.__fx.burst($(".lpb"),70),250);
   if(!S.best[key]||pct>S.best[key]){S.best[key]=pct;save()}
   // je Station
   const by={};Q.log.forEach(l=>{const id=l.q[0];(by[id]=by[id]||{n:0,ok:0});by[id].n++;if(l.ok)by[id].ok++});
@@ -1831,7 +1918,7 @@ $("#c-area").addEventListener("click",e=>{
   if(e.target.closest("#c-reset")){const t=+$("#c-topic").value;CD.forEach((c,i)=>{if(!t||c[0]===t)delete S.known[i]});save();progress();buildDeck();return}
   const b=e.target.closest("[data-c]");if(!b)return;
   const d=C.deck[C.i],m=b.dataset.c;
-  if(m==="know"){S.known[d.i]=1;save();progress();if(CM==="open"){C.deck.splice(C.i,1);if(C.i>=C.deck.length)C.i=0}else C.i=(C.i+1)%C.deck.length}
+  if(m==="know"){S.known[d.i]=1;window.__fx.burst(b,16);save();progress();if(CM==="open"){C.deck.splice(C.i,1);if(C.i>=C.deck.length)C.i=0}else C.i=(C.i+1)%C.deck.length}
   else if(m==="again"){delete S.known[d.i];save();progress();C.i=(C.i+1)%C.deck.length}
   else if(m==="next")C.i=(C.i+1)%C.deck.length;
   else if(m==="prev")C.i=(C.i-1+C.deck.length)%C.deck.length;
@@ -1851,8 +1938,8 @@ renderEx();renderLaws();progress();
 S.tab=["path","quiz","cards","laws","ex"].includes(S.tab)?S.tab:"path";
 
 window.__LP={host:host,tabs:{path:"path",quiz:"quiz",cards:"cards",laws:"laws",ex:"ex"},
- show:function(tab,st){if(S.tab!==tab)setTab(tab);if(st){goStation(st);var el=$(".st[data-id='"+st+"']");if(el)setTimeout(function(){el.scrollIntoView({block:"start"})},60)}},
- sync:function(){host.setAttribute("data-theme",__real.documentElement.getAttribute("data-theme")||"light")}};
+ show:function(tab,st){if(S.tab!==tab)setTab(tab);var w=$(".lpb");w.classList.remove("enter");void w.offsetWidth;w.classList.add("enter");setTimeout(function(){w.classList.remove("enter")},1100);if(st){goStation(st);var el=$(".st[data-id='"+st+"']");if(el)setTimeout(function(){el.scrollIntoView({block:"start"})},60)}},
+ sync:function(){host.setAttribute("data-theme",__real.documentElement.getAttribute("data-theme")||"light");host.classList.toggle("tt",__real.documentElement.classList.contains("tt"))}};
 })();
 })();
 </script>
@@ -2058,7 +2145,7 @@ function render(){
   window.__LPon=!!lp;window.__LP.sync();
   if(lp){
     h=(hash==="quiz"?subbar(["quiz","Fragen zu den Stationen",1],["quiz-norm","Welche Norm passt?",0]):hash==="uebungen"?subbar(["uebungen","Navigatoren und Fälle",1],["spick","Spickzettel",0]):"");
-    main.innerHTML=h;main.appendChild(window.__LP.host);window.__LP.host.hidden=false;
+    main.innerHTML=h;main.appendChild(window.__LP.host);window.__LP.host.hidden=false;pgIn();
     var key=hash+"|"+st;if(key!==lastLP){window.__LP.show(lp,st);lastLP=key}
     document.title=(st?"Station "+st+" – ":"")+LPN[lp]+" – Modul 5 Lernatlas";
     setActiveNav(r);renderTree();return}
@@ -2070,7 +2157,7 @@ function render(){
   else if(hash.indexOf("t_")===0&&thById[hash.slice(2)])h=pageTheme(thById[hash.slice(2)]);
   else if(byId[hash])h=pageNorm(byId[hash]);
   else h=pageHome();
-  main.innerHTML=h;setActiveNav(r);renderTree();renderFilters();renderRing();
+  main.innerHTML=h;pgIn();setActiveNav(r);renderTree();renderFilters();renderRing();
   document.title=(byId[hash]?byId[hash].par+" – ":"")+"Modul 5 Lernatlas"}
 function go(){render();try{window.scrollTo(0,0)}catch(e){}}
 window.addEventListener("hashchange",go);
@@ -2090,12 +2177,12 @@ document.addEventListener("click",function(e){
   if(t.closest("#btnFilter")){var tp=$("#top"),o=tp.classList.toggle("fopen");$("#btnFilter").setAttribute("aria-expanded",o);$("#btnFilter").textContent=o?"✕":"🔍";document.documentElement.style.setProperty("--hh",tp.offsetHeight+"px");return}
   if(window.innerWidth<=900&&!layout.classList.contains("noaside")&&(t===layout||(t.closest("#aside")&&t.closest("a[href]")))){layout.classList.add("noaside");return}
   if(t.closest("#hideTree")||t.closest("#btnTree")){layout.classList.toggle("noaside");return}
-  if(t.closest("#btnTheme")){var d=dark();document.documentElement.setAttribute("data-theme",d?"light":"dark");store("m5_theme",d?"light":"dark");render();return}
+  if(t.closest("#btnTheme")){var d=dark();var hr=document.documentElement;hr.classList.add("tt");setTimeout(function(){hr.classList.remove("tt");window.__LP.sync()},550);document.documentElement.setAttribute("data-theme",d?"light":"dark");store("m5_theme",d?"light":"dark");render();return}
   b=t.closest("[data-m]");if(b){var p=b.getAttribute("data-m").split("|");F.themen={};F.themen[p[0]]=true;F.skript={};F.skript[p[1]]=true;render();location.hash="#t_"+p[0];return}
   var cur=(location.hash||"").slice(1);
-  if(t.closest("#bLearn")&&byId[cur]){learned[cur]=!learned[cur];if(!learned[cur])delete learned[cur];saveAll();render();return}
+  if(t.closest("#bLearn")&&byId[cur]){learned[cur]=!learned[cur];if(!learned[cur])delete learned[cur];else window.__fx.burst(t.closest("#bLearn"),34);saveAll();render();return}
   if(t.closest("#bStar")&&byId[cur]){starred[cur]=!starred[cur];if(!starred[cur])delete starred[cur];saveAll();render();return}
-  b=t.closest("[data-o]");if(b&&quiz){var q=quiz.qs[quiz.i];if(!q.pick){q.pick=b.getAttribute("data-o");if(q.pick===q.n.id)quiz.score++;main.innerHTML=pageQuiz()}return}
+  b=t.closest("[data-o]");if(b&&quiz){var q=quiz.qs[quiz.i];if(!q.pick){q.pick=b.getAttribute("data-o");if(q.pick===q.n.id){quiz.score++;window.__fx.burst(b)}main.innerHTML=pageQuiz()}return}
   if(t.closest("#qNext")){quiz.i++;main.innerHTML=pageQuiz();return}
   if(t.closest("#qNew")){newQuiz();main.innerHTML=pageQuiz();return}
 });
@@ -2109,6 +2196,15 @@ document.addEventListener("keydown",function(e){
   var m=tg.closest&&tg.closest("[data-m]");if(m&&(e.key==="Enter"||e.key===" ")){e.preventDefault();m.click()}
 });
 /* Auto-Ausblenden der Kopfleiste (nur Desktop mit Maus) */
+/* Animationen: Seitenwechsel, Reveal beim Scrollen, Fortschrittsbalken, Zähler */
+var RMq=window.matchMedia("(prefers-reduced-motion:reduce)"),sprog=$("#sprog");
+var IO=("IntersectionObserver" in window)?new IntersectionObserver(function(es){var k=0;es.forEach(function(e){if(!e.isIntersecting)return;var el=e.target;IO.unobserve(el);el.style.transitionDelay=(k++*55)+"ms";el.classList.add("in");setTimeout(function(){el.classList.remove("rvl","in");el.style.transitionDelay=""},900)})},{rootMargin:"0px 0px -5% 0px",threshold:.04}):null;
+function countUp(el){var n=parseInt(el.textContent,10);if(isNaN(n)||n<1||String(n)!==el.textContent.trim())return;var t0=null,d=Math.min(900,300+n*25);function f(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/d);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f);else el.textContent=n}el.textContent="0";requestAnimationFrame(f)}
+function pgIn(){if(RMq.matches)return;main.classList.remove("pg");void main.offsetWidth;main.classList.add("pg");
+  if(IO)main.querySelectorAll(".card,.box,.tip,.merk,.stat,.pager,h2,.table-wrap,table,.lp").forEach(function(el){if(el.closest(".rvl"))return;el.classList.add("rvl");IO.observe(el)});
+  main.querySelectorAll(".stat b").forEach(countUp)}
+function updProg(){if(!sprog)return;var h=document.documentElement.scrollHeight-innerHeight;sprog.style.transform="scaleX("+(h>0?Math.min(1,scrollY/h):0)+")"}
+var progT=0;window.addEventListener("scroll",function(){if(progT)return;progT=requestAnimationFrame(function(){progT=0;updProg()})},{passive:true});
 var topEl=$("#top"),hidT=null,isHid=false,AH=window.matchMedia("(min-width:901px) and (hover:hover) and (pointer:fine)");
 function topH(){return isHid?0:topEl.offsetHeight}
 function setHid(on){on=on&&AH.matches;if(on===isHid)return;var h=topEl.offsetHeight;isHid=on;topEl.classList.toggle("hid",on);topEl.style.marginBottom=on?(-h)+"px":"";document.documentElement.style.setProperty("--hh",on?"0px":h+"px")}
