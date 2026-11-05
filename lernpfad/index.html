@@ -2,33 +2,33 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: Kopfzeile mit Tabs, darunter eine Sprechblase als Einstieg; Lernpfad als vertikale Linie mit Stationen, Quiz und Karten als schmale Arbeitsflächen */
 :root{
-  --bg:#F8F3F4; --surface:#FFFFFF; --ink:#2A1B20; --muted:#6A5A5F; --line:#E4D7DA;
-  --accent:#8E2C48; --accent-ink:#FFFFFF; --accent-soft:#F4DEE5;
+  --bg:#eef2f8; --surface:#FFFFFF; --ink:#14213d; --muted:#46536b; --line:#d9e0ec;
+  --accent:#1d3a6e; --accent-ink:#FFFFFF; --accent-soft:#e4edfb;
   --note-bg:#FFF3D6; --note-ink:#4F3500; --note-line:#E3B13A;
   --good:#17744A; --good-soft:#DDF3E7; --bad:#B42318; --bad-soft:#FBE4E0;
   --c-s1:#8E2C48; --c-s2:#8A4B9C; --c-s3:#B15A0E; --c-s4:#2F62A8;
-  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
-  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-display:"Fraunces",Georgia,"Times New Roman",serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1B1316; --surface:#261B20; --ink:#F1E6E9; --muted:#C3AEB5; --line:#3E2D34;
-  --accent:#E58AA5; --accent-ink:#2B0E17; --accent-soft:#42202C;
+  --bg:#0e1424; --surface:#161e33; --ink:#e8edf8; --muted:#a8b4cc; --line:#2a3555;
+  --accent:#7aa7f5; --accent-ink:#0e1424; --accent-soft:#1f2c4d;
   --note-bg:#38300F; --note-ink:#F1E0B0; --note-line:#8A6A1B;
   --good:#5BD08F; --good-soft:#14352A; --bad:#FF8F80; --bad-soft:#41201C;
   --c-s1:#E58AA5; --c-s2:#D9A3EA; --c-s3:#F0A862; --c-s4:#8DB7F0; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#1B1316; --surface:#261B20; --ink:#F1E6E9; --muted:#C3AEB5; --line:#3E2D34;
-  --accent:#E58AA5; --accent-ink:#2B0E17; --accent-soft:#42202C;
+  --bg:#0e1424; --surface:#161e33; --ink:#e8edf8; --muted:#a8b4cc; --line:#2a3555;
+  --accent:#7aa7f5; --accent-ink:#0e1424; --accent-soft:#1f2c4d;
   --note-bg:#38300F; --note-ink:#F1E0B0; --note-line:#8A6A1B;
   --good:#5BD08F; --good-soft:#14352A; --bad:#FF8F80; --bad-soft:#41201C;
   --c-s1:#E58AA5; --c-s2:#D9A3EA; --c-s3:#F0A862; --c-s4:#8DB7F0; color-scheme:dark}
 
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;margin:0}
 .wrap{max-width:860px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
 h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
 button,select{font:inherit;color:inherit}
@@ -38,9 +38,16 @@ button{cursor:pointer}
 /* Kopf */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
 .top .wrap{padding-block:10px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.brand{font-family:var(--f-display);font-weight:700;font-size:1.05rem;letter-spacing:.01em}
-.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px}
-.tab{border:0;background:transparent;padding:7px 16px;border-radius:999px;font-weight:600;color:var(--muted)}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.25rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;line-height:1.1}
+.brand span{font:400 .78rem var(--f-body);color:var(--muted);letter-spacing:0}
+.hd{display:grid!important;grid-template-columns:1fr auto auto;gap:10px 12px!important;align-items:center}
+.hd .tabs{grid-column:1/-1}
+.modes{display:flex;gap:4px;background:var(--accent-soft);border-radius:12px;padding:3px}
+.modes a{padding:9px 16px;border-radius:10px;font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink);white-space:nowrap}
+.modes a.on{background:var(--accent);color:var(--accent-ink)}
+.thm{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 13px;font-size:1.05rem}
+.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
+.tab{border:0;background:transparent;padding:10px 4px;border-radius:9px;font-weight:600;font-size:.97rem;text-align:center;color:var(--muted)}
 .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
 
 /* Einstieg */
@@ -183,7 +190,7 @@ h2.sec{font-size:1.5rem;margin-top:28px}
 .hint{color:var(--muted);font-size:.9rem;margin-top:12px}
 .empty{padding:30px;text-align:center;color:var(--muted)}
 footer{margin-top:40px;color:var(--muted);font-size:.88rem;border-top:1px solid var(--line);padding-top:16px}
-@media (max-width:520px){.panel{padding:16px}.face{padding:18px}.face p{font-size:1.15rem}.tabs{display:grid;grid-template-columns:repeat(5,1fr);width:100%;border-radius:14px;gap:2px;padding:3px}.tab{padding:10px 0;font-size:.92rem;text-align:center;border-radius:11px}}
+@media (max-width:520px){.panel{padding:16px}.face{padding:18px}.face p{font-size:1.15rem}.tab{font-size:.86rem;padding:11px 0}.brand{font-size:1.15rem;white-space:nowrap}.brand span{display:none}.hd{grid-template-columns:1fr auto!important}.hd .modes{grid-column:1/-1;order:3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.hd .tabs{order:4}.modes a{text-align:center;font-size:1rem;padding:11px 4px}}
 @media (prefers-reduced-motion:reduce){.card,.bar>i{transition:none}}
 [hidden]{display:none!important}
 /* Übungen */
@@ -221,11 +228,12 @@ textarea{resize:vertical}
 .rv ul{margin:8px 0 0}
 </style>
 
-<header class="top"><div class="wrap">
-  <div class="brand">Modul 5 · Personensorge</div>
-  <a href="../" style="font-size:.9rem;font-weight:600;white-space:nowrap;color:inherit">← Lernatlas</a>
-  <div class="tabs" role="tablist" aria-label="Bereiche">
-    <button class="tab" role="tab" id="t-path" data-tab="path" aria-selected="true">Lernpfad</button>
+<header class="top"><div class="wrap hd">
+  <a class="brand" href="../">Modul 5 Lernatlas<span>Personensorge</span></a>
+  <nav class="modes" aria-label="Bereich wählen"><a href="../">📚 Atlas</a><a class="on" href="./" aria-current="page">🧭 Lernpfad</a></nav>
+  <button class="thm" id="btnTheme" type="button" aria-label="Hell/Dunkel umschalten">◐</button>
+  <div class="tabs" role="tablist" aria-label="Bereiche im Lernpfad">
+    <button class="tab" role="tab" id="t-path" data-tab="path" aria-selected="true">Stationen</button>
     <button class="tab" role="tab" id="t-quiz" data-tab="quiz" aria-selected="false">Quiz</button>
     <button class="tab" role="tab" id="t-cards" data-tab="cards" aria-selected="false">Karten</button>
     <button class="tab" role="tab" id="t-laws" data-tab="laws" aria-selected="false">Gesetze</button>
@@ -300,6 +308,8 @@ textarea{resize:vertical}
   <footer>Die Seite fasst die Inhalte des Moduls zusammen. Sie ersetzt weder die Unterlagen noch eine Rechtsberatung. Gesetzestexte: gesetze-im-internet.de. Der Lernfortschritt wird nur in diesem Browser gespeichert.</footer>
 </main>
 
+<script>try{var _t=localStorage.getItem("m5_theme");if(_t){_t=JSON.parse(_t);if(_t==="dark"||_t==="light")document.documentElement.setAttribute("data-theme",_t)}}catch(e){}
+document.addEventListener("click",function(e){if(!e.target.closest("#btnTheme"))return;var r=document.documentElement,a=r.getAttribute("data-theme"),d=a==="dark"||(!a&&matchMedia("(prefers-color-scheme: dark)").matches),n=d?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("m5_theme",JSON.stringify(n))}catch(x){}});</script>
 <script>
 "use strict";
 /* ---------- Inhalte ---------- */

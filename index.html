@@ -42,13 +42,17 @@ header.top{position:sticky;top:0;z-index:30;background:var(--panel);border-botto
 .brand{display:flex;flex-direction:column;line-height:1.15;cursor:pointer;text-decoration:none;color:inherit}
 .brand b{font:700 19px var(--serif);letter-spacing:-.01em}
 .brand span{font-size:12px;color:var(--ink2)}
-.search{flex:1;min-width:200px;max-width:560px;position:relative}
+.search{flex:1;min-width:140px;max-width:560px;position:relative}
+@media(min-width:901px) and (max-width:1500px){.brand span{display:none}.search{min-width:120px}}
 .search input{width:100%;padding:9px 38px 9px 36px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--ink);font:inherit}
 .search svg{position:absolute;left:11px;top:11px;width:16px;height:16px;color:var(--ink2)}
 .search kbd{position:absolute;right:10px;top:8px;font:12px var(--mono);border:1px solid var(--line);border-radius:6px;padding:0 6px;color:var(--ink2)}
 .nav-links{display:flex;gap:6px;flex-wrap:wrap}
 .nav-links a{padding:7px 11px;border-radius:10px;font-weight:600;font-size:13px;text-decoration:none;color:var(--ink);border:1px solid transparent}
 .nav-links a:hover{background:var(--soft)}
+.modes{display:flex;gap:4px;background:var(--soft);border-radius:12px;padding:3px}
+.modes a{padding:8px 16px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.modes a.on{background:var(--accent);color:var(--accent-ink)}
 .nav-links a.hl{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .nav-links a.hl:hover{filter:brightness(1.12);background:var(--accent)}
 .lp{border:2px solid var(--accent);border-radius:18px;padding:18px 20px;margin:18px 0;background:linear-gradient(135deg,var(--soft),var(--panel))}
@@ -207,15 +211,18 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
   .brand{order:2;flex:1 1 auto;min-width:0}
   .brand b{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .brand span{display:none}
-  .ring{order:3}
+  .ring{display:none}
   #btnTheme{order:4;font-size:17px;padding:6px 12px}
-  .search{order:5;flex:1 0 calc(100% - 104px);max-width:none;min-width:0}
+  .search{display:none;order:9;flex:1 0 100%;max-width:none;min-width:0}
+  header.top.fopen .search{display:block}
   .nav-links .lg{display:none}
   .search input{font-size:16px;padding:11px 12px 11px 36px}
   .search svg{top:14px}
   .search kbd{display:none}
-  #btnFilter{order:6;font-size:15px;padding:10px 14px}
-  .nav-links{order:7;flex:1 0 100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  #btnFilter{order:3;font-size:17px;padding:6px 12px}
+  .modes{order:7;flex:1 0 100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .modes a{text-align:center;font-size:16px;padding:11px 4px}
+  .nav-links{order:8;flex:1 0 100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
   .nav-links a{text-align:center;font-size:15px;padding:10px 2px;border:1px solid var(--line);white-space:nowrap}
   .ring span{display:none}
   .ring svg{width:30px;height:30px}
@@ -259,15 +266,15 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;font-size:1
       <input id="q" type="search" autocomplete="off" placeholder="Suche: 1829, Wunsch, Kündigungsfrist, Genehmigung …" aria-label="Suche">
       <kbd>/</kbd>
     </div>
+    <nav class="modes" aria-label="Bereich wählen"><a class="on" href="./" aria-current="page">📚 Atlas</a><a href="lernpfad/">🧭 Lernpfad</a></nav>
     <nav class="nav-links" aria-label="Lernmodi">
-      <a class="hl" href="lernpfad/" data-nav="lernpfad">🧭 Lernpfad</a>
       <a href="#karten" data-nav="karten">Karte<span class="lg">ikarte</span>n</a>
       <a href="#quiz" data-nav="quiz">Quiz</a>
       <a href="#werkzeuge" data-nav="werkzeuge"><span class="lg">Prüf-</span>Werkzeuge</a>
     </nav>
     <div class="ring" id="ring" aria-live="polite"></div>
     <button class="btn" id="btnTheme" aria-label="Hell/Dunkel umschalten">◐</button>
-    <button class="btn only-m" id="btnFilter" aria-expanded="false" aria-controls="filters">Filter ▾</button>
+    <button class="btn only-m" id="btnFilter" aria-expanded="false" aria-controls="filters" aria-label="Suche und Filter ein- oder ausblenden">🔍</button>
   </div>
   <div class="filters" id="filters"></div>
 </header>
@@ -917,7 +924,7 @@ document.addEventListener("click",function(e){
   b=t.closest("[data-br]");if(b){var id=b.getAttribute("data-br");openBr[id]=true;if(window.innerWidth<=900)layout.classList.add("noaside");if(location.hash==="#t_"+id){renderTree();render()}else{location.hash="#t_"+id}return}
   if(t.closest("#allOpen")){THEMEN.forEach(function(x){openBr[x.id]=true});renderTree();return}
   if(t.closest("#allClose")){openBr={};renderTree();return}
-  if(t.closest("#btnFilter")){var tp=$("#top"),o=tp.classList.toggle("fopen");$("#btnFilter").setAttribute("aria-expanded",o);$("#btnFilter").textContent=o?"Filter ▴":"Filter ▾";document.documentElement.style.setProperty("--hh",tp.offsetHeight+"px");return}
+  if(t.closest("#btnFilter")){var tp=$("#top"),o=tp.classList.toggle("fopen");$("#btnFilter").setAttribute("aria-expanded",o);$("#btnFilter").textContent=o?"✕":"🔍";document.documentElement.style.setProperty("--hh",tp.offsetHeight+"px");return}
   if(window.innerWidth<=900&&!layout.classList.contains("noaside")&&(t===layout||(t.closest("#aside")&&t.closest("a[href]")))){layout.classList.add("noaside");return}
   if(t.closest("#hideTree")||t.closest("#btnTree")){layout.classList.toggle("noaside");return}
   if(t.closest("#btnTheme")){var d=dark();document.documentElement.setAttribute("data-theme",d?"light":"dark");store("m5_theme",d?"light":"dark");render();return}
